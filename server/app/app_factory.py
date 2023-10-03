@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User, db
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
-# from flask_cors import CORS
+from flask_cors import CORS
 from flask_restx import Api, Resource, Namespace, fields
 from sqlalchemy.exc import SQLAlchemyError
 from flask_uploads import UploadSet, configure_uploads, IMAGES
@@ -40,6 +40,7 @@ def create_app():
 
 
 app = create_app()
+CORS(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
 api = Api(app)
