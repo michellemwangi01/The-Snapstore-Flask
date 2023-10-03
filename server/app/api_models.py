@@ -17,3 +17,12 @@ user_input_schema = api.model('user_input',{
     # "profile_pic": fields.Nested()
 })
 
+category_schema = api.model('category', {
+    'id': fields.Integer,
+    'name': fields.String
+})
+
+categories_schema = api.model('categories', {
+    'categories': fields.List(fields.Nested(category_schema))
+})
+
