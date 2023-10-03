@@ -10,7 +10,10 @@ metadata = MetaData(naming_convention={
 })
 
 db = SQLAlchemy(metadata=metadata)
-
+photo_category_association = db.Table('photo_category_association',
+    db.Column('photo_id', db.Integer, db.ForeignKey('photos.id'), primary_key=True),
+    db.Column('category_id', db.Integer, db.ForeignKey('categories.category_id'), primary_key=True)
+)
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -39,3 +42,16 @@ class User(db.Model):
     def check_password(self, password):
         # Check if a provided password matches the stored hash
         return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, Primary_key=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+
+    photos = db.relationship('Photo', secondary='photo_category_association', back_populates='categories')
+
+
+    def __repr__(self):
+        return f"Category(category_id={self.id}, name={self.name})"
