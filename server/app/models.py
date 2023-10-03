@@ -73,8 +73,10 @@ class Category(db.Model):
     __table_args__ = (UniqueConstraint('name', name='category_name_unique_constraint'),)
 
     photos = db.relationship('Photo', back_populates='category', cascade='all, delete-orphan')
+
     def __repr__(self):
         return f'(id={self.id}, name={self.name})'
+
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
