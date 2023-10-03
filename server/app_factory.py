@@ -10,16 +10,16 @@ from models import User
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 # from flask_cors import CORS
-from flask_restful import Resource, Api
-from flask_restx import Api, Resource, Namespace
+# from flask_restful import Resource, Api
+from flask_restx import Api, Resource, Namespace, fields
 from sqlalchemy.exc import SQLAlchemyError
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
 
 from flask_sqlalchemy import SQLAlchemy
 import secrets
 from models import db
-
 
 
 def create_app():
@@ -34,4 +34,14 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.json.compact = False
+
+    # marshmallow
+
+    db.init_app(app)
     return app
+
+
+app = create_app()
+ma = Marshmallow(app)
+migrate = Migrate(app, db)
+api = Api(app)
