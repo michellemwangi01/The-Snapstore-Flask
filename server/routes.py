@@ -5,9 +5,31 @@ from app_factory import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from api_models import *
 import jwt
+from functools import wraps
 
 ns = Namespace('api')
 api.add_namespace(ns)
+
+
+# -------------------------------------- A U T H E N T I C A T I O N ------------------------------
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return {"message": "Token is missing"}, 401
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            current_user = User.query.filterby(public_id=data['public_id']).first()
+        except:
+            return {"message": "token is invalid"}, 401
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
+
 
 # -------------------------------------- R O U T E S ------------------------------
 
@@ -19,7 +41,7 @@ configure_uploads(app, photos)
 class Home(Resource):
     def get(self):
         try:
-            return {"message": "welcome to the snapstore!"}, 200
+            return {"message": "welcome to the snapstore_mine!"}, 200
         except Exception as e:
             return {'error': f'{str(e)}'}
 
@@ -44,11 +66,12 @@ class GetFile(Resource):
     def get(self, filename):
         return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename)
 
+
 api.add_resource(GetFile, '/uploads/<filename>')
 
 
 class UploadImage(Resource):
-    def post(self):
+    def post(self, current_user):
         form = UploadForm()
         # if form.validate_on_submit():
         if form:
@@ -84,10 +107,12 @@ class Signup(Resource):
         else:
             return {'message': "No data found"}, 404
 
+
 api.add_resource(Signup, '/signup')
 
+
 class Login(Resource):
-    def post(self):
+    def get(self):
         auth = request.authorization
 
         if not auth or not auth.username or not auth.password:
@@ -107,5 +132,19 @@ class Login(Resource):
             token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
             return jsonify({'token': token})
 
+
 api.add_resource(Login, '/login')
 
+
+# @ns.route('/users')
+class Users(Resource):
+    @token_required
+    @ns.marshal_list_with(user_schema)
+    def get(self, current_user):
+        # if not current_user.admin:
+        #     return jsonify({"message": "Sorry. You are not authorized to perform this function"})
+        users = User.query.all()
+        return users, 200
+
+
+api.add_resource(Users, '/users')

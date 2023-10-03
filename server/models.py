@@ -3,14 +3,13 @@ from sqlalchemy.orm import validates
 from sqlalchemy import MetaData, UniqueConstraint
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
-from app_factory import  generate_password_hash
+from app_factory import generate_password_hash
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
 
 db = SQLAlchemy(metadata=metadata)
-
 
 
 class User(db.Model):
@@ -36,10 +35,7 @@ class User(db.Model):
     def set_password(self, password):
         # Generate a password hash
         self.password_hash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
-        # password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        # self.password_hash = password_hash.decode('utf-8')
 
     def check_password(self, password):
         # Check if a provided password matches the stored hash
         return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
-
