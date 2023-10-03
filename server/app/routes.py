@@ -4,6 +4,7 @@ from .app_factory import jsonify, request, url_for, csrf, Resource, User, SQLAlc
 from .app_factory import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from .api_models import *
+from .models import Category, Transaction, User, Photo
 import jwt
 from functools import wraps
 
@@ -132,16 +133,57 @@ class Login(Resource):
 api.add_resource(Login, '/login')
 
 
-# @ns.route('/users')
+@ns.route('/users')
 class Users(Resource):
-    @token_required
-    @ns.marshal_list_with(user_schema)
-    def get(self, current_user):
+    # @token_required
+    @ns.marshal_list_with(users_schema)
+    def get(self):
         # if not current_user.admin:
         #     return jsonify({"message": "Sorry. You are not authorized to perform this function"})
         users = User.query.all()
         return users, 200
 
 
-api.add_resource(Users, '/users')
-#
+@ns.route('/users/<int:id>')
+class UserByID(Resource):
+    # @token_required
+    @ns.marshal_with(user_schema)
+    def get(self, id):
+        # if not current_user.admin:
+        #     return jsonify({"message": "Sorry. You are not authorized to perform this function"})
+        user = User.query.filter_by(id=id).first()
+        print(user.photos)
+        return user, 200
+
+
+
+@ns.route('/categories')
+class Categories(Resource):
+    @ns.marshal_list_with(category_schema)
+    def get(self):
+        categories = Category.query.all()
+        return categories,200
+
+@ns.route('/category/<int:id>')
+class CategoryByID(Resource):
+    @ns.marshal_with(category_schema)
+    def get(self, id):
+        category = Category.query.filter_by(id=id).first()
+        return category,200
+
+@ns.route('/transactions')
+class Transactions(Resource):
+    @ns.marshal_list_with(transaction_schema)
+    def get(self):
+        transactions = Transaction.query.all()
+        print(transactions[1].photo)
+        return transactions,200
+
+
+@ns.route('/photos')
+class Photos(Resource):
+    @ns.marshal_list_with(photo_schema)
+    def get(self):
+        photos = Photo.query.all()
+        return photos,200
+
