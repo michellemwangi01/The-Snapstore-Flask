@@ -1,4 +1,4 @@
-from app.app_factory import app
+from app.app_factory import app, uuid
 from app.models import User, Category, Photo, Transaction, db
 from faker import Faker
 import random, locale
@@ -12,18 +12,18 @@ with app.app_context():
     Transaction.query.delete()
 
     users_images = [
-        "/img1",
-        "/img2",
-        "/img3",
-        "/img4",
-        "/img5",
-        "/img6",
-        "/img7",
-        "/img8",
-        "/img9",
-        "/img10",
-        "/img11",
-        "/img12"
+        "img1",
+        "img2",
+        "img3",
+        "img4",
+        "img5",
+        "img6",
+        "img7",
+        "img8",
+        "img9",
+        "img10",
+        "img11",
+        "img12"
     ]
 
     categories = [
@@ -44,7 +44,9 @@ with app.app_context():
     for i in range(20):
         new_user = User(
             username=f'{fake.unique.first_name()}{fake.unique.last_name()}',
-            profile_pic=f'/{rc(users_images)}'
+            profile_pic=f'/{rc(users_images)}',
+            public_id = str(uuid.uuid4())
+
         )
         new_user.email = f'{new_user.username}@mail.com'
         db.session.add(new_user)
