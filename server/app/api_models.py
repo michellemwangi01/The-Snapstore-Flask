@@ -1,4 +1,4 @@
-from app_factory import fields, api
+from .app_factory import fields, api
 
 # ------------------------- A P I _ M O D E L S ------------------------
 

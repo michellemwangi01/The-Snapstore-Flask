@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy import MetaData, UniqueConstraint
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
-from app_factory import generate_password_hash
+from .app_factory import generate_password_hash
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",

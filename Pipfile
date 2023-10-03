@@ -13,10 +13,10 @@ flask-wtf = "*"
 faker = "*"
 bcrypt = "*"
 flask-restx = "*"
-flask = "==2.3.3"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 pyjwt = "*"
+flask = "==2.3.3"
 
 [dev-packages]
 

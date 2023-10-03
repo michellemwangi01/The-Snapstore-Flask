@@ -1,9 +1,9 @@
-from app_factory import jsonify, request, url_for, csrf, Resource, User, SQLAlchemyError, make_response, FlaskForm, \
+from .app_factory import jsonify, request, url_for, csrf, Resource, User, SQLAlchemyError, make_response, FlaskForm, \
     FileField, send_from_directory, FileAllowed, FileRequired, create_app, Migrate, db, Api, UploadSet, SubmitField, \
     configure_uploads, IMAGES, Namespace, Marshmallow, fields, check_password_hash, datetime, uuid
-from app_factory import app, ma, api
+from .app_factory import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from api_models import *
+from .api_models import *
 import jwt
 from functools import wraps
 
@@ -148,3 +148,4 @@ class Users(Resource):
 
 
 api.add_resource(Users, '/users')
+#
