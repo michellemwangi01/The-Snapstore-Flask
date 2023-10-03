@@ -9,7 +9,7 @@ click==8.1.7
 distlib==0.3.7
 Faker==18.13.0
 filelock==3.12.2
-Flask==2.3.3
+Flask==2.2.5
 flask-marshmallow==0.15.0
 Flask-Migrate==4.0.5
 Flask-RESTful==0.3.10
