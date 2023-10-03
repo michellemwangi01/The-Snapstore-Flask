@@ -1,11 +1,14 @@
 from app.app_factory import app
-from app.models import User, db
+from app.models import User, Category, Photo,Transaction, db
 from faker import Faker
 import random
 from random import randint, choice as rc
 fake = Faker()
 with app.app_context():
     User.query.delete()
+    Category.query.delete()
+    Photo.query.delete()
+    Transaction.query.delete()
 
     print("🦸‍♀️ Seeding users...")
 

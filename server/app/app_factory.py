@@ -22,7 +22,6 @@ from flask_sqlalchemy import SQLAlchemy
 import secrets
 
 
-
 def create_app():
     app = Flask(__name__)
 
@@ -44,3 +43,6 @@ app = create_app()
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
 api = Api(app)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5555)

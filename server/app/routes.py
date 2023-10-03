@@ -66,7 +66,6 @@ class GetFile(Resource):
     def get(self, filename):
         return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename)
 
-
 api.add_resource(GetFile, '/uploads/<filename>')
 
 
@@ -80,7 +79,6 @@ class UploadImage(Resource):
             return make_response(jsonify(file_url), 200)
         else:
             return make_response({"error": f"{form.errors}"}, 200)
-
 
 api.add_resource(UploadImage, '/uploadimage')
 
@@ -107,12 +105,11 @@ class Signup(Resource):
         else:
             return {'message': "No data found"}, 404
 
-
 api.add_resource(Signup, '/signup')
 
 
 class Login(Resource):
-    def get(self):
+    def post(self):
         auth = request.authorization
 
         if not auth or not auth.username or not auth.password:
@@ -131,7 +128,6 @@ class Login(Resource):
         if check_password_hash(user.password_hash, auth.password):
             token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
             return jsonify({'token': token})
-
 
 api.add_resource(Login, '/login')
 

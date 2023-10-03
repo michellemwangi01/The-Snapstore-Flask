@@ -1,6 +1,6 @@
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
-from sqlalchemy import MetaData, UniqueConstraint
+from sqlalchemy import MetaData, UniqueConstraint, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 from .app_factory import generate_password_hash
@@ -26,16 +26,59 @@ class User(db.Model):
 
     __table_args__ = (UniqueConstraint('username', name='user_unique_constraint'),)
 
-    # heropowers = db.relationship('HeroPower', back_populates='hero', cascade='all, delete-orphan')
-    # powers = association_proxy('heropowers', 'power')
-
     def __repr__(self):
         return f'(id={self.id}, name={self.username} email={self.email} profile_pic={self.profile_pic})'
 
     def set_password(self, password):
-        # Generate a password hash
         self.password_hash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
 
     def check_password(self, password):
-        # Check if a provided password matches the stored hash
         return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+
+
+class Photo(db.Model):
+    __tablename__ = 'photos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    description = db.Column(db.String)
+    price = db.Column(db.Numeric(precision=10, scale=2))
+    user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, ForeignKey('categories.id'))
+    image = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    __table_args__ = (UniqueConstraint('name', name='img_name_unique_constraint'),)
+
+    category = db.relationship('Category', back_populates='photos', cascade='all, delete-orphan')
+    user = db.relationship('User', back_populates='photos', cascade='all, delete-orphan')
+
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    __table_args__ = (UniqueConstraint('name', name='category_name_unique_constraint'),)
+
+    photos = db.relationship('Photo', back_populates='category', cascade='all, delete-orphan')
+
+class Transaction(db.Model):
+    __tablename__ = 'transactions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    photo_id = db.Column(db.Integer, ForeignKey('categories.id'))
+    pieces = db.Column(db.Integer)
+    amount = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    user = db.relationship('User', back_populates='transactions', cascade='all, delete-orphan')
+    photo = db.relationship('Photo', back_populates='transactions', cascade='all, delete-orphan')
+
