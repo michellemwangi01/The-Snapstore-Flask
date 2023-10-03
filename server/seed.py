@@ -1,5 +1,5 @@
-from app import  app
-from models import User, db
+from app.app_factory import app
+from app.models import User, db
 from faker import Faker
 import random
 from random import randint, choice as rc

@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm, csrf
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from wtforms import SubmitField
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User
+from .models import User, db
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 # from flask_cors import CORS
@@ -20,7 +20,7 @@ import uuid
 
 from flask_sqlalchemy import SQLAlchemy
 import secrets
-from models import db
+
 
 
 def create_app():
