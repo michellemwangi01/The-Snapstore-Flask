@@ -24,6 +24,9 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    photos = db.relationship('Photo', back_populates='user', cascade='all, delete-orphan')
+    transactions = db.relationship('Transaction', back_populates='user')
+
     __table_args__ = (UniqueConstraint('username', name='user_unique_constraint'),)
 
     def __repr__(self):
@@ -51,9 +54,12 @@ class Photo(db.Model):
 
     __table_args__ = (UniqueConstraint('name', name='img_name_unique_constraint'),)
 
-    category = db.relationship('Category', back_populates='photos', cascade='all, delete-orphan')
-    user = db.relationship('User', back_populates='photos', cascade='all, delete-orphan')
+    category = db.relationship('Category', back_populates='photos')
+    user = db.relationship('User', back_populates='photos')
+    transaction = db.relationship('Transaction', back_populates='photo')
 
+    def __repr__(self):
+        return f'(id={self.id}, name={self.name} description={self.description} price={self.price} price={self.image} user_id={self.user_id} category_id={self.category_id} )'
 
 
 class Category(db.Model):
@@ -67,18 +73,22 @@ class Category(db.Model):
     __table_args__ = (UniqueConstraint('name', name='category_name_unique_constraint'),)
 
     photos = db.relationship('Photo', back_populates='category', cascade='all, delete-orphan')
+    def __repr__(self):
+        return f'(id={self.id}, name={self.name})'
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
 
     id = db.Column(db.Integer, primary_key=True)
-    photo_id = db.Column(db.Integer, ForeignKey('categories.id'))
-    pieces = db.Column(db.Integer)
+    photo_id = db.Column(db.Integer, ForeignKey('photos.id'))
+    quantity = db.Column(db.Integer)
     amount = db.Column(db.Integer)
-    user_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    user = db.relationship('User', back_populates='transactions', cascade='all, delete-orphan')
-    photo = db.relationship('Photo', back_populates='transactions', cascade='all, delete-orphan')
+    user = db.relationship('User', back_populates='transactions')
+    photo = db.relationship('Photo', back_populates='transaction')
 
+    def __repr__(self):
+        return f'(id={self.id}, quantity={self.quantity} amount={self.amount})'
