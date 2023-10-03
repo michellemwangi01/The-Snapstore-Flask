@@ -35,8 +35,6 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.json.compact = False
 
-    # marshmallow
-
     db.init_app(app)
     return app
 

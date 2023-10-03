@@ -17,6 +17,14 @@ photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
 
+@ns.route('/')
+class Home(Resource):
+    def get(self):
+        try:
+            return {"message": "welcome to the snapstore!"}, 200
+        except Exception as e:
+            return {'error': f'{str(e)}'}
+
 class UploadForm(FlaskForm):
     photo = FileField(
         validators=[
@@ -26,14 +34,13 @@ class UploadForm(FlaskForm):
     submit = SubmitField('Upload')
 
 
-@app.route('/uploads/<filename>')
-class GetFile(Resource):
-    def get(self, filename):
-        return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename)
+# @ns.route('/uploads/<filename>')
+# class GetFile(Resource):
+#     def get(self, filename):
+#         return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename)
 
 
-api.add_resource(GetFile, '/uploads/<filename>')
-
+@ns.route('/get_csrf_token')
 
 class get_csrf_token(Resource):
     def get(self):
@@ -41,46 +48,41 @@ class get_csrf_token(Resource):
         return jsonify({'csrf_token': csrf_token})
 
 
-api.add_resource(get_csrf_token, '/get_csrf_token')
+# @ns.route('/uploadimage')
+# class UploadImage(Resource):
+#     def post(self):
+#         form = UploadForm()
+#         # if form.validate_on_submit():
+#         if form:
+#             filename = photos.save(form.photo.data)  # Save the image to the uploads folder
+#             file_url = url_for('get_file', filename=filename)
+#             return make_response(jsonify(file_url), 200)
+#         else:
+#             return make_response({"error": f"{form.errors}"}, 200)
 
 
-class UploadImage(Resource):
-    def post(self):
-        form = UploadForm()
-        # if form.validate_on_submit():
-        if form:
-            filename = photos.save(form.photo.data)  # Save the image to the uploads folder
-            file_url = url_for('get_file', filename=filename)
-            return make_response(jsonify(file_url), 200)
-        else:
-            return make_response({"error": f"{form.errors}"}, 200)
-
-
-api.add_resource(UploadImage, '/uploadimage')
 
 @ns.route('/signup')
 class Signup(Resource):
     @ns.expect(user_input_schema)
     @ns.marshal_with(user_schema)
     def post(self):
-        print('posting')
-        try:
+        data = request.get_json()
+        print(data)
+        if data:
             new_user = User(
-                username=request.form.get('username'),
-                email=request.form.get('email'),
-                profile_pic=request.form.get('profile_pic'),
+                username=data['username'],
+                email=data['email'],
+                # profile_pic=data['profile_pic'],
             )
-            print(new_user)
-            new_user.password_hash = new_user.set_password(request.form.get('password'))
+            print(f'new user:{new_user}')
+            new_user.set_password(data['password'])
             db.session.add(new_user)
             db.session.commit()
             print(new_user)
             return new_user, 201
-        except Exception as e:
-            return make_response(jsonify({"error": str(e)}), 400)
-    # else:
-    #     response = {"message": "No data provided"}
-    #     return make_response(jsonify(response), 404)
+        else:
+            return {'message':"No data found"}, 404
 
 
-api.add_resource(Signup, '/signup')
+
