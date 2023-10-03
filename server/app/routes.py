@@ -148,4 +148,90 @@ class Users(Resource):
 
 
 api.add_resource(Users, '/users')
-#
+
+
+# categories using flask_Restx
+def handle_db_error(error):
+    db.session.rollback()
+    app.logger.error(str(e))
+    return {'message':'Database error occurred'}, 500
+
+@ns.route('/categories')
+class Categories(Resource):
+    @ns.marshal_with(categories_schema)
+    def get(self):
+        try:
+            categories = Category.query.all()
+            return {'categories': categories}, 200
+        except SQLAlchemyError as e:
+            handle_db_error(e)
+
+
+    @ns.expect(category_schema)
+    @ns.marshal_with(category_schema)
+    def post(self):
+        try:
+            data = request.get_json()
+            
+            if data:
+                new_category = Category(
+                    name = data['name']
+                )
+
+                db.session.add(new_category)
+                db.session.commit()
+                return new_category, 201
+            else:
+                return {'message': 'No data Found'}, 404
+        except SQLAlchemyErro as e:
+            handle_db_error(e)
+
+# single Category
+@ns.route('/categories/<int:category_id>')
+class CategoryResource(Resource):
+    @ns.marshal_with(categories_schema)
+    
+    def get(self, category_id):
+        try:
+            category = Category.query.get(category_id)
+
+            if category:
+                return category, 200
+            else:
+                return {'message': 'Category not found'}, 404
+        except SQLAlchemyError as e:
+            handle_db_error(e)
+
+    @ns.expect(category_schema)
+    @ns.marshal_with(category_schema)
+    def put(self, category_id):
+        try:
+
+            data = request.get_json()
+            category = Category.query.get(category_id)
+
+            if not category:
+                return {'message': 'Category not found'}, 404
+            
+            if data:
+                category.name = data['name']
+                db.session.commit()
+                return category, 200
+            else:
+                return {'message': 'No data found'}, 400
+
+        except SQLAlchemyError as e:
+            handle_db_error(e)
+
+    def delete(self,category_id):
+        try:
+            category = Category.query.get(category_id)
+            if not category:
+                return {'message':'Category not found'}, 404
+            db.session.delete()
+            db.session.commit()
+            return{'message': 'Category deleted Successfully'}, 200
+        except SQLAlchemyError as e:
+            handle_db_error(e)
+
+
