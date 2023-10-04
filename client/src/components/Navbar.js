@@ -1,4 +1,3 @@
-// Navbar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProfileIconImage from '../assets/profile-icon.svg';
@@ -6,9 +5,9 @@ import PhotosIconImage from '../assets/photos-svgrepo-com.svg';
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-orangered"> {/* Change bg-primary to bg-orangered */}
+    <nav className="navbar navbar-expand-lg navbar-dark bg-orangered">
       <div className="container">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand"> {/* Wrap the logo in Link */}
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src={PhotosIconImage} alt="Photos Icon" style={{ width: '32px', height: '32px', marginRight: '5px' }} />
             <span style={{ fontWeight: 'bold', fontSize: '24px', margin: '0' }}>
