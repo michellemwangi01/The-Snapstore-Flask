@@ -178,7 +178,14 @@ class Transactions(Resource):
         transactions = Transaction.query.all()
         print(transactions[1].photo)
         return transactions,200
-
+    
+@ns.route('/transaction/<int:id>')
+class Transactionbyid(Resource):
+      @ns.marshal_list_with(transaction_schema)
+      def get(self ,id):
+        transaction = Transaction.query.filter_by(id=id).first()
+      
+        return transaction,200
 
 @ns.route('/photos')
 class Photos(Resource):

@@ -90,7 +90,7 @@ class Transaction(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user = db.relationship('User', back_populates='transactions')
-    photo = db.relationship('Photo', back_populates='transaction')
+    photo = db.relationship('Photo', back_populates='transactions')
 
     def __repr__(self):
         return f'(id={self.id}, quantity={self.quantity} amount={self.amount})'
