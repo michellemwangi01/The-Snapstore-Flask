@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+.tablediv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#transaction th{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+#transaction{
+  margin-top: 50px;
+}
+#transaction tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+#transaction td, #transaction th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

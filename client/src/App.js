@@ -8,6 +8,7 @@ import PhotoPurchase from './components/PhotoPurchase';
 import Transactions from './components/Transactions';
 import Profile from './components/Profile'; // Import the Profile component
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 function App() {
   return (
