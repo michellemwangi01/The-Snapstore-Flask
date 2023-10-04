@@ -9,7 +9,12 @@ function Navbar() {
       <div className="container">
         <Link to="/" className="navbar-brand"> {/* Wrap the logo in Link */}
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img src={PhotosIconImage} alt="Photos Icon" style={{ width: '32px', height: '32px', marginRight: '5px' }} />
+            <img
+              src={PhotosIconImage}
+              alt="Photos Icon"
+              style={{ width: '32px', height: '32px', marginRight: '5px', border: '1px solid transparent' }}
+              className="logo" // Add a class name
+            />
             <span style={{ fontWeight: 'bold', fontSize: '24px', margin: '0' }}>
               <span style={{ color: 'green' }}>Snap</span>
               <span style={{ color: 'yellow' }}>Store</span>
