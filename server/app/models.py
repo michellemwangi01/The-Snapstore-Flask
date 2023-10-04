@@ -56,7 +56,7 @@ class Photo(db.Model):
 
     category = db.relationship('Category', back_populates='photos')
     user = db.relationship('User', back_populates='photos')
-    transaction = db.relationship('Transaction', back_populates='photo')
+    transactions = db.relationship('Transaction', back_populates='photo')
 
     def __repr__(self):
         return f'(id={self.id}, name={self.name} description={self.description} price={self.price} price={self.image} user_id={self.user_id} category_id={self.category_id} )'

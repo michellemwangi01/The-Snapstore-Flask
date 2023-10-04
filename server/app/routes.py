@@ -184,9 +184,21 @@ class Transactionbyid(Resource):
       @ns.marshal_list_with(transaction_schema)
       def get(self ,id):
         transaction = Transaction.query.filter_by(id=id).first()
-      
+        print(transaction)
         return transaction,200
+      
+@ns.route('/transaction/<int:id>')
+class Deletetransaction(Resource):   
+      def delete(self ,id):
+         transaction = Transaction.query.filter_by(id=id).first()
+         db.session.delete(transaction)
+         db.session.commit()
 
+         response_dict = {
+             "message" : "record succefully deleted"
+         }
+         return response_dict, 200
+      
 @ns.route('/photos')
 class Photos(Resource):
     @ns.marshal_list_with(photo_schema)
