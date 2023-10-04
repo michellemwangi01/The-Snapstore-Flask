@@ -6,7 +6,6 @@ import Categories from './components/Categories';
 import Home from './components/Home';
 import PhotoPurchase from './components/PhotoPurchase';
 import Transactions from './components/Transactions';
-import Profile from './components/Profile'; // Import the Profile component
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/photopurchase" element={<PhotoPurchase />} />
                   <Route path="/transaction" element={<Transactions />} />
-                  <Route path="/profile" element={<Profile />} /> {/* Profile route */}
                 </Routes>
               </div>
             </div>
