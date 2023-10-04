@@ -200,19 +200,45 @@ class Deletetransaction(Resource):
          return response_dict, 200
       
 @ns.route('/transaction')
-class Posttransaction(Resource):
+class PostTransaction(Resource):
     def post(self):
-       new_transaction = Transaction(
-           photo_id =   request.form['photo_id'],
-           user_id = request.form['user_id'] ,
-           quantity =  request.form['quantity'] ,
-           amount =  request.form['amount'],
-       )
-    
-       db.session.add(new_transaction) 
-       db.session.commit()
+        try:
+            # Validate and get data from the request
+            
 
-       return new_transaction , 200
+            # if not (photo_id and user_id and quantity and amount):
+            #     return {"message": "Missing required fields"}, 400
+
+            # Create a new transaction
+            new_transaction = Transaction(
+                photo_id = request.form.get ('photo_id') ,
+                user_id = request.form.get ('user_id') ,
+                quantity= request.form.get ('quantity' ) , 
+                amount=request.form.get ('amount')  ,
+            )
+
+            # Add the new transaction to the database
+            db.session.add(new_transaction)
+            db.session.commit()
+
+            # Return a response as a JSON object
+            return {
+                "message": "Transaction created successfully",
+                "transaction": {
+                    "photo_id": new_transaction.photo_id,
+                    "user_id": new_transaction.user_id,
+                    "quantity": new_transaction.quantity,
+                    "amount": new_transaction.amount,
+    
+                }
+            }, 201
+        except Exception as e:
+            db.session.rollback()
+            return{
+                "message": "Failed to create transaction",
+                "error": str(e)
+            }, 500   
+            
       
 @ns.route('/photos')
 class Photos(Resource):
