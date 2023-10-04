@@ -187,7 +187,7 @@ class Transactionbyid(Resource):
         print(transaction)
         return transaction,200
       
-@ns.route('/transaction/<int:id>')
+@ns.route('/transactions/<int:id>')
 class Deletetransaction(Resource):   
       def delete(self ,id):
          transaction = Transaction.query.filter_by(id=id).first()
@@ -198,6 +198,21 @@ class Deletetransaction(Resource):
              "message" : "record succefully deleted"
          }
          return response_dict, 200
+      
+@ns.route('/transaction')
+class Posttransaction(Resource):
+    def post(self):
+       new_transaction = Transaction(
+           photo_id =   request.form['photo_id'],
+           user_id = request.form['user_id'] ,
+           quantity =  request.form['quantity'] ,
+           amount =  request.form['amount'],
+       )
+    
+       db.session.add(new_transaction) 
+       db.session.commit()
+
+       return new_transaction , 200
       
 @ns.route('/photos')
 class Photos(Resource):
