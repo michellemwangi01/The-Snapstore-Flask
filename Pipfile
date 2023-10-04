@@ -18,6 +18,7 @@ marshmallow-sqlalchemy = "*"
 pyjwt = "*"
 flask = "==2.3.3"
 flask-cors = "*"
+gunicorn = "*"
 
 [dev-packages]
 
