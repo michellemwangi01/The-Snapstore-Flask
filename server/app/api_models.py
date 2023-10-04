@@ -28,19 +28,24 @@ photo_category_schema = api.model('photo',{
     "image": fields.String,
 })
 
-transaction_user_schema = api.model('transaction',{
+transaction_schema = api.model('transaction', {
     "id": fields.Integer,
+    "photo_id": fields.Integer,
+    "user_id": fields.Integer,
     "quantity": fields.Integer,
-    "amount": fields.Integer,
+    "amount": fields.Float,
+    "purchased_at": fields.DateTime,
 })
+
 user_schema = api.model('user',{
     "id": fields.Integer,
     "public_id": fields.String,
     "username": fields.String,
     "email": fields.String,
     "photos": fields.List(fields.Nested(photo_category_schema)),
-    "transactions": fields.List(fields.Nested(transaction_user_schema)),
+    "transactions": fields.List(fields.Nested(transaction_schema)),
 })
+
 category_schema = api.model('category',{
     "id": fields.Integer,
     "name": fields.String,
@@ -69,25 +74,33 @@ photo_input_schema = api.model('photo_input',{
     "user_id": fields.Integer,
     "category_id": fields.Integer
 })
-transaction_user_schema = api.model('user_input',{
-    "id": fields.Integer,
-    "username": fields.String,
-    "email": fields.String,
+cart_item_input_schema = api.model('cart_item_input', {
+    "photo_id": fields.Integer(required=True),
+    "quantity": fields.Integer(required=True),
 })
-transaction_schema = api.model('transaction',{
+
+transaction_input_schema = api.model('transaction_input', {
+    "photo_id": fields.Integer(required=True),
+    "quantity": fields.Integer(required=True),
+})
+
+cart_item_schema = api.model('cart_item', {
     "id": fields.Integer,
+    "cart_id": fields.Integer,
+    "photo_id": fields.Integer,
     "quantity": fields.Integer,
-    "amount": fields.Integer,
-    "photo": fields.Nested(photo_category_schema),
-    "user": fields.Nested(transaction_user_schema),
+    "added_at": fields.DateTime,
 })
-transaction_input_schema = api.model('category_input',{
+
+transaction_schema = api.model('transaction', {
     "id": fields.Integer,
     "photo_id": fields.Integer,
     "user_id": fields.Integer,
     "quantity": fields.Integer,
-    "amount": fields.Integer,
+    "amount": fields.Float,
+    "purchased_at": fields.DateTime,
 })
+
 
 
 
