@@ -4,9 +4,11 @@ from .app_factory import jsonify, request, url_for, csrf, Resource, User, SQLAlc
 from .app_factory import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from .api_models import *
-from .models import Category, Transaction, User, Photo
+from .models import Category, Transaction, User, Photo, Cart, CartItem
 import jwt
 from functools import wraps
+from marshmallow.exceptions import ValidationError
+
 
 ns = Namespace('api')
 api.add_namespace(ns)
@@ -102,6 +104,12 @@ class Signup(Resource):
             db.session.add(new_user)
             db.session.commit()
             print(new_user)
+
+            # Create a cart for the newly registered user
+            # new_cart = Cart(user=new_user)
+            # db.session.add(new_cart)
+            # db.session.commit()
+
             return new_user, 201
         else:
             return {'message': "No data found"}, 404
@@ -128,6 +136,14 @@ class Login(Resource):
 
         if check_password_hash(user.password_hash, auth.password):
             token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
+
+            # Check if the user has a cart, if not, create one
+            # user_cart = Cart.query.filter_by(user_id=user.id).first()
+            # if not user_cart:
+            #     new_cart = Cart(user=user)
+            #     db.session.add(new_cart)
+            #     db.session.commit()
+
             return jsonify({'token': token})
 
 api.add_resource(Login, '/login')
@@ -171,13 +187,13 @@ class CategoryByID(Resource):
         category = Category.query.filter_by(id=id).first()
         return category,200
 
-@ns.route('/transactions')
-class Transactions(Resource):
-    @ns.marshal_list_with(transaction_schema)
-    def get(self):
-        transactions = Transaction.query.all()
-        print(transactions[1].photo)
-        return transactions,200
+# @ns.route('/transactions')
+# class Transactions(Resource):
+#     @ns.marshal_list_with(transaction_schema)
+#     def get(self):
+#         transactions = Transaction.query.all()
+#         print(transactions[1].photo)
+#         return transactions,200
 
 
 @ns.route('/photos')
@@ -187,3 +203,111 @@ class Photos(Resource):
         photos = Photo.query.all()
         return photos,200
 
+@ns.route('/cart/add/<int:photo_id>')
+class AddToCart(Resource):
+    # @token_required
+    @ns.expect(cart_item_input_schema, validate=True)
+    def post(self, photo_id, current_user):
+        data = request.get_json()
+        current = User.query.filter_by(id = current_user.id).first()
+        print(current)
+
+        # Check if the user has a cart, if not, create one
+        try:
+            user_cart = Cart.query.filter_by(user_id=current.id).first()
+            if not user_cart:
+                user = User.query.get(current.id)
+                new_cart = Cart(user=user)
+                db.session.add(new_cart)
+                db.session.commit()
+        except SQLAlchemyError as e:
+            app.logger.error(str(e))
+            return {"message": "Error creating cart for user"}, 500
+
+
+        # Check if the photo exists
+        photo = Photo.query.get(photo_id)
+        if not photo:
+            app.logger.error("Photo not found")
+            return {"message":"Photo not found"}, 404
+
+        # Check if the item is already in the cart
+        existing_item = CartItem.query.filter_by(cart_id=user_cart.id, photo_id=photo_id).first()
+        if existing_item:
+            app.logger.error("Item is already in the cart")
+            return {"message":"Item is already in the cart"}, 400
+
+        # Add the item to the cart
+        new_item = CartItem(cart=user_cart, photo=photo, quantity=data["quantity"])
+        db.session.add(new_item)
+        db.session.commit()
+        app.logger.info("Item added to the cart successfully")
+        return {"message": "Item added to the cart successfully"}, 201
+
+
+@ns.route('/checkout')
+class Checkout(Resource):
+    # @token_required
+    @ns.expect(transaction_input_schema)
+    def post(self, current_user):
+        data = request.get_json()
+
+
+        # Check if the user has a cart
+        user_cart = Cart.query.filter_by(user_id=current_user.id).first()
+        if not user_cart:
+            app.logger.error("User does not have a cart. Add items to the cart first.")
+            return {"message":"User does not have a cart. Add items to the cart first."}, 400
+
+        # Check if the item is in the user's cart
+        cart_item = CartItem.query.filter_by(cart_id=user_cart.id, photo_id=data["photo_id"]).first()
+        if not cart_item:
+            app.logger.error( "Item is not in the cart")
+            return {"message":"Item is not in the cart"}, 404
+        
+        try:
+
+            # Create a transaction
+            transaction = Transaction(
+                photo_id=data["photo_id"],
+                user_id=current_user.id, 
+                cart_item_id =user_cart.id
+                
+            )
+            db.session.add(transaction)
+            db.session.commit()
+
+            # Remove the item from the cart
+            db.session.delete(cart_item)
+            db.session.commit()
+
+            return {"message": app.logger.info("Transaction completed successfully")}, 201
+        except SQLAlchemyError as e:
+            app.logger.error(str(e))
+            return {"message": "Error Creating Transction"}
+
+        # user_cart = Cart.query.filter_by(user_id=19).first()
+        # if not user_cart:
+        #     return {"message": app.logger.error("User does not have a cart. Add items to the cart first.")}, 400
+
+        # # Check if the item is in the user's cart
+        # cart_item = CartItem.query.filter_by(cart_id=user_cart.id, photo_id=data["photo_id"]).first()
+        # if not cart_item:
+            
+        #     return {"message": app.logger.error( "Item is not in the cart")}, 404
+
+        # # Create a transaction
+        # transaction = Transaction(
+        #     photo_id=data["photo_id"],
+        #     user_id=1, 
+        #     cart_item_id =cart_item.id
+            
+        # )
+        # db.session.add(transaction)
+        # db.session.commit()
+
+        # # Remove the item from the cart
+        # db.session.delete(cart_item)
+        # db.session.commit()
+
+        # return {"message": app.logger.error("Transaction completed successfully")}, 201
