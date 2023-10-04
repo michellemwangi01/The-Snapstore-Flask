@@ -239,7 +239,26 @@ class PostTransaction(Resource):
                 "error": str(e)
             }, 500   
             
-      
+@ns.route('/transaction/<int:id>')
+class UpdateTransaction(Resource):
+     
+     def patch(self, id):
+
+        record = Transaction.query.filter_by(id=id).first()
+        for attr in request.form:
+            setattr(record, attr, request.form[attr])
+
+        db.session.add(record)
+        db.session.commit()
+        mydict = {
+            "photo_id" :record.photo_id ,
+            "user_id" : record.user_id ,
+            "quantity" : record.quantity,
+            "amount"  : record.amount
+        }
+        
+        return mydict,200
+  
 @ns.route('/photos')
 class Photos(Resource):
     @ns.marshal_list_with(photo_schema)
