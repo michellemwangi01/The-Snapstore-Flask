@@ -9,14 +9,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User, db
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
-from flask_cors import CORS
 from flask_restx import Api, Resource, Namespace, fields
 from sqlalchemy.exc import SQLAlchemyError
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
 import datetime
 import uuid
+from flask_cors import CORS
+from flask_marshmallow import Marshmallow
+
 
 from flask_sqlalchemy import SQLAlchemy
 import secrets
@@ -45,3 +46,7 @@ ma = Marshmallow(app)
 migrate = Migrate(app, db)
 api = Api(app)
 
+
+from .routes import *
+if __name__ == '__main__':
+    app.run(debug=True, port=5555)
