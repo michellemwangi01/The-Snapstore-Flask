@@ -12,7 +12,13 @@ users_schema = api.model('user',{
 user_input_schema = api.model('user_input',{
     "username": fields.String,
     "password": fields.String,
+    "repeatpassword": fields.String,
     "email": fields.String,
+})
+user_login_schema = api.model('user_login',{
+    "username": fields.String,
+    "password": fields.String,
+
 })
 
 category_input_schema = api.model('category_input',{
