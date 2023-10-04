@@ -1,67 +1,72 @@
 import React, { useState, useEffect } from 'react';
 
 function Home() {
-  const [imageData, setImageData] = useState(null);
-  const [liked, setLiked] = useState(false);
-  const [cart, setCart] = useState([]); // Initialize cart as an empty array
-  const [likesCount, setLikesCount] = useState(0);
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [likes, setLikes] = useState({}); // Store liked photos
+  const [cart, setCart] = useState([]); // Store items in the cart
 
   useEffect(() => {
-    // Replace with your actual API endpoint to fetch image data
-    fetch('https://your-api-endpoint.com/image')
+    // Replace 'YOUR_API_URL' with the actual URL of your API endpoint for photos
+    fetch('http://127.0.0.1:5555/api/photos')
       .then((response) => response.json())
       .then((data) => {
-        setImageData(data); // Assuming the API returns an object with image data
+        setPhotos(data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching image data:', error);
+        console.error('Error fetching photos:', error);
+        setLoading(false);
       });
   }, []);
 
-  const toggleLike = () => {
-    setLiked(!liked);
-    setLikesCount(liked ? likesCount - 1 : likesCount + 1);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  // Function to handle liking or unliking a photo
+  const toggleLike = (photoId) => {
+    const updatedLikes = { ...likes };
+    updatedLikes[photoId] = !updatedLikes[photoId];
+    setLikes(updatedLikes);
   };
 
-  const addToCart = () => {
-    if (imageData) {
-      // Create a new item with selected quantity and image data
-      const cartItem = {
-        imageData,
-        quantity: selectedQuantity,
-      };
-
-      // Add the cartItem to the cart
-      setCart([...cart, cartItem]);
-    }
-  };
-
-  const handleQuantityChange = (e) => {
-    setSelectedQuantity(parseInt(e.target.value, 10));
+  // Function to handle adding a photo to the cart
+  const addToCart = (photo) => {
+    setCart([...cart, photo]);
   };
 
   return (
     <div>
       <h1>Welcome to SnapStore</h1>
-      {imageData && <img src={imageData.imageUrl} alt={imageData.imageAlt} />}
-      <button onClick={toggleLike}>
-        {liked ? 'Unlike' : 'Like'} ({likesCount})
-      </button>
-      <div>
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          type="number"
-          id="quantity"
-          value={selectedQuantity}
-          onChange={handleQuantityChange}
-          min="1"
-        />
+      <div className="photo-list">
+        {photos.map((photo) => (
+          <div key={photo.id} className="photo-item">
+            <img src={photo.image} alt={photo.name} />
+            <h2>{photo.name}</h2>
+            <p>{photo.description}</p>
+            <p>Price: ${photo.price}</p>
+            <button onClick={() => toggleLike(photo.id)}>
+              {likes[photo.id] ? 'Unlike' : 'Like'}
+            </button>
+            <button onClick={() => addToCart(photo)}>
+              Add to Cart
+            </button>
+          </div>
+        ))}
       </div>
-      <button onClick={addToCart}>Add to Cart</button>
-      <p>Items in Cart: {cart.length}</p>
+      <div className="cart">
+        <h2>Cart</h2>
+        <ul>
+          {cart.map((item) => (
+            <li key={item.id}>
+              {item.name} - Price: ${item.price}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
-export default Home;
+export default Home; 
