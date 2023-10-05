@@ -177,10 +177,4 @@ function Home() {
     </div>
   );
 }
-
-<<<<<<< HEAD
-
 export default Home; 
-=======
-export default Home;
->>>>>>> origin/ft-development
