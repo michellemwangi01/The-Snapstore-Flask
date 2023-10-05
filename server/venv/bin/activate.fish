@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/gilley/Desktop/FULL-STACK-DEVELOPER/Development/code/phase-4/The-Snapstore-Flask/server/venv"
+set -gx VIRTUAL_ENV "/home/michelle/Development/Code/phase-4-flask/TSS/The-Snapstore-Flask/server/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

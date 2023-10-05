@@ -40,22 +40,19 @@ const Login = ({ jwToken, setJWToken }) => {
       })
       .then((data) => {
         console.log("Response data:", data);
-        setJWToken(data.token);
-        console.log(jwToken);
+        localStorage.setItem("jwtToken", data.token);
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          repeatPassword: "",
+        });
+        setJWToken(data);
+        navigate("/home");
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
-    localStorage.setItem("jwtToken", jwToken);
-
-    setFormData({
-      username: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-    });
-    navigate("/home");
   };
 
   //   useEffect(() => {

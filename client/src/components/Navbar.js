@@ -6,7 +6,7 @@ import Login from "./Login";
 import "../styles/mystyles.css";
 
 function Navbar({ jwToken }) {
-  const btnText = jwToken ? "Logout" : "Login";
+  const btnText = jwToken === "" ? "Login" : "Logout";
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">

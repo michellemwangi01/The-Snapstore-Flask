@@ -153,6 +153,7 @@ class Signup(Resource):
 
 @ns.route('/login')
 class Login(Resource):
+    @ns.expect(user_login_schema)
     def post(self):
         data = request.get_json()
         print(data)
@@ -163,7 +164,7 @@ class Login(Resource):
         user = User.query.filter_by(username=data['username']).first()
         print(user)
         if not user:
-            return make_response('Could Not Verify', 401)
+            return make_response(jsonify({'message':'Could Not Verify'}), 401)
 
         token_payload = {
             'public_id': user.public_id,

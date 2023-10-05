@@ -22,9 +22,8 @@ import Footer from "./components/Footer";
 import "./App.css";
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [jwToken, setJWToken] = useState(null);
+  const [jwToken, setJWToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(`jwtoken ${jwToken}`);
 
   useEffect(() => {
     setCurrentUser("Mamamia");
@@ -40,24 +39,11 @@ const App = () => {
               <div className="col-md-12">
                 <div className="container">
                   <Routes>
-                    <Route
-                      path="/login"
-                      element={<Login setJWToken={setJWToken} />}
-                    />
-                    <Route
-                      path="/"
-                      element={
-                        jwToken ? (
-                          <Home jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
+                    <Route path="/home" element={<Home jwToken={jwToken} />} />
                     <Route
                       path="/photopurchase"
                       element={
-                        jwToken ? (
+                        jwToken != "" ? (
                           <Transactions jwToken={jwToken} />
                         ) : (
                           <Navigate to="/login" />
@@ -115,6 +101,12 @@ const App = () => {
                       }
                     />
                     <Route path="/signup" element={<Signup />} />
+                    <Route
+                      path="/login"
+                      element={
+                        <Login jwToken={jwToken} setJWToken={setJWToken} />
+                      }
+                    />
                   </Routes>
                 </div>
               </div>
