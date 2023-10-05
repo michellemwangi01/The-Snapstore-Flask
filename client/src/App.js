@@ -1,4 +1,3 @@
-// App.js
 import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -11,7 +10,7 @@ import Categories from "./components/Categories";
 import Home from "./components/Home";
 import PhotoPurchase from "./components/PhotoPurchase";
 import Transactions from "./components/Transactions";
-import Profile from "./components/Profile"; // Import the Profile component
+import Profile from "./components/Profile"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -21,6 +20,7 @@ import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import "./App.css";
+
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState(null);
@@ -40,112 +40,16 @@ const App = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="container">
-                  {/* <Routes>
-                    
-
-                    <Route
-                      path="/login"
-                      element={<Login setJWToken={setJWToken} />}
-                    />
-                    <Route
-                      path="/"
-                      element={
-                        jwToken ? (
-                          <Home jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/photopurchase"
-                      element={
-                        jwToken ? (
-                          <Transactions jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/transaction"
-                      element={
-                        jwToken ? (
-                          <PhotoPurchase jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/profile"
-                      element={
-                        jwToken ? (
-                          <Profile jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/gallery"
-                      element={
-                        jwToken ? (
-                          <Gallery jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/logout"
-                      element={
-                        jwToken ? (
-                          <Logout setJWToken={setJWToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/categories"
-                      element={
-                        jwToken ? (
-                          <Categories jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route path="/signup" element={<Signup />} />
-                  </Routes> */}
                   <Routes>
+                    {/* Use a Route to display LandingPage on the root route */}
+                    <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/" element={<Home jwToken={jwToken} />} />
-                    <Route
-                      path="/photopurchase"
-                      element={<Transactions jwToken={jwToken} />}
-                    />
-                    <Route
-                      path="/transaction"
-                      element={<PhotoPurchase jwToken={jwToken} />}
-                    />
-                    <Route
-                      path="/profile"
-                      element={<Profile jwToken={jwToken} />}
-                    />
-                    <Route
-                      path="/gallery"
-                      element={<Gallery jwToken={jwToken} />}
-                    />
-                    <Route
-                      path="/logout"
-                      element={<Logout setJWToken={setJWToken} />}
-                    />
-                    <Route
-                      path="/categories"
-                      element={<Categories jwToken={jwToken} />}
-                    />
+                    <Route path="/photopurchase" element={<Transactions jwToken={jwToken} />} />
+                    <Route path="/transaction" element={<PhotoPurchase jwToken={jwToken} />} />
+                    <Route path="/profile" element={<Profile jwToken={jwToken} />} />
+                    <Route path="/gallery" element={<Gallery jwToken={jwToken} />} />
+                    <Route path="/logout" element={<Logout setJWToken={setJWToken} />} />
+                    <Route path="/categories" element={<Categories jwToken={jwToken} />} />
                     <Route path="/signup" element={<Signup />} />
                   </Routes>
                 </div>
@@ -155,8 +59,8 @@ const App = () => {
         </div>
       </Router>
       <Footer />
-      <LandingPage />
     </div>
   );
 };
+
 export default App;
