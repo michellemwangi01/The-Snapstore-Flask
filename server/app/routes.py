@@ -10,7 +10,7 @@ from functools import wraps
 from marshmallow.exceptions import ValidationError
 
 
-ns = Namespace('api')
+ns = Namespace('snapstore')
 api.add_namespace(ns)
 
 
@@ -19,15 +19,21 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+        auth_header = request.headers.get('Authorization')
+
+        if auth_header and auth_header.startswith('Bearer '):
+            token = auth_header.split('Bearer ')[1]
         if not token:
             return {"message": "Token is missing"}, 401
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             current_user = User.query.filterby(public_id=data['public_id']).first()
-        except:
-            return {"message": "token is invalid"}, 401
+            if not current_user:
+                return {"message": "User not found"}, 401
+        except jwt.ExpiredSignatureError:
+            return {"message": "Token has expired"}, 401
+        except jwt.InvalidTokenError:
+            return {"message": "Invalid token"}, 401
 
         return f(current_user, *args, **kwargs)
 
@@ -39,6 +45,11 @@ def token_required(f):
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
+UPLOAD_FOLDER = "uploads"  # Folder where the uploaded images will be stored
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @ns.route('/')
 class Home(Resource):
@@ -71,27 +82,50 @@ class GetFile(Resource):
 
 api.add_resource(GetFile, '/uploads/<filename>')
 
-
+@ns.route('/uploadimage')
 class UploadImage(Resource):
-    def post(self, current_user):
-        form = UploadForm()
+    def post(self):
+        # form = UploadForm()
         # if form.validate_on_submit():
-        if form:
-            filename = photos.save(form.photo.data)  # Save the image to the uploads folder
-            file_url = url_for('get_file', filename=filename)
-            return make_response(jsonify(file_url), 200)
-        else:
-            return make_response({"error": f"{form.errors}"}, 200)
+        try:
+            file = request.files("image")
+            if file:
+                # filename = photos.save(form.photo.data)  # Save the image to the uploads folder
+                # file_url = url_for('get_file', filename=filename)
+                filename = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+                file.save(filename)
+                return make_response(jsonify(filename), 200)
+            else:
+                return {"message": "No file uploaded"}, 400
+        except Exception as e:
+            return {"message": str(e)}, 500
 
-api.add_resource(UploadImage, '/uploadimage')
+# api.add_resource(UploadImage, '/uploadimage')
 
 
+@ns.route('/signup')
 class Signup(Resource):
     @ns.expect(user_input_schema)
     @ns.marshal_with(user_schema)
     def post(self):
         data = request.get_json()
         print(data)
+        if data['password'] == data['repeatPassword']:
+            if data:
+                new_user = User(
+                    username=data['username'],
+                    email=data['email'],
+                    public_id=str(uuid.uuid4())
+                )
+                new_user.set_password(data['password'])
+                print(f'new user:{new_user}')
+                new_user.set_password(data['password'])
+                db.session.add(new_user)
+                db.session.commit()
+                print(new_user)
+                return new_user, 201
+            else:
+                return {'message': "No data found"}, 404
         if data:
             new_user = User(
                 username=data['username'],
@@ -114,17 +148,17 @@ class Signup(Resource):
         else:
             return {'message': "No data found"}, 404
 
-api.add_resource(Signup, '/signup')
 
-
+@ns.route('/login')
 class Login(Resource):
     def post(self):
-        auth = request.authorization
+        data = request.get_json()
+        print(data)
 
-        if not auth or not auth.username or not auth.password:
+        if not data or not data['username'] or not data['password']:
             return make_response('Could Not Verify', 401)
 
-        user = User.query.filter_by(username=auth.username).first()
+        user = User.query.filter_by(username=data['username']).first()
         print(user)
         if not user:
             return make_response('Could Not Verify', 401)
@@ -134,7 +168,7 @@ class Login(Resource):
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }
 
-        if check_password_hash(user.password_hash, auth.password):
+        if check_password_hash(user.password_hash, data['password']):
             token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
 
             # Check if the user has a cart, if not, create one
@@ -146,18 +180,18 @@ class Login(Resource):
 
             return jsonify({'token': token})
 
-api.add_resource(Login, '/login')
+# api.add_resource(Login, '/login')
 
 
 @ns.route('/users')
 class Users(Resource):
-    # @token_required
+    @token_required
     @ns.marshal_list_with(users_schema)
     def get(self):
         # if not current_user.admin:
         #     return jsonify({"message": "Sorry. You are not authorized to perform this function"})
         users = User.query.all()
-        return users, 200
+        return users,200
 
 
 @ns.route('/users/<int:id>')
