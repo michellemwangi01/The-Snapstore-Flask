@@ -7,7 +7,7 @@ import Home from './components/Home';
 import PhotoPurchase from './components/PhotoPurchase';
 import Transactions from './components/Transactions';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Footer from './components/Footer';
 function App() {
   return (
     <Router>
@@ -35,6 +35,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Footer />
     </Router>
   );
 }
