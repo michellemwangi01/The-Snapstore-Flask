@@ -8,6 +8,7 @@ import PhotoPurchase from './components/PhotoPurchase';
 import Transactions from './components/Transactions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Footer />
     </Router>
   );
 }

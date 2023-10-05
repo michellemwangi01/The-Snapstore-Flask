@@ -1,0 +1,9 @@
+HTTP request sent, awaiting response... 200 OK
+Length: 512 [binary/octet-stream]
+Saving to: ‘/home/gilley/.cache/trunk/cli/tmp.jhBpm3zznA/launcher/latest’
+
+     0K                                                       100% 54.9M=0s
+
+utime(/home/gilley/.cache/trunk/cli/tmp.jhBpm3zznA/launcher/latest): No such file or directory
+2023-10-05 01:27:49 (54.9 MB/s) - ‘/home/gilley/.cache/trunk/cli/tmp.jhBpm3zznA/launcher/latest’ saved [512/512]
+
