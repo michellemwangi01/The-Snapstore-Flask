@@ -5,7 +5,7 @@ from .app_factory import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from .api_models import *
 from .models import Category, Transaction, User, Photo
-import jwt, base64
+import jwt, base64, os
 from functools import wraps
 
 ns = Namespace('snapstore')
@@ -43,6 +43,11 @@ def token_required(f):
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
+UPLOAD_FOLDER = "uploads"  # Folder where the uploaded images will be stored
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @ns.route('/')
 class Home(Resource):
@@ -75,19 +80,25 @@ class GetFile(Resource):
 
 api.add_resource(GetFile, '/uploads/<filename>')
 
-
+@ns.route('/uploadimage')
 class UploadImage(Resource):
-    def post(self, current_user):
-        form = UploadForm()
+    def post(self):
+        # form = UploadForm()
         # if form.validate_on_submit():
-        if form:
-            filename = photos.save(form.photo.data)  # Save the image to the uploads folder
-            file_url = url_for('get_file', filename=filename)
-            return make_response(jsonify(file_url), 200)
-        else:
-            return make_response({"error": f"{form.errors}"}, 200)
+        try:
+            file = request.files("image")
+            if file:
+                # filename = photos.save(form.photo.data)  # Save the image to the uploads folder
+                # file_url = url_for('get_file', filename=filename)
+                filename = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+                file.save(filename)
+                return make_response(jsonify(filename), 200)
+            else:
+                return {"message": "No file uploaded"}, 400
+        except Exception as e:
+            return {"message": str(e)}, 500
 
-api.add_resource(UploadImage, '/uploadimage')
+# api.add_resource(UploadImage, '/uploadimage')
 
 
 @ns.route('/signup')

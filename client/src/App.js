@@ -17,6 +17,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./components/Logout";
+import Gallery from "./components/Gallery";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -60,6 +61,10 @@ function App() {
                     <Route
                       path="/profile"
                       element={jwToken ? <Profile /> : <Navigate to="/login" />}
+                    />
+                    <Route
+                      path="/gallery"
+                      element={jwToken ? <Gallery /> : <Navigate to="/login" />}
                     />
                     <Route
                       path="/logout"

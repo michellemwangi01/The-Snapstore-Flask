@@ -145,6 +145,16 @@ function Navbar({ jwToken }) {
               >
                 Categories
               </NavLink>
+              <NavLink
+                to="/gallery"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                Gallery
+              </NavLink>
             </li>
           </ul>
           <form class="d-flex">
