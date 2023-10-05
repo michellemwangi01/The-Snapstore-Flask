@@ -6,9 +6,9 @@ import Categories from './components/Categories';
 import Home from './components/Home';
 import PhotoPurchase from './components/PhotoPurchase';
 import Transactions from './components/Transactions';
-import Profile from './components/Profile'; // Import the Profile component
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -31,13 +31,13 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/photopurchase" element={<PhotoPurchase />} />
                   <Route path="/transaction" element={<Transactions />} />
-                  <Route path="/profile" element={<Profile />} /> {/* Profile route */}
                 </Routes>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </Router>
   );
 }
