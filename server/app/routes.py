@@ -221,15 +221,94 @@ class CategoryByID(Resource):
         category = Category.query.filter_by(id=id).first()
         return category,200
 
-# @ns.route('/transactions')
-# class Transactions(Resource):
-#     @ns.marshal_list_with(transaction_schema)
-#     def get(self):
-#         transactions = Transaction.query.all()
-#         print(transactions[1].photo)
-#         return transactions,200
+@ns.route('/transactions')
+class Transactions(Resource):
+    @ns.marshal_list_with(transaction_schema)
+    def get(self):
+        transactions = Transaction.query.all()
+        print(transactions[1].photo)
+        return transactions,200
 
+@ns.route('/transaction/<int:id>')
+class Transactionbyid(Resource):
+      @ns.marshal_list_with(transaction_schema)
+      def get(self ,id):
+        transaction = Transaction.query.filter_by(id=id).first()
+        print(transaction)
+        return transaction,200
+      
+@ns.route('/transactions/<int:id>')
+class Deletetransaction(Resource):   
+      def delete(self ,id):
+         transaction = Transaction.query.filter_by(id=id).first()
+         db.session.delete(transaction)
+         db.session.commit()
 
+         response_dict = {
+             "message" : "record succefully deleted"
+         }
+         return response_dict, 200
+      
+@ns.route('/transaction')
+class PostTransaction(Resource):
+    def post(self):
+        try:
+            # Validate and get data from the request
+            
+
+            # if not (photo_id and user_id and quantity and amount):
+            #     return {"message": "Missing required fields"}, 400
+
+            # Create a new transaction
+            new_transaction = Transaction(
+                photo_id = request.form.get ('photo_id') ,
+                user_id = request.form.get ('user_id') ,
+                quantity= request.form.get ('quantity' ) , 
+                amount=request.form.get ('amount')  ,
+            )
+
+            # Add the new transaction to the database
+            db.session.add(new_transaction)
+            db.session.commit()
+
+            # Return a response as a JSON object
+            return {
+                "message": "Transaction created successfully",
+                "transaction": {
+                    "photo_id": new_transaction.photo_id,
+                    "user_id": new_transaction.user_id,
+                    "quantity": new_transaction.quantity,
+                    "amount": new_transaction.amount,
+    
+                }
+            }, 201
+        except Exception as e:
+            db.session.rollback()
+            return{
+                "message": "Failed to create transaction",
+                "error": str(e)
+            }, 500   
+            
+@ns.route('/transaction/<int:id>')
+class UpdateTransaction(Resource):
+     
+     def patch(self, id):
+
+        record = Transaction.query.filter_by(id=id).first()
+        for attr in request.form:
+            setattr(record, attr, request.form[attr])
+
+        db.session.add(record)
+        db.session.commit()
+        mydict = {
+            "photo_id" :record.photo_id ,
+            "user_id" : record.user_id ,
+            "quantity" : record.quantity,
+            "amount"  : record.amount
+        }
+        
+        return mydict,200
+  
 @ns.route('/photos')
 class Photos(Resource):
     @ns.marshal_list_with(photo_schema)

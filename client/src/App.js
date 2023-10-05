@@ -19,7 +19,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./components/Logout";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
-
+import "./App.css";
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState(null);

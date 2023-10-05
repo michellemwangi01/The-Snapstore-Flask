@@ -39,68 +39,26 @@ iframe#webpack-dev-server-client-overlay {
     transform: rotate(360deg);
   }
 }
-
-/* ********************************************** */
-.gradient-custom-3 {
-  /* fallback for old browsers */
-  background: #84fab0;
-
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(
-    to right,
-    rgba(132, 250, 176, 0.5),
-    rgba(143, 211, 244, 0.5)
-  );
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(
-    to right,
-    rgba(132, 250, 176, 0.5),
-    rgba(143, 211, 244, 0.5)
-  );
-}
-.gradient-custom-4 {
-  /* fallback for old browsers */
-  background: #84fab0;
-
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(
-    to right,
-    rgba(132, 250, 176, 1),
-    rgba(143, 211, 244, 1)
-  );
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(
-    to right,
-    rgba(132, 250, 176, 1),
-    rgba(143, 211, 244, 1)
-  );
-}
-
-/* ************************************************* */
-.navbar_buttons {
-  margin: 1rem;
-}
-.btnLogin {
-  margin: 1rem;
-}
-.container-fluid {
+.tablediv {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
-.nav-item a.active {
-  background-color: purple;
+#transaction th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
   color: white;
-  padding: 10px;
 }
-
-.nav-item a {
-  color: black;
-  padding: 10px;
-  opacity: 0.9;
-  width: 6rem;
-  margin: 5px;
+#transaction {
+  margin-top: 50px;
+}
+#transaction tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+#transaction td,
+#transaction th {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
