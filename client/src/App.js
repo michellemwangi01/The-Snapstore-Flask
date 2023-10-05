@@ -6,8 +6,10 @@ import Categories from './components/Categories';
 import Home from './components/Home';
 import PhotoPurchase from './components/PhotoPurchase';
 import Transactions from './components/Transactions';
+import LandingPage from './components/LandingPage'; // Import the LandingPage component
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/Footer';
+
 function App() {
   return (
     <Router>
@@ -26,7 +28,8 @@ function App() {
             <div className="col-md-10">
               <div className="container">
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<LandingPage />} /> {/* Use LandingPage as the landing page */}
+                  <Route path="/home" element={<Home />} />
                   <Route path="/photopurchase" element={<PhotoPurchase />} />
                   <Route path="/transaction" element={<Transactions />} />
                 </Routes>
