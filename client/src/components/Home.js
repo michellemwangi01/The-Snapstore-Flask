@@ -60,6 +60,7 @@ function Home() {
             {currentPhotos.map((photo) => (
               <div key={photo.id} className="col-md-4 mb-4">
                 <div className="card card-sm"> {/* Add card-sm class to make cards smaller */}
+<<<<<<< Updated upstream
                   <img src={photo.image} alt={photo.name} className="card-img-top" />
 =======
         <div className="col-md-9">
@@ -77,6 +78,9 @@ function Home() {
                     className="card-img-top"
                   />
 >>>>>>> origin/ft-development
+=======
+                  <img src={`uploads/${photo.filename}`} alt={photo.name} className="card-img-top" />
+>>>>>>> Stashed changes
                   <div className="card-body">
                     <h5 className="card-title">{photo.name}</h5>
                     <p className="card-text">{photo.description}</p>
