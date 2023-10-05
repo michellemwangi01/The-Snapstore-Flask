@@ -18,17 +18,9 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./components/Logout";
 import Gallery from "./components/Gallery";
+import Footer from "./components/Footer";
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Categories from './components/Categories';
-import Home from './components/Home';
-import PhotoPurchase from './components/PhotoPurchase';
-import Transactions from './components/Transactions';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Footer from './components/Footer';
-function App() {
+const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,28 +44,55 @@ function App() {
                       path="/login"
                       element={<Login setJWToken={setJWToken} />}
                     />
-
-                    <Route path="/" element={<Home />} jwToken={jwToken} />
+                    <Route
+                      path="/"
+                      element={
+                        jwToken ? (
+                          <Home jwToken={jwToken} />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
+                      }
+                    />
                     <Route
                       path="/photopurchase"
                       element={
-                        jwToken ? <Transactions /> : <Navigate to="/login" />
+                        jwToken ? (
+                          <Transactions jwToken={jwToken} />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
                       }
                     />
                     <Route
                       path="/transaction"
                       element={
-                        jwToken ? <PhotoPurchase /> : <Navigate to="/login" />
+                        jwToken ? (
+                          <PhotoPurchase jwToken={jwToken} />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
                       }
-                      jwToken={jwToken}
                     />
                     <Route
                       path="/profile"
-                      element={jwToken ? <Profile /> : <Navigate to="/login" />}
+                      element={
+                        jwToken ? (
+                          <Profile jwToken={jwToken} />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
+                      }
                     />
                     <Route
                       path="/gallery"
-                      element={jwToken ? <Gallery /> : <Navigate to="/login" />}
+                      element={
+                        jwToken ? (
+                          <Gallery jwToken={jwToken} />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
+                      }
                     />
                     <Route
                       path="/logout"
@@ -81,47 +100,30 @@ function App() {
                         jwToken ? (
                           <Logout setJWToken={setJWToken} />
                         ) : (
-                          <Navigate to="/logout" />
+                          <Navigate to="/login" />
                         )
                       }
                     />
                     <Route
                       path="/categories"
                       element={
-                        jwToken ? <Categories /> : <Navigate to="/logout" />
+                        jwToken ? (
+                          <Categories jwToken={jwToken} />
+                        ) : (
+                          <Navigate to="/login" />
+                        )
                       }
                     />
                     <Route path="/signup" element={<Signup />} />
                   </Routes>
                 </div>
-    <Router>
-      <div>
-        {/* Navbar */}
-        <Navbar />
-
-        <div className="container-fluid">
-          <div className="row">
-            {/* Categories Container */}
-            <div className="col-md-2 bg-light">
-              <Categories />
-            </div>
-
-            {/* Main Content */}
-            <div className="col-md-10">
-              <div className="container">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/photopurchase" element={<PhotoPurchase />} />
-                  <Route path="/transaction" element={<Transactions />} />
-                </Routes>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Router>
       <Footer />
-    </Router>
+    </div>
   );
-}
-
+};
 export default App;
