@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import Cart from './Cart'; // Import the Cart component
+
 
 function Home() {
   const [photos, setPhotos] = useState([]);
