@@ -19,6 +19,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./components/Logout";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
+import LandingPage from "./components/LandingPage";
 import "./App.css";
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -39,7 +40,9 @@ const App = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="container">
-                  <Routes>
+                  {/* <Routes>
+                    
+
                     <Route
                       path="/login"
                       element={<Login setJWToken={setJWToken} />}
@@ -115,6 +118,35 @@ const App = () => {
                       }
                     />
                     <Route path="/signup" element={<Signup />} />
+                  </Routes> */}
+                  <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<Home jwToken={jwToken} />} />
+                    <Route
+                      path="/photopurchase"
+                      element={<Transactions jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/transaction"
+                      element={<PhotoPurchase jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/profile"
+                      element={<Profile jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/gallery"
+                      element={<Gallery jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/logout"
+                      element={<Logout setJWToken={setJWToken} />}
+                    />
+                    <Route
+                      path="/categories"
+                      element={<Categories jwToken={jwToken} />}
+                    />
+                    <Route path="/signup" element={<Signup />} />
                   </Routes>
                 </div>
               </div>
@@ -123,6 +155,7 @@ const App = () => {
         </div>
       </Router>
       <Footer />
+      <LandingPage />
     </div>
   );
 };
