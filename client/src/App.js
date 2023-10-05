@@ -1,4 +1,5 @@
 // App.js
+
 import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -17,6 +18,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./components/Logout";
+import Footer from './components/Footer';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -42,6 +44,7 @@ function App() {
                       path="/login"
                       element={<Login setJWToken={setJWToken} />}
                     />
+
 
                     <Route path="/" element={<Home />} jwToken={jwToken} />
                     <Route
@@ -80,12 +83,16 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                   </Routes>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
-      </Router>
-    </div>
+
+      </div>
+      <Footer />
+    </Router>
+
   );
 }
 
