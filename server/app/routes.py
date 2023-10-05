@@ -30,6 +30,7 @@ def token_required(f):
             current_user = User.query.filterby(public_id=data['public_id']).first()
             if not current_user:
                 return {"message": "User not found"}, 401
+            print(current_user)
         except jwt.ExpiredSignatureError:
             return {"message": "Token has expired"}, 401
         except jwt.InvalidTokenError:
@@ -109,7 +110,7 @@ class Signup(Resource):
     @ns.marshal_with(user_schema)
     def post(self):
         data = request.get_json()
-        print(data)
+        print("signup",data)
         if data['password'] == data['repeatPassword']:
             if data:
                 new_user = User(
@@ -122,27 +123,28 @@ class Signup(Resource):
                 new_user.set_password(data['password'])
                 db.session.add(new_user)
                 db.session.commit()
-                print(new_user)
+                print("new added user",new_user)
                 return new_user, 201
             else:
                 return {'message': "No data found"}, 404
-        if data:
-            new_user = User(
-                username=data['username'],
-                email=data['email'],
-                public_id=str(uuid.uuid4())
-            )
-            new_user.set_password(data['password'])
-            print(f'new user:{new_user}')
-            new_user.set_password(data['password'])
-            db.session.add(new_user)
-            db.session.commit()
-            print(new_user)
+        # if data:
+        #     new_user = User(
+        #         username=data['username'],
+        #         email=data['email'],
+        #         public_id=str(uuid.uuid4())
+        #     )
+        #     new_user.set_password(data['password'])
+        #     print(f'new user:{new_user}')
+        #     new_user.set_password(data['password'])
+        #     db.session.add(new_user)
+        #     db.session.commit()
+        #     print(new_user)
 
             # Create a cart for the newly registered user
-            # new_cart = Cart(user=new_user)
-            # db.session.add(new_cart)
-            # db.session.commit()
+            new_cart = Cart(user=new_user)
+            print("user cart", new_cart)
+            db.session.add(new_cart)
+            db.session.commit()
 
             return new_user, 201
         else:
@@ -172,11 +174,12 @@ class Login(Resource):
             token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
 
             # Check if the user has a cart, if not, create one
-            # user_cart = Cart.query.filter_by(user_id=user.id).first()
-            # if not user_cart:
-            #     new_cart = Cart(user=user)
-            #     db.session.add(new_cart)
-            #     db.session.commit()
+            user_cart = Cart.query.filter_by(user_id=user.id).first()
+            if not user_cart:
+                new_cart = Cart(user=user)
+                db.session.add(new_cart)
+                db.session.commit()
+                print(f"cart for user {user.id}", new_cart)
 
             return jsonify({'token': token})
 
@@ -231,24 +234,24 @@ class Transactions(Resource):
 
 @ns.route('/transaction/<int:id>')
 class Transactionbyid(Resource):
-      @ns.marshal_list_with(transaction_schema)
-      def get(self ,id):
+    @ns.marshal_list_with(transaction_schema)
+    def get(self ,id):
         transaction = Transaction.query.filter_by(id=id).first()
         print(transaction)
         return transaction,200
-      
+    
 @ns.route('/transactions/<int:id>')
 class Deletetransaction(Resource):   
-      def delete(self ,id):
-         transaction = Transaction.query.filter_by(id=id).first()
-         db.session.delete(transaction)
-         db.session.commit()
+    def delete(self ,id):
+        transaction = Transaction.query.filter_by(id=id).first()
+        db.session.delete(transaction)
+        db.session.commit()
 
-         response_dict = {
-             "message" : "record succefully deleted"
-         }
-         return response_dict, 200
-      
+        response_dict = {
+            "message" : "record succefully deleted"
+        }
+        return response_dict, 200
+
 @ns.route('/transaction')
 class PostTransaction(Resource):
     def post(self):
@@ -291,8 +294,7 @@ class PostTransaction(Resource):
             
 @ns.route('/transaction/<int:id>')
 class UpdateTransaction(Resource):
-     
-     def patch(self, id):
+    def patch(self, id):
 
         record = Transaction.query.filter_by(id=id).first()
         for attr in request.form:
@@ -308,13 +310,27 @@ class UpdateTransaction(Resource):
         }
         
         return mydict,200
-  
+
 @ns.route('/photos')
 class Photos(Resource):
     @ns.marshal_list_with(photo_schema)
     def get(self):
-        photos = Photo.query.all()
-        return photos,200
+        try:
+            photos = Photo.query.all()
+
+            if not photos:
+
+                return "No photos found", 404
+
+            print("ourphotos",photos)
+
+            return photos, 200
+        except Exception as e:
+            app.logger.error(str(e))
+            return "Error loading photos", 500
+
+
+
 
 @ns.route('/cart/add/<int:photo_id>')
 class AddToCart(Resource):
