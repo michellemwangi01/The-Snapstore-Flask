@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
+import ProtectedRoute from "./ProtectedRoute";
 
-function Transactions() {
+function Transactions({ jwToken, setJWToken }) {
   return (
     <div>
       <h1>Transactions Page</h1>

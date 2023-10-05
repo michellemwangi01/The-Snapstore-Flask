@@ -22,10 +22,10 @@ const Signup = (addUser) => {
     const { username, email, password, repeatPassword } = formData;
 
     const userData = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-      repeatPassword: formData.repeatPassword,
+      username: username,
+      email: email,
+      password: password,
+      repeatPassword: repeatPassword,
     };
 
     fetch("http://127.0.0.1:5555/snapstore/signup", {

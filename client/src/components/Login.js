@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ jwToken, setJWToken }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const [jwToken, setJWToken] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +21,13 @@ const Login = () => {
     const { username, password } = formData;
 
     const userData = {
-      username: formData.username,
-      password: formData.password,
+      username: username,
+      password: password,
     };
 
     fetch("http://127.0.0.1:5555/snapstore/login", {
       method: "POST",
       headers: {
-        // Authorization: "Bearer {jwToken}",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
@@ -42,6 +41,7 @@ const Login = () => {
       .then((data) => {
         console.log("Response data:", data);
         setJWToken(data.token);
+        console.log(jwToken);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -55,28 +55,29 @@ const Login = () => {
       password: "",
       repeatPassword: "",
     });
+    navigate("/home");
   };
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5555/snapstore/users", {
-      headers: {
-        Authorization: "Bearer {jwToken}",
-      },
-    })
-      .then((response) => {
-        if (response.message) {
-          console.log(response.message);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Response data:", data);
-        setJWToken(data.token);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, [jwToken]);
+  //   useEffect(() => {
+  //     fetch("http://127.0.0.1:5555/snapstore/users", {
+  //       headers: {
+  //         Authorization: "Bearer {jwToken}",
+  //       },
+  //     })
+  //       .then((response) => {
+  //         if (response.message) {
+  //           console.log(response.message);
+  //         }
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         console.log("Response data:", data);
+  //         setJWToken(data.token);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error:", error);
+  //       });
+  //   }, [jwToken]);
 
   return (
     <div>
