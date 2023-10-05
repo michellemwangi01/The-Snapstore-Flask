@@ -41,6 +41,9 @@
   justify-content: center;
   align-items: center;
 }
+#myicon :hover{
+  cursor: pointer;
+}
 #transaction th{
   padding-top: 12px;
   padding-bottom: 12px;
@@ -48,8 +51,18 @@
   background-color: #04AA6D;
   color: white;
 }
+#delete{
+  background-color: rgb(163, 2, 2);
+    border-radius: 5px;
+    border-color: rgb(116, 64, 64);
+    width: 70%;
+    color: white;
+
+}
 #transaction{
   margin-top: 50px;
+  width: 100%;
+  margin-left: 50px
 }
 #transaction tr:nth-child(even){
   background-color: #f2f2f2;
@@ -57,4 +70,37 @@
 #transaction td, #transaction th {
   border: 1px solid #ddd;
   padding: 8px;
+}
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+.confirm-dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 1001; 
+}
+#cancelbutton{
+  background-color: white;
+ 
+  border-color: white ;
+  margin-right: 10px;
+}
+#confirmbutton{
+  background-color:#04AA6D;
+  border-color: #04AA6D;
+  margin-left: 10px;
+}
+#deletebuttons{
+  display: flex;
 }
