@@ -421,6 +421,6 @@ class Checkout(Resource):
 
         # # Remove the item from the cart
         # db.session.delete(cart_item)
-        # db.session.commit()
+        # db.session.commit()   
 
         # return {"message": app.logger.error("Transaction completed successfully")}, 201
