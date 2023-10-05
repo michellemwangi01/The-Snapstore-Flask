@@ -144,15 +144,11 @@ function Home() {
                   </button>
                 </li>
               ))}
-<<<<<<< HEAD
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-=======
               <li
                 className={`page-item ${
                   currentPage === totalPages ? "disabled" : ""
                 }`}
               >
->>>>>>> origin/ft-development
                 <button
                   className="page-link"
                   onClick={() => paginate(currentPage + 1)}
