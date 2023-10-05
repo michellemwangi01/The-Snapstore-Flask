@@ -5,7 +5,7 @@ from .app_factory import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from .api_models import *
 from .models import Category, Transaction, User, Photo, Cart, CartItem
-import jwt
+import jwt, os
 from functools import wraps
 from marshmallow.exceptions import ValidationError
 
