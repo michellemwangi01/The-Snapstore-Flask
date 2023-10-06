@@ -1,6 +1,7 @@
 iframe#webpack-dev-server-client-overlay {
   display: none !important;
 }
+
 .App {
   text-align: center;
 }
@@ -39,33 +40,36 @@ iframe#webpack-dev-server-client-overlay {
     transform: rotate(360deg);
   }
 }
+
 .tablediv {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 #transaction th {
-#myicon :hover{
-  cursor: pointer;
+  cursor: pointer; /* Corrected position */
 }
-#transaction th{
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: purple;
-  color: white;
+
+#transaction th:hover {
+  background-color: purple; /* Hover effect background color */
+  color: white; /* Hover effect text color */
 }
+
 #transaction {
   margin-top: 50px;
 }
+
 #transaction tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
 #transaction td,
 #transaction th {
   border: 1px solid #ddd;
   padding: 8px;
 }
+
 .dialog-backdrop {
   position: fixed;
   top: 0;
@@ -76,26 +80,29 @@ iframe#webpack-dev-server-client-overlay {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
+
 .confirm-dialog {
   background-color: white;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
-  z-index: 1001; 
+  z-index: 1001;
 }
-#cancelbutton{
+
+#cancelbutton {
   background-color: white;
- 
-  border-color: white ;
+  border-color: white;
   margin-right: 10px;
 }
-#confirmbutton{
-  background-color:#04AA6D;
+
+#confirmbutton {
+  background-color: #04AA6D;
   border-color: #04AA6D;
   margin-left: 10px;
 }
-#deletebuttons{
+
+#deletebuttons {
   display: flex;
 }
