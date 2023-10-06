@@ -145,6 +145,11 @@ const Login = ({ jwToken, setJWToken }) => {
                         <button
                           type="submit"
                           class="btn btnLogin btn-block btn-lg gradient-custom-4 text-body"
+                          style={{
+                            borderWidth: "1px",
+                            borderColor: "purple",
+                            borderStyle: "solid",
+                          }}
                         >
                           Login
                         </button>
