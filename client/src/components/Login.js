@@ -55,6 +55,7 @@ const Login = ({ jwToken, setJWToken }) => {
         console.error("Error:", error);
       });
   };
+  console.log(jwToken);
 
   //   useEffect(() => {
   //     fetch("http://127.0.0.1:5555/snapstore/users", {
