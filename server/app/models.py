@@ -80,22 +80,7 @@ class Category(db.Model):
         return f'(id={self.id}, name={self.name})'
 
 
-# class Transaction(db.Model):
-#     __tablename__ = 'transactions'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     photo_id = db.Column(db.Integer, ForeignKey('photos.id'))
-#     quantity = db.Column(db.Integer)
-#     amount = db.Column(db.Integer)
-#     user_id = db.Column(db.Integer, ForeignKey('users.id'))
-#     created_at = db.Column(db.DateTime, server_default=db.func.now())
-#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-#     user = db.relationship('User', back_populates='transactions')
-#     photo = db.relationship('Photo', back_populates='transaction')
-
-#     def __repr__(self):
-#         return f'(id={self.id}, quantity={self.quantity} amount={self.amount})'
 class Cart(db.Model):
     __tablename__ = 'carts'
 
@@ -134,7 +119,6 @@ class Transaction(db.Model):
     cart_item_id = db.Column(db.Integer, ForeignKey('cart_items.id'))
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
     purchased_at = db.Column(db.DateTime, server_default=db.func.now())
-    photo_id = db.Column(db.Integer, db.ForeignKey('photos.id'))
     user = db.relationship('User', back_populates='transactions')
     photo = db.relationship('Photo', back_populates='transaction')
     cart_item = db.relationship('CartItem', back_populates='transaction')

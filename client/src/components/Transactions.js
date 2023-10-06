@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import ConfirmDeleteDialog from './Confirmdelet';
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import ConfirmDeleteDialog from "./Confirmdelet";
 
-function Transactions() {
+function Transactions({ jwToken }) {
   const [transactions, setTransactions] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/api/transactions")
+    console.log(jwToken);
+    fetch("http://127.0.0.1:5555/snapstore/transactions", {
+      headers: {
+        Authorization: `Bearer ${jwToken.access_token}`,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
         setTransactions(data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching transactions:", error);
       });
   }, []);
 
@@ -36,39 +41,28 @@ function Transactions() {
     try {
       // Send a DELETE request to the API to delete the resource
       await fetch(`http://127.0.0.1:5555/api/transactions/${selectedItemId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
-        // Update the local state by removing the deleted resource
-        setTransactions((prevTransactions) =>
-        prevTransactions.filter((transaction) => transaction.id !== selectedItemId)
+      // Update the local state by removing the deleted resource
+      setTransactions((prevTransactions) =>
+        prevTransactions.filter(
+          (transaction) => transaction.id !== selectedItemId
+        )
       );
 
       // Close the confirmation dialog
       setIsDialogOpen(false);
       setSelectedItemId(null);
     } catch (error) {
-      console.error('Error deleting resource:', error);
+      console.error("Error deleting resource:", error);
     }
   };
-function Transactions({ jwToken }) {
-  const [transactions, setTransaction] = useState([]);
 
-  useEffect(() => {
-    console.log(jwToken);
-    fetch("http://127.0.0.1:5555/snapstore/transactions", {
-      headers: {
-        Authorization: `Bearer ${jwToken.access_token}`,
-      },
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-        setTransaction(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching transactions:", error);
-      });
-  }, []);
+  function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function (word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    });
+  }
 
   return (
     <div className="tablediv">
@@ -85,33 +79,32 @@ function Transactions({ jwToken }) {
             <th></th>
           </tr>
 
-  {transactions.map((item, index) => (
-    <tr key={item.id}>
-      <td>{index + 1}</td>
-      <td>{item.quantity}</td>
-      <td> KSH {item.amount}</td>
-      <td>{item.photo.name}</td>
-      <td>{item.user.username}</td>
-      <td>
-        <FontAwesomeIcon
-          color='red'
-          id='myicon'
-          icon={faTrash}
-          onClick={() => handleDelete(item.id)}
-        />
-      </td>
-    </tr>
-  ))}
-</tbody>
-</table>
+          {transactions.map((item, index) => (
+            <tr key={item.id}>
+              <td>{index + 1}</td>
+              <td>{item.quantity}</td>
+              <td> KSH {item.amount}</td>
+              <td>{toTitleCase(item.photo.name)}</td>
+              <td>{toTitleCase(item.user.username)}</td>
+              <td>
+                <FontAwesomeIcon
+                  color="red"
+                  id="myicon"
+                  icon={faTrash}
+                  onClick={() => handleDelete(item.id)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-<ConfirmDeleteDialog
-isOpen={isDialogOpen}
-onCancel={handleCancel}
-onConfirm={handleConfirm}
-/>
-</div>
-);
-
+      <ConfirmDeleteDialog
+        isOpen={isDialogOpen}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      />
+    </div>
+  );
 }
 export default Transactions;

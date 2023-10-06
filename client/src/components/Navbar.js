@@ -6,7 +6,6 @@ import Login from "./Login";
 import "../styles/mystyles.css";
 
 function Navbar({ jwToken }) {
-
   const btnText = jwToken === "" ? "Login" : "Logout";
 
   return (
@@ -40,9 +39,7 @@ function Navbar({ jwToken }) {
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <NavLink
-
-                to="/home"
-
+                to="/"
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
@@ -52,55 +49,45 @@ function Navbar({ jwToken }) {
                 Home
               </NavLink>
               <NavLink
-
                 to="/gallery"
-
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
-
                 Gallery
               </NavLink>
 
               <NavLink
                 to="/history"
-
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
-
                 History
               </NavLink>
               <NavLink
                 to="/cart"
-
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
-
                 Cart
               </NavLink>
               <NavLink
                 to="/categories"
-
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
-
                 Categories
-
               </NavLink>
             </li>
           </ul>
@@ -110,7 +97,6 @@ function Navbar({ jwToken }) {
               type="search"
               placeholder="Search"
               aria-label="Search"
-
               style={{
                 padding: "5px 10px",
                 margin: "3px",
@@ -128,7 +114,6 @@ function Navbar({ jwToken }) {
                 color: "purple",
               }}
             >
-
               Search
             </button>
           </form>
@@ -140,7 +125,6 @@ function Navbar({ jwToken }) {
                   ? "active navbar_buttons btn btn-lg btn-block"
                   : "inactive navbar_buttons btn btn-lg btn-block"
               }
-
               style={{
                 padding: "3px 10px",
                 margin: "1rem",
@@ -148,7 +132,6 @@ function Navbar({ jwToken }) {
                 color: "white",
                 background: "purple",
               }}
-
             >
               {btnText}
             </NavLink>
@@ -157,7 +140,6 @@ function Navbar({ jwToken }) {
               to="/login"
               className={({ isActive }) =>
                 isActive
-
                   ? "login_out active navbar_buttons btn btn-lg btn-block"
                   : "login_out inactive navbar_buttons btn btn-lg btn-block"
               }
@@ -168,7 +150,6 @@ function Navbar({ jwToken }) {
                 color: "white",
                 background: "purple",
               }}
-
             >
               {btnText}
             </NavLink>

@@ -11,7 +11,7 @@ import Categories from "./components/Categories";
 import Home from "./components/Home";
 import PhotoPurchase from "./components/PhotoPurchase";
 import Transactions from "./components/Transactions";
-import Profile from "./components/Profile"; 
+import Profile from "./components/Profile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -40,11 +40,9 @@ const App = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
-
                 <div className="container_main">
                   <Routes>
-                   <Route path="/" element={<LandingPage />}
-                    <Route path="/home" element={<Home jwToken={jwToken} />} />
+                    <Route path="/" element={<LandingPage />} />
                     <Route
                       path="/history"
                       element={
@@ -118,7 +116,6 @@ const App = () => {
                     />
                     <Route path="/redirect" element={<Redirect />} />
                   </Routes>
-                  
                 </div>
               </div>
             </div>

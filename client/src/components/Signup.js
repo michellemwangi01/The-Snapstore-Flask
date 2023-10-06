@@ -169,8 +169,8 @@ const Signup = (addUser) => {
                       </div>
 
                       <div class="d-flex justify-content-center">
-                        <button
-                          type="submit"
+                        <Link
+                          to="/login"
                           class="btn "
                           style={{
                             border: "1px purple solid",
@@ -181,7 +181,7 @@ const Signup = (addUser) => {
                           }}
                         >
                           Register
-                        </button>
+                        </Link>
                       </div>
 
                       <p

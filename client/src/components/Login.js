@@ -143,8 +143,8 @@ const Login = ({ jwToken, setJWToken }) => {
                       </div>
 
                       <div class="d-flex justify-content-center">
-                        <button
-                          type="submit"
+                        <Link
+                          to="/"
                           class="btn "
                           style={{
                             border: "1px purple solid",
@@ -155,7 +155,7 @@ const Login = ({ jwToken, setJWToken }) => {
                           }}
                         >
                           Login
-                        </button>
+                        </Link>
                       </div>
 
                       <p

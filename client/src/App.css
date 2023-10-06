@@ -44,11 +44,10 @@ iframe#webpack-dev-server-client-overlay {
   justify-content: center;
   align-items: center;
 }
-#transaction th {
-#myicon :hover{
+#transaction th #myicon :hover {
   cursor: pointer;
 }
-#transaction th{
+#transaction th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -76,26 +75,26 @@ iframe#webpack-dev-server-client-overlay {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 .confirm-dialog {
   background-color: white;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
-  z-index: 1001; 
+  z-index: 1001;
 }
-#cancelbutton{
+#cancelbutton {
   background-color: white;
- 
-  border-color: white ;
+
+  border-color: white;
   margin-right: 10px;
 }
-#confirmbutton{
-  background-color:#04AA6D;
-  border-color: #04AA6D;
+#confirmbutton {
+  background-color: #04aa6d;
+  border-color: #04aa6d;
   margin-left: 10px;
 }
-#deletebuttons{
+#deletebuttons {
   display: flex;
 }
