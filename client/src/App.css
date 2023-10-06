@@ -1,3 +1,6 @@
+iframe#webpack-dev-server-client-overlay {
+  display: none !important;
+}
 .App {
   text-align: center;
 }
@@ -35,4 +38,37 @@
   to {
     transform: rotate(360deg);
   }
+}
+.tablediv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#transaction th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: purple;
+  color: white;
+}
+#transaction {
+  margin: 50px 0;
+  padding: 1rem;
+  border-radius: 10px;
+}
+#transaction tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+#transaction td,
+#transaction th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.container_main {
+  margin: auto;
+  width: 100%;
+}
+.historyRow {
+  padding: 10px;
+  margin: 1px;
 }
