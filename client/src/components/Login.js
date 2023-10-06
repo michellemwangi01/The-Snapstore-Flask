@@ -144,12 +144,13 @@ const Login = ({ jwToken, setJWToken }) => {
                       <div class="d-flex justify-content-center">
                         <button
                           type="submit"
-                          class="btn btnLogin btn-block btn-lg gradient-custom-4 text-body"
+                          class="btn "
                           style={{
-                            borderWidth: "1px",
-                            borderColor: "purple",
-                            borderStyle: "solid",
-                            color: "purple",
+                            border: "1px purple solid",
+                            color: "white",
+                            backgroundColor: "purple",
+                            padding: "10px 20px ",
+                            fontSize: "1.2rem",
                           }}
                         >
                           Login

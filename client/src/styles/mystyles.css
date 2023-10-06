@@ -108,6 +108,7 @@ img {
 }
 button .btnLogin {
   background-color: purple;
+  color: white;
 }
 .p-5 {
   background-color: transparent;
@@ -119,5 +120,5 @@ button .btnLogin {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 15rem;
+  margin-top: 12rem;
 }
