@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
   Navigate,
+  Link,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Categories from "./components/Categories";
@@ -20,6 +21,7 @@ import Logout from "./components/Logout";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 import "./App.css";
+import Redirect from "./components/Redirect";
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState("");
@@ -38,23 +40,27 @@ const App = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="container_main">
-                  {/* <Routes>
+                  <Routes>
                     <Route path="/home" element={<Home jwToken={jwToken} />} />
                     <Route
-                      path="/transaction"
+                      path="/history"
                       element={
                         jwToken === "" ? (
-                          <Navigate to="/login" />
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
                           <Transactions jwToken={jwToken} />
                         )
                       }
                     />
                     <Route
-                      path="/photopurchase"
+                      path="/cart"
                       element={
                         jwToken === "" ? (
-                          <Navigate to="/login" />
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
                           <PhotoPurchase jwToken={jwToken} />
                         )
@@ -64,19 +70,34 @@ const App = () => {
                       path="/profile"
                       element={
                         jwToken === "" ? (
-                          <Navigate to="/login" />
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
                           <Profile jwToken={jwToken} />
                         )
                       }
                     />
+
                     <Route
                       path="/gallery"
                       element={
                         jwToken === "" ? (
-                          <Navigate to="/login" />
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
                           <Gallery jwToken={jwToken} />
+                        )
+                      }
+                    />
+                    <Route
+                      path="/categories"
+                      element={
+                        jwToken === "" ? (
+                          <Navigate to="/redirect" />
+                        ) : (
+                          <Categories to="/categories" />
                         )
                       }
                     />
@@ -84,16 +105,7 @@ const App = () => {
                       path="/logout"
                       element={<Logout setJWToken={setJWToken} />}
                     />
-                    <Route
-                      path="/categories"
-                      element={
-                        jwToken ? (
-                          <Categories jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
+
                     <Route path="/signup" element={<Signup />} />
                     <Route
                       path="/login"
@@ -101,8 +113,9 @@ const App = () => {
                         <Login jwToken={jwToken} setJWToken={setJWToken} />
                       }
                     />
-                  </Routes> */}
-                  <Routes>
+                    <Route path="/redirect" element={<Redirect />} />
+                  </Routes>
+                  {/* <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Home jwToken={jwToken} />} />
                     <Route
@@ -130,7 +143,7 @@ const App = () => {
                       element={<Categories jwToken={jwToken} />}
                     />
                     <Route path="/signup" element={<Signup />} />
-                  </Routes>
+                  </Routes> */}
                 </div>
               </div>
             </div>

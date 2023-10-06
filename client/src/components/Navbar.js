@@ -48,7 +48,28 @@ function Navbar({ jwToken }) {
                 Home
               </NavLink>
               <NavLink
-                to="/photopurchase"
+                to="/gallery"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                Gallery
+              </NavLink>
+
+              <NavLink
+                to="/history"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                History
+              </NavLink>
+              <NavLink
+                to="/cart"
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
@@ -56,16 +77,6 @@ function Navbar({ jwToken }) {
                 }
               >
                 Cart
-              </NavLink>
-              <NavLink
-                to="/transaction"
-                className={({ isActive }) =>
-                  isActive
-                    ? "active navbar_buttons btn btn-lg btn-block"
-                    : "inactive navbar_buttons btn btn-lg btn-block"
-                }
-              >
-                Purchases
               </NavLink>
               <NavLink
                 to="/categories"
@@ -76,16 +87,6 @@ function Navbar({ jwToken }) {
                 }
               >
                 Categories
-              </NavLink>
-              <NavLink
-                to="/gallery"
-                className={({ isActive }) =>
-                  isActive
-                    ? "active navbar_buttons btn btn-lg btn-block"
-                    : "inactive navbar_buttons btn btn-lg btn-block"
-                }
-              >
-                Gallery
               </NavLink>
             </li>
           </ul>

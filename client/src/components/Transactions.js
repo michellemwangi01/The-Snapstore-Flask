@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../styles/mystyles.css";
 
 function Transactions({ jwToken }) {
   const [transactions, setTransaction] = useState([]);
@@ -25,21 +26,25 @@ function Transactions({ jwToken }) {
       <table id="transaction">
         <tbody>
           <tr>
-            <th>Id</th>
+            <th>#</th>
+            <th>Purchased By</th>
+            <th>Name of Item</th>
             <th>Quantity</th>
             <th>Amount</th>
-            <th>Photoid</th>
-            <th>Userid</th>
+            <th>Date of purchase</th>
             <th></th>
           </tr>
 
           {transactions.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.quantity}</td>
-              <td>{item.amount}</td>
-              <td>{item.purchased_at}</td>
-              <td>{item.user.username}</td>
+            <tr className="" key={item.id}>
+              <td className="historyRow">{item.id}</td>
+
+              <td className="historyRow">{item.user.username}</td>
+              <td className="historyRow">{item.photo.name}</td>
+
+              <td className="historyRow">{item.quantity}</td>
+              <td className="historyRow">{item.amount}</td>
+              <td className="historyRow">{item.purchased_at}</td>
 
               <td>
                 <button>Delete</button>

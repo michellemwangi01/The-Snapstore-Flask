@@ -77,8 +77,12 @@ img {
   font-weight: bold;
 }
 .card-body {
-  height: 14rem;
-  background-color: rgb(233, 228, 222);
+  height: 0;
+  background-color: transparent;
+}
+.card-body .p-5 {
+  height: 0;
+  background-color: transparent;
 }
 
 .card-img-top {
@@ -101,4 +105,19 @@ img {
 
 .theCart .card {
   width: 100%;
+}
+button .btnLogin {
+  background-color: purple;
+}
+.p-5 {
+  background-color: transparent;
+}
+.vh-100 {
+  height: 80vh;
+}
+.loginBackgroundContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15rem;
 }

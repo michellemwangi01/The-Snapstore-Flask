@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import "../styles/mystyles.css";
 
 const Login = ({ jwToken, setJWToken }) => {
   const navigate = useNavigate();
@@ -83,15 +84,32 @@ const Login = ({ jwToken, setJWToken }) => {
         style={{
           backgroundImage:
             "url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')",
+          position: "top",
         }}
       >
         <div class="mask d-flex align-items-center h-100 gradient-custom-3">
           <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="loginBackgroundContainer">
               <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                <div class="card" style={{ borderRadius: "15px" }}>
+                <div
+                  class="card"
+                  style={{
+                    borderRadius: "15px",
+                    background: "transparent",
+                    border: "0",
+                  }}
+                >
                   <div class="card-body p-5">
-                    <h2 class="text-uppercase text-center mb-5">Login</h2>
+                    <h2
+                      class="text-uppercase text-center mb-5"
+                      style={{
+                        color: "purple",
+                        fontFamily: "cursive",
+                        fontSize: "3rem",
+                      }}
+                    >
+                      LOGIN
+                    </h2>
 
                     <form onSubmit={handleSubmit}>
                       <div className="form-outline mb-4">
@@ -102,6 +120,7 @@ const Login = ({ jwToken, setJWToken }) => {
                           name="username"
                           value={formData.username}
                           onChange={handleInputChange}
+                          style={{ borderColor: "purple" }}
                         />
                         <label className="form-label" htmlFor="form3Example1cg">
                           Username
@@ -115,6 +134,7 @@ const Login = ({ jwToken, setJWToken }) => {
                           name="password"
                           value={formData.password}
                           onChange={handleInputChange}
+                          style={{ borderColor: "purple" }}
                         />
                         <label className="form-label" htmlFor="form3Example4cg">
                           Password
@@ -124,7 +144,7 @@ const Login = ({ jwToken, setJWToken }) => {
                       <div class="d-flex justify-content-center">
                         <button
                           type="submit"
-                          class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                          class="btn btnLogin btn-block btn-lg gradient-custom-4 text-body"
                         >
                           Login
                         </button>
