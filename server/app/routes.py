@@ -8,13 +8,20 @@ from .models import Category, Transaction, User, Photo, Cart, CartItem
 import jwt, os
 from functools import wraps
 from marshmallow.exceptions import ValidationError
+from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
 ns = Namespace('snapstore')
 api.add_namespace(ns)
+jwt = JWTManager(app)
+
 
 
 # -------------------------------------- A U T H E N T I C A T I O N ------------------------------
+from jwt.exceptions import ExpiredSignatureError, DecodeError
+import jwt  # Make sure you have the jwt library imported
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -23,17 +30,23 @@ def token_required(f):
 
         if auth_header and auth_header.startswith('Bearer '):
             token = auth_header.split('Bearer ')[1]
+            print(token)
         if not token:
             return {"message": "Token is missing"}, 401
+        
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = User.query.filterby(public_id=data['public_id']).first()
+            print(app.config['SECRET_KEY'])
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])  # Specify the algorithm here
+            # token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
+
+            current_user = User.query.filter_by(public_id=data['public_id']).first()
             if not current_user:
                 return {"message": "User not found"}, 401
-        except jwt.ExpiredSignatureError:
+            print(current_user)
+        except ExpiredSignatureError:
             return {"message": "Token has expired"}, 401
-        except jwt.InvalidTokenError:
-            return {"message": "Invalid token"}, 401
+        except DecodeError as e:
+            return {"message": f"{e}"}, 401
 
         return f(current_user, *args, **kwargs)
 
@@ -109,7 +122,7 @@ class Signup(Resource):
     @ns.marshal_with(user_schema)
     def post(self):
         data = request.get_json()
-        print(data)
+        print("signup",data)
         if data['password'] == data['repeatPassword']:
             if data:
                 new_user = User(
@@ -122,46 +135,48 @@ class Signup(Resource):
                 new_user.set_password(data['password'])
                 db.session.add(new_user)
                 db.session.commit()
-                print(new_user)
+                print("new added user",new_user)
                 return new_user, 201
             else:
                 return {'message': "No data found"}, 404
-        if data:
-            new_user = User(
-                username=data['username'],
-                email=data['email'],
-                public_id=str(uuid.uuid4())
-            )
-            new_user.set_password(data['password'])
-            print(f'new user:{new_user}')
-            new_user.set_password(data['password'])
-            db.session.add(new_user)
-            db.session.commit()
-            print(new_user)
+        # if data:
+        #     new_user = User(
+        #         username=data['username'],
+        #         email=data['email'],
+        #         public_id=str(uuid.uuid4())
+        #     )
+        #     new_user.set_password(data['password'])
+        #     print(f'new user:{new_user}')
+        #     new_user.set_password(data['password'])
+        #     db.session.add(new_user)
+        #     db.session.commit()
+        #     print(new_user)
 
             # Create a cart for the newly registered user
             # new_cart = Cart(user=new_user)
+            # print("user cart", new_cart)
             # db.session.add(new_cart)
             # db.session.commit()
 
-            return new_user, 201
+            # return new_user, 201
         else:
             return {'message': "No data found"}, 404
 
 
 @ns.route('/login')
 class Login(Resource):
+    @ns.expect(user_login_schema)
     def post(self):
         data = request.get_json()
         print(data)
 
         if not data or not data['username'] or not data['password']:
-            return make_response('Could Not Verify', 401)
+            return jsonify({'message': 'Could Not Verify'}), 401
 
         user = User.query.filter_by(username=data['username']).first()
         print(user)
         if not user:
-            return make_response('Could Not Verify', 401)
+            return jsonify({'message': 'Could Not Verify'}), 401
 
         token_payload = {
             'public_id': user.public_id,
@@ -169,16 +184,22 @@ class Login(Resource):
         }
 
         if check_password_hash(user.password_hash, data['password']):
-            token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
+            access_token = create_access_token(identity=user.id)
+            return jsonify({'access_token': access_token})
+        else:
+            return jsonify({'message': 'Invalid credentials'}), 401
 
-            # Check if the user has a cart, if not, create one
+            # token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
+
+            # # Check if the user has a cart, if not, create one
             # user_cart = Cart.query.filter_by(user_id=user.id).first()
             # if not user_cart:
             #     new_cart = Cart(user=user)
             #     db.session.add(new_cart)
             #     db.session.commit()
+            #     print(f"cart for user {user.id}", new_cart)
 
-            return jsonify({'token': token})
+            # return jsonify({'token': token})
 
 # api.add_resource(Login, '/login')
 
@@ -223,32 +244,38 @@ class CategoryByID(Resource):
 
 @ns.route('/transactions')
 class Transactions(Resource):
+    # @token_required
+    # @jwt_required()
     @ns.marshal_list_with(transaction_schema)
     def get(self):
-        transactions = Transaction.query.all()
-        print(transactions[1].photo)
+        # current_user = get_jwt_identity()
+        # print(f'current_user: {current_user}')
+        transactions = Transaction.query.filter_by(user_id=7).all()
+        # print(transactions[1].photo)
+        for t in transactions:
+            print(t)
         return transactions,200
 
 @ns.route('/transaction/<int:id>')
 class Transactionbyid(Resource):
-      @ns.marshal_list_with(transaction_schema)
-      def get(self ,id):
+    @ns.marshal_list_with(transaction_schema)
+    def get(self ,id):
         transaction = Transaction.query.filter_by(id=id).first()
-        print(transaction)
+        # print(transaction)
         return transaction,200
-      
+    
 @ns.route('/transactions/<int:id>')
 class Deletetransaction(Resource):   
-      def delete(self ,id):
-         transaction = Transaction.query.filter_by(id=id).first()
-         db.session.delete(transaction)
-         db.session.commit()
+    def delete(self ,id):
+        transaction = Transaction.query.filter_by(id=id).first()
+        db.session.delete(transaction)
+        db.session.commit()
 
-         response_dict = {
-             "message" : "record succefully deleted"
-         }
-         return response_dict, 200
-      
+        response_dict = {
+            "message" : "record succefully deleted"
+        }
+        return response_dict, 200
+
 @ns.route('/transaction')
 class PostTransaction(Resource):
     def post(self):
@@ -291,8 +318,7 @@ class PostTransaction(Resource):
             
 @ns.route('/transaction/<int:id>')
 class UpdateTransaction(Resource):
-     
-     def patch(self, id):
+    def patch(self, id):
 
         record = Transaction.query.filter_by(id=id).first()
         for attr in request.form:
@@ -308,13 +334,27 @@ class UpdateTransaction(Resource):
         }
         
         return mydict,200
-  
+
 @ns.route('/photos')
 class Photos(Resource):
     @ns.marshal_list_with(photo_schema)
     def get(self):
-        photos = Photo.query.all()
-        return photos,200
+        try:
+            photos = Photo.query.all()
+
+            if not photos:
+
+                return "No photos found", 404
+
+            # print("ourphotos",photos)
+
+            return photos, 200
+        except Exception as e:
+            app.logger.error(str(e))
+            return "Error loading photos", 500
+
+
+
 
 @ns.route('/cart/add/<int:photo_id>')
 class AddToCart(Resource):
@@ -323,7 +363,7 @@ class AddToCart(Resource):
     def post(self, photo_id, current_user):
         data = request.get_json()
         current = User.query.filter_by(id = current_user.id).first()
-        print(current)
+        # print(current)
 
         # Check if the user has a cart, if not, create one
         try:

@@ -1,8 +1,13 @@
 // Navbar.js
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import ProfileIconImage from "../assets/profile-icon.svg";
+import PhotosIconImage from "../assets/photos-svgrepo-com.svg";
+import Login from "./Login";
+import "../styles/mystyles.css";
 
-const Navbar = ({ jwToken }) => {
+function Navbar({ jwToken }) {
+  const btnText = jwToken === "" ? "Login" : "Logout";
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -20,40 +25,129 @@ const Navbar = ({ jwToken }) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
-            {jwToken ? (
-              <>
-                <li className="nav-item">
-                  <Link to="/profile" className="nav-link">
-                    Profile
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/logout" className="nav-link">
-                    Logout
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link to="/login" className="nav-link">
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/signup" className="nav-link">
-                    Signup
-                  </Link>
-                </li>
-              </>
-            )}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <NavLink
+                to="/home"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/gallery"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                Gallery
+              </NavLink>
+
+              <NavLink
+                to="/history"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                History
+              </NavLink>
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                Cart
+              </NavLink>
+              <NavLink
+                to="/categories"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+                Categories
+              </NavLink>
+            </li>
           </ul>
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              style={{
+                padding: "5px 10px",
+                margin: "3px",
+                border: "1px purple solid",
+                color: "purple",
+              }}
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style={{
+                padding: "5px 10px",
+                margin: "3px",
+                border: "1px purple solid",
+                color: "purple",
+              }}
+            >
+              Search
+            </button>
+          </form>
+          {jwToken ? (
+            <NavLink
+              to="/logout"
+              className={({ isActive }) =>
+                isActive
+                  ? "active navbar_buttons btn btn-lg btn-block"
+                  : "inactive navbar_buttons btn btn-lg btn-block"
+              }
+              style={{
+                padding: "3px 10px",
+                margin: "1rem",
+                border: "1px purple solid",
+                color: "white",
+                background: "purple",
+              }}
+            >
+              {btnText}
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive
+                  ? "login_out active navbar_buttons btn btn-lg btn-block"
+                  : "login_out inactive navbar_buttons btn btn-lg btn-block"
+              }
+              style={{
+                padding: "3px 10px",
+                margin: "1rem",
+                border: "1px purple solid",
+                color: "white",
+                background: "purple",
+              }}
+            >
+              {btnText}
+            </NavLink>
+          )}
         </div>
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

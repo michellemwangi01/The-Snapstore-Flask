@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
   Navigate,
+  Link,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Categories from "./components/Categories";
@@ -21,11 +22,11 @@ import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import "./App.css";
+import Redirect from "./components/Redirect";
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [jwToken, setJWToken] = useState(null);
+  const [jwToken, setJWToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(`jwtoken ${jwToken}`);
 
   useEffect(() => {
     setCurrentUser("Mamamia");
@@ -39,87 +40,83 @@ const App = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
-                <div className="container">
-                  {/* <Routes>
-                    
-
+                <div className="container_main">
+                  <Routes>
+                    <Route path="/home" element={<Home jwToken={jwToken} />} />
                     <Route
-                      path="/login"
-                      element={<Login setJWToken={setJWToken} />}
-                    />
-                    <Route
-                      path="/"
+                      path="/history"
                       element={
-                        jwToken ? (
-                          <Home jwToken={jwToken} />
+                        jwToken === "" ? (
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/photopurchase"
-                      element={
-                        jwToken ? (
                           <Transactions jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
                         )
                       }
                     />
                     <Route
-                      path="/transaction"
+                      path="/cart"
                       element={
-                        jwToken ? (
-                          <PhotoPurchase jwToken={jwToken} />
+                        jwToken === "" ? (
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
-                          <Navigate to="/login" />
+                          <PhotoPurchase jwToken={jwToken} />
                         )
                       }
                     />
                     <Route
                       path="/profile"
                       element={
-                        jwToken ? (
-                          <Profile jwToken={jwToken} />
+                        jwToken === "" ? (
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
                         ) : (
-                          <Navigate to="/login" />
+                          <Profile jwToken={jwToken} />
                         )
                       }
                     />
+
                     <Route
                       path="/gallery"
                       element={
-                        jwToken ? (
+                        jwToken === "" ? (
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
+                        ) : (
                           <Gallery jwToken={jwToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
-                    />
-                    <Route
-                      path="/logout"
-                      element={
-                        jwToken ? (
-                          <Logout setJWToken={setJWToken} />
-                        ) : (
-                          <Navigate to="/login" />
                         )
                       }
                     />
                     <Route
                       path="/categories"
                       element={
-                        jwToken ? (
-                          <Categories jwToken={jwToken} />
+                        jwToken === "" ? (
+                          <Navigate to="/redirect" />
                         ) : (
-                          <Navigate to="/login" />
+                          <Categories to="/categories" />
                         )
                       }
                     />
+                    <Route
+                      path="/logout"
+                      element={<Logout setJWToken={setJWToken} />}
+                    />
+
                     <Route path="/signup" element={<Signup />} />
-                  </Routes> */}
-                  <Routes>
+                    <Route
+                      path="/login"
+                      element={
+                        <Login jwToken={jwToken} setJWToken={setJWToken} />
+                      }
+                    />
+                    <Route path="/redirect" element={<Redirect />} />
+                  </Routes>
+                  {/* <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Home jwToken={jwToken} />} />
                     <Route
