@@ -1,4 +1,3 @@
-// Navbar.js
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import ProfileIconImage from "../assets/profile-icon.svg";
@@ -7,29 +6,43 @@ import Login from "./Login";
 import "../styles/mystyles.css";
 
 function Navbar({ jwToken }) {
+
   const btnText = jwToken === "" ? "Login" : "Logout";
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container">
-        <Link to="/" className="navbar-brand">
-          Your App Name
-        </Link>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={PhotosIconImage}
+              alt="Photos Icon"
+              style={{ width: "32px", height: "32px", marginRight: "5px" }}
+            />
+            <span style={{ fontWeight: "bold", fontSize: "24px", margin: "0" }}>
+              <span style={{ color: "Black" }}>Snap</span>
+              <span style={{ color: "Purple" }}>Store</span>
+            </span>
+          </div>
+        </a>
         <button
-          className="navbar-toggler"
+          class="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <NavLink
+
                 to="/home"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
@@ -39,45 +52,55 @@ function Navbar({ jwToken }) {
                 Home
               </NavLink>
               <NavLink
+
                 to="/gallery"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
+
                 Gallery
               </NavLink>
 
               <NavLink
                 to="/history"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
+
                 History
               </NavLink>
               <NavLink
                 to="/cart"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
+
                 Cart
               </NavLink>
               <NavLink
                 to="/categories"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
+
                 Categories
+
               </NavLink>
             </li>
           </ul>
@@ -87,6 +110,7 @@ function Navbar({ jwToken }) {
               type="search"
               placeholder="Search"
               aria-label="Search"
+
               style={{
                 padding: "5px 10px",
                 margin: "3px",
@@ -104,6 +128,7 @@ function Navbar({ jwToken }) {
                 color: "purple",
               }}
             >
+
               Search
             </button>
           </form>
@@ -115,6 +140,7 @@ function Navbar({ jwToken }) {
                   ? "active navbar_buttons btn btn-lg btn-block"
                   : "inactive navbar_buttons btn btn-lg btn-block"
               }
+
               style={{
                 padding: "3px 10px",
                 margin: "1rem",
@@ -122,6 +148,7 @@ function Navbar({ jwToken }) {
                 color: "white",
                 background: "purple",
               }}
+
             >
               {btnText}
             </NavLink>
@@ -130,6 +157,7 @@ function Navbar({ jwToken }) {
               to="/login"
               className={({ isActive }) =>
                 isActive
+
                   ? "login_out active navbar_buttons btn btn-lg btn-block"
                   : "login_out inactive navbar_buttons btn btn-lg btn-block"
               }
@@ -140,6 +168,7 @@ function Navbar({ jwToken }) {
                 color: "white",
                 background: "purple",
               }}
+
             >
               {btnText}
             </NavLink>
