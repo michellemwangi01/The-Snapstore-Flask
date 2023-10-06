@@ -149,13 +149,17 @@ const Login = ({ jwToken, setJWToken }) => {
                             borderWidth: "1px",
                             borderColor: "purple",
                             borderStyle: "solid",
+                            color: "purple",
                           }}
                         >
                           Login
                         </button>
                       </div>
 
-                      <p class="text-center text-muted mt-5 mb-0">
+                      <p
+                        class="text-center text-muted mt-5 mb-0"
+                        style={{ fontSize: "20px" }}
+                      >
                         Don't have an account?{" "}
                         <Link to="/signup">Sign up here</Link>
                       </p>

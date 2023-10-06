@@ -96,8 +96,23 @@ function Navbar({ jwToken }) {
               type="search"
               placeholder="Search"
               aria-label="Search"
+              style={{
+                padding: "5px 10px",
+                margin: "3px",
+                border: "1px purple solid",
+                color: "purple",
+              }}
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style={{
+                padding: "5px 10px",
+                margin: "3px",
+                border: "1px purple solid",
+                color: "purple",
+              }}
+            >
               Search
             </button>
           </form>
@@ -120,6 +135,13 @@ function Navbar({ jwToken }) {
                   ? "login_out active navbar_buttons btn btn-lg btn-block"
                   : "login_out inactive navbar_buttons btn btn-lg btn-block"
               }
+              style={{
+                padding: "3px 10px",
+                margin: "1rem",
+                border: "1px purple solid",
+                color: "white",
+                background: "purple",
+              }}
             >
               {btnText}
             </NavLink>
