@@ -11,7 +11,7 @@ function Home() {
 
   useEffect(() => {
     // Replace 'YOUR_API_URL' with the actual URL of your API endpoint for photos
-    fetch('http://127.0.0.1:5555//photos')
+    fetch('http://127.0.0.1:5555/snapstore/photos')
       .then((response) => response.json())
       .then((data) => {
         setPhotos(data);
