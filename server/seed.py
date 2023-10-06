@@ -1,5 +1,5 @@
 from app.app_factory import app, uuid
-from app.models import User, Category, Photo, Transaction, db
+from app.models import User, Category, Photo, Transaction, Cart, CartItem, db
 from faker import Faker
 import random, locale
 from random import randint, choice as rc
@@ -10,6 +10,8 @@ with app.app_context():
     Category.query.delete()
     Photo.query.delete()
     Transaction.query.delete()
+    Cart.query.delete()
+    CartItem.query.delete()
 
     users_images = [
         "img1",
@@ -79,19 +81,50 @@ with app.app_context():
         db.session.commit()
         photo_ids.append(new_photo.id)
 
-    print("🦸‍♀️ Seeding transactions...")
-    for i in range(30):
-        qty = random.randint(1,10)
-        new_transaction = Transaction(
-            photo_id=rc(photo_ids),
-            quantity=qty,
-            amount= qty*random.randint(1,8),
-            user_id=rc(user_ids),
-        )
-        db.session.add(new_transaction)
+    print("🦸‍♀️ Seeding carts, cart items, and transactions...")
+
+    for _ in range(5):
+        # Create a cart for a random user
+        user_id = random.choice(user_ids)
+        cart = Cart(user_id=user_id)
+        db.session.add(cart)
         db.session.commit()
 
+        for _ in range(5):
+            while True:
+                # Create a cart item for a random photo in the cart
+                photo_id = random.choice(photo_ids)
+                cart_item = CartItem(
+                    cart=cart,
+                    photo_id=photo_id,
+                    quantity=random.randint(1, 5),
+                )
+                db.session.add(cart_item)
+                db.session.commit()
+
+                # Check if the user is trying to buy their own photo
+                if Photo.query.get(photo_id).user_id == user_id:
+                    print(f"User {user_id} tried to buy their own photo. Retrying...")
+                    db.session.rollback()
+                else:
+                    break
+
+            # Create a transaction for the cart item
+            transaction = Transaction(
+                cart_item=cart_item,
+                user_id=user_id,
+            )
+            db.session.add(transaction)
+            db.session.commit()
+            print(f"Transaction successful: User {user_id} bought a photo.")
+
+    print("🦸‍♀️ Seeding complete!")
 
     print("🦸‍♀️ Seeding complete!")
 
 
+# transaction_user_schema = api.model('transaction',{
+#     "id": fields.Integer,
+#     "quantity": fields.Integer,
+#     "amount": fields.Integer,
+# })

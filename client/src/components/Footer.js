@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+// import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -24,22 +24,22 @@ const Footer = () => {
             <ul className="list-unstyled list-inline">
               <li className="list-inline-item">
                 <a href="https://www.facebook.com" className="text-light" title="Facebook">
-                  <FaFacebook className="social-icon" />
+                  {/* <FaFacebook className="social-icon" /> */}
                 </a>
               </li>
               <li className="list-inline-item">
                 <a href="https://www.twitter.com" className="text-light" title="Twitter">
-                  <FaTwitter className="social-icon" />
+                  {/* <FaTwitter className="social-icon" /> */}
                 </a>
               </li>
               <li className="list-inline-item">
                 <a href="https://www.instagram.com" className="text-light" title="Instagram">
-                  <FaInstagram className="social-icon" />
+                  {/* <FaInstagram className="social-icon" /> */}
                 </a>
               </li>
               <li className="list-inline-item">
                 <a href="https://www.linkedin.com" className="text-light" title="LinkedIn">
-                  <FaLinkedin className="social-icon" />
+                  {/* <FaLinkedin className="social-icon" /> */}
                 </a>
               </li>
             </ul>
@@ -70,7 +70,7 @@ const Footer = () => {
               <div className="form-group">
                 <input type="email" className="form-control" placeholder="Enter your email" />
               </div>
-              <button type="submit" className="btn btn-primary"><FaEnvelope /> Subscribe</button>
+              {/* <button type="submit" className="btn btn-primary"><FaEnvelope /> Subscribe</button> */}
             </form>
           </div>
         </div>

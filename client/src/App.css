@@ -1,3 +1,6 @@
+iframe#webpack-dev-server-client-overlay {
+  display: none !important;
+}
 .App {
   text-align: center;
 }
@@ -36,38 +39,28 @@
     transform: rotate(360deg);
   }
 }
-.tablediv{
+.tablediv {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-#myicon :hover{
-  cursor: pointer;
 }
 #transaction th{
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
-}
-#delete{
-  background-color: rgb(163, 2, 2);
-    border-radius: 5px;
-    border-color: rgb(116, 64, 64);
-    width: 70%;
-    color: white;
-
 }
 #transaction{
   margin-top: 50px;
   width: 100%;
   margin-left: 50px
 }
-#transaction tr:nth-child(even){
+#transaction tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-#transaction td, #transaction th {
+#transaction td,
+#transaction th {
   border: 1px solid #ddd;
   padding: 8px;
 }
@@ -103,4 +96,7 @@
 }
 #deletebuttons{
   display: flex;
+}
+#myicon :hover{
+ cursor: pointer;
 }

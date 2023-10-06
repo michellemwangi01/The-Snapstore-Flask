@@ -3,13 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import ConfirmDeleteDialog from './Confirmdelet';
 
-function Transactions() {
+function Transactions({searchterm}) {
+  console.log(searchterm);
   const [transactions, setTransactions] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
+
+ 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/api/transactions")
+    fetch("http://127.0.0.1:5555/snapstore/transactions")
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
@@ -19,6 +22,10 @@ function Transactions() {
         console.error('Error fetching data:', error);
       });
   }, []);
+  
+//   const filteredTransactions = transactions.filter((item) =>
+//   typeof item.user_id=== 'string' && item.user_id.toLowerCase().includes(searchterm.toLowerCase())
+// );
 
   const handleDelete = async (transactionId) => {
     // Open the confirmation dialog and store the selected item ID
@@ -35,7 +42,7 @@ function Transactions() {
   const handleConfirm = async () => {
     try {
       // Send a DELETE request to the API to delete the resource
-      await fetch(`http://127.0.0.1:5555/api/transactions/${selectedItemId}`, {
+      await fetch(`http://127.0.0.1:5555/snapstore/transactions/${selectedItemId}`, {
         method: 'DELETE',
       });
         // Update the local state by removing the deleted resource
@@ -50,6 +57,10 @@ function Transactions() {
       console.error('Error deleting resource:', error);
     }
   };
+  
+
+// console.log("filteredTransactions ",filteredTransactions);
+
   return (
     <div className="tablediv">
       <table id="transaction">
@@ -58,8 +69,8 @@ function Transactions() {
             <th>Id</th>
             <th>Quantity</th>
             <th>Amount</th>
-            <th>PhotoName</th>
-            <th>Username</th>
+            <th>Purchasetime</th>
+            <th>User_id</th>
             <th></th>
           </tr>
 
@@ -68,8 +79,8 @@ function Transactions() {
       <td>{index + 1}</td>
       <td>{item.quantity}</td>
       <td> KSH {item.amount}</td>
-      <td>{item.photo.name}</td>
-      <td>{item.user.username}</td>
+      <td>{item.purchased_at}</td>
+      <td>{item.user_id}</td>
       <td>
         <FontAwesomeIcon
           color='red'

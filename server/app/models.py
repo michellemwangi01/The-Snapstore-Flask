@@ -26,6 +26,7 @@ class User(db.Model):
 
     photos = db.relationship('Photo', back_populates='user', cascade='all, delete-orphan')
     transactions = db.relationship('Transaction', back_populates='user')
+    cart = db.relationship('Cart', back_populates='user')
 
     __table_args__ = (UniqueConstraint('username', name='user_unique_constraint'),)
 
@@ -56,7 +57,8 @@ class Photo(db.Model):
 
     category = db.relationship('Category', back_populates='photos')
     user = db.relationship('User', back_populates='photos')
-    transactions = db.relationship('Transaction', back_populates='photo')
+    transaction = db.relationship('Transaction', back_populates='photo')
+    cart_items = db.relationship('CartItem', back_populates='photo', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'(id={self.id}, name={self.name} description={self.description} price={self.price} price={self.image} user_id={self.user_id} category_id={self.category_id} )'
@@ -78,19 +80,71 @@ class Category(db.Model):
         return f'(id={self.id}, name={self.name})'
 
 
-class Transaction(db.Model):
-    __tablename__ = 'transactions'
+# class Transaction(db.Model):
+#     __tablename__ = 'transactions'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     photo_id = db.Column(db.Integer, ForeignKey('photos.id'))
+#     quantity = db.Column(db.Integer)
+#     amount = db.Column(db.Integer)
+#     user_id = db.Column(db.Integer, ForeignKey('users.id'))
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+#     user = db.relationship('User', back_populates='transactions')
+#     photo = db.relationship('Photo', back_populates='transaction')
+
+#     def __repr__(self):
+#         return f'(id={self.id}, quantity={self.quantity} amount={self.amount})'
+class Cart(db.Model):
+    __tablename__ = 'carts'
 
     id = db.Column(db.Integer, primary_key=True)
-    photo_id = db.Column(db.Integer, ForeignKey('photos.id'))
-    quantity = db.Column(db.Integer)
-    amount = db.Column(db.Integer)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    user = db.relationship('User', back_populates='transactions')
-    photo = db.relationship('Photo', back_populates='transactions')
+    user = db.relationship('User', back_populates='cart')
+    items = db.relationship('CartItem', back_populates='cart', cascade='all, delete-orphan')
 
     def __repr__(self):
-        return f'(id={self.id}, quantity={self.quantity} amount={self.amount})'
+        return f'(id={self.id}, user_id={self.user_id})'
+
+class CartItem(db.Model):
+    __tablename__ = 'cart_items'
+
+    id = db.Column(db.Integer, primary_key=True)
+    cart_id = db.Column(db.Integer, ForeignKey('carts.id'))
+    photo_id = db.Column(db.Integer, ForeignKey('photos.id'))
+    quantity = db.Column(db.Integer)
+    added_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    cart = db.relationship('Cart', back_populates='items')
+    photo = db.relationship('Photo', back_populates='cart_items')
+    transaction = db.relationship('Transaction', back_populates='cart_item')
+
+    def __repr__(self):
+        return f'(id={self.id}, cart_id={self.cart_id}, photo_id={self.photo_id}, quantity={self.quantity})'
+
+class Transaction(db.Model):
+    __tablename__ = 'transactions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    photo_id = db.Column(db.Integer, ForeignKey('photos.id')) 
+    cart_item_id = db.Column(db.Integer, ForeignKey('cart_items.id'))
+    user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    purchased_at = db.Column(db.DateTime, server_default=db.func.now())
+    photo_id = db.Column(db.Integer, db.ForeignKey('photos.id'))
+    user = db.relationship('User', back_populates='transactions')
+    photo = db.relationship('Photo', back_populates='transaction', foreign_keys=[photo_id])
+    cart_item = db.relationship('CartItem', back_populates='transaction')
+
+    @validates('cart_item')
+    def validate_cart_item(self, key, cart_item):
+        if cart_item.photo.user_id == self.user_id:
+            raise ValueError("You cannot buy your own photo.")
+        return cart_item
+
+
+    def __repr__(self):
+        return f'(id={self.id}, cart_item_id={self.cart_item_id}, user_id={self.user_id}, purchased_at={self.purchased_at})'

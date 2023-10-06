@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Cart from './Cart'; // Import the Cart component
+import React, { useState, useEffect } from "react";
+import Cart from "./Cart"; // Import the Cart component
 
 function Home() {
   const [photos, setPhotos] = useState([]);
@@ -11,14 +11,14 @@ function Home() {
 
   useEffect(() => {
     // Replace 'YOUR_API_URL' with the actual URL of your API endpoint for photos
-    fetch('http://127.0.0.1:5555/api/photos')
+    fetch("http://127.0.0.1:5555/api/photos")
       .then((response) => response.json())
       .then((data) => {
         setPhotos(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching photos:', error);
+        console.error("Error fetching photos:", error);
         setLoading(false);
       });
   }, []);
@@ -54,11 +54,12 @@ function Home() {
     <div className="container">
       <h1 className="my-4">Welcome to SnapStore</h1>
       <div className="row">
-        <div className="col-md-9"> {/* Content column */}
+        <div className="col-md-9">
+          {/* Content column */}
           <div className="row">
             {currentPhotos.map((photo) => (
               <div key={photo.id} className="col-md-4 mb-4">
-                <div className="card card-sm"> {/* Add card-sm class to make cards smaller */}
+                <div className="card card-sm">
                   <img src={photo.image} alt={photo.name} className="card-img-top" />
                   <div className="card-body">
                     <h5 className="card-title">{photo.name}</h5>
@@ -93,7 +94,11 @@ function Home() {
                   </button>
                 </li>
               ))}
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <li
+                className={`page-item ${
+                  currentPage === totalPages ? "disabled" : ""
+                }`}
+              >
                 <button
                   className="page-link"
                   onClick={() => paginate(currentPage + 1)}
@@ -105,7 +110,8 @@ function Home() {
             </ul>
           </nav>
         </div>
-        <div className="col-md-3"> {/* Cart column */}
+        <div className="col-md-3">
+          {/* Cart column */}
           <Cart cartItems={cart} />
         </div>
       </div>
