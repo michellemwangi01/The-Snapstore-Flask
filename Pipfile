@@ -17,8 +17,10 @@ flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 pyjwt = "*"
 flask = "==2.3.3"
+flask-cors = "*"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.8.10"
