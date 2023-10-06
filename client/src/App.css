@@ -48,11 +48,13 @@ iframe#webpack-dev-server-client-overlay {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04aa6d;
+  background-color: purple;
   color: white;
 }
 #transaction {
-  margin-top: 50px;
+  margin: 50px 0;
+  padding: 1rem;
+  border-radius: 10px;
 }
 #transaction tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -61,4 +63,12 @@ iframe#webpack-dev-server-client-overlay {
 #transaction th {
   border: 1px solid #ddd;
   padding: 8px;
+}
+.container_main {
+  margin: auto;
+  width: 100%;
+}
+.historyRow {
+  padding: 10px;
+  margin: 1px;
 }

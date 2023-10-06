@@ -6,7 +6,9 @@ import Login from "./Login";
 import "../styles/mystyles.css";
 
 function Navbar({ jwToken }) {
-  const btnText = jwToken ? "Logout" : "Login";
+
+  const btnText = jwToken === "" ? "Login" : "Logout";
+
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
@@ -38,7 +40,9 @@ function Navbar({ jwToken }) {
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <NavLink
-                to="/"
+
+                to="/home"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
@@ -48,44 +52,55 @@ function Navbar({ jwToken }) {
                 Home
               </NavLink>
               <NavLink
-                to="/photopurchase"
+
+                to="/gallery"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
+
+                Gallery
+              </NavLink>
+
+              <NavLink
+                to="/history"
+
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+
+                History
+              </NavLink>
+              <NavLink
+                to="/cart"
+
+                className={({ isActive }) =>
+                  isActive
+                    ? "active navbar_buttons btn btn-lg btn-block"
+                    : "inactive navbar_buttons btn btn-lg btn-block"
+                }
+              >
+
                 Cart
               </NavLink>
               <NavLink
-                to="/transaction"
-                className={({ isActive }) =>
-                  isActive
-                    ? "active navbar_buttons btn btn-lg btn-block"
-                    : "inactive navbar_buttons btn btn-lg btn-block"
-                }
-              >
-                Purchases
-              </NavLink>
-              <NavLink
                 to="/categories"
+
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
+
                 Categories
-              </NavLink>
-              <NavLink
-                to="/gallery"
-                className={({ isActive }) =>
-                  isActive
-                    ? "active navbar_buttons btn btn-lg btn-block"
-                    : "inactive navbar_buttons btn btn-lg btn-block"
-                }
-              >
-                Gallery
+
               </NavLink>
             </li>
           </ul>
@@ -95,8 +110,25 @@ function Navbar({ jwToken }) {
               type="search"
               placeholder="Search"
               aria-label="Search"
+
+              style={{
+                padding: "5px 10px",
+                margin: "3px",
+                border: "1px purple solid",
+                color: "purple",
+              }}
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style={{
+                padding: "5px 10px",
+                margin: "3px",
+                border: "1px purple solid",
+                color: "purple",
+              }}
+            >
+
               Search
             </button>
           </form>
@@ -108,6 +140,15 @@ function Navbar({ jwToken }) {
                   ? "active navbar_buttons btn btn-lg btn-block"
                   : "inactive navbar_buttons btn btn-lg btn-block"
               }
+
+              style={{
+                padding: "3px 10px",
+                margin: "1rem",
+                border: "1px purple solid",
+                color: "white",
+                background: "purple",
+              }}
+
             >
               {btnText}
             </NavLink>
@@ -116,9 +157,18 @@ function Navbar({ jwToken }) {
               to="/login"
               className={({ isActive }) =>
                 isActive
-                  ? "active navbar_buttons btn btn-lg btn-block"
-                  : "inactive navbar_buttons btn btn-lg btn-block"
+
+                  ? "login_out active navbar_buttons btn btn-lg btn-block"
+                  : "login_out inactive navbar_buttons btn btn-lg btn-block"
               }
+              style={{
+                padding: "3px 10px",
+                margin: "1rem",
+                border: "1px purple solid",
+                color: "white",
+                background: "purple",
+              }}
+
             >
               {btnText}
             </NavLink>

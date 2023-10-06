@@ -136,8 +136,10 @@ class Transaction(db.Model):
     purchased_at = db.Column(db.DateTime, server_default=db.func.now())
     photo_id = db.Column(db.Integer, db.ForeignKey('photos.id'))
     user = db.relationship('User', back_populates='transactions')
-    photo = db.relationship('Photo', back_populates='transaction', foreign_keys=[photo_id])
+    photo = db.relationship('Photo', back_populates='transaction')
     cart_item = db.relationship('CartItem', back_populates='transaction')
+
+    photo = db.relationship('Photo', back_populates='transaction')
 
     @validates('cart_item')
     def validate_cart_item(self, key, cart_item):
