@@ -66,6 +66,7 @@ function Transactions({searchterm}) {
       <table id="transaction">
         <tbody>
           <tr>
+            <th>Avatar</th>
             <th>Id</th>
             <th>Quantity</th>
             <th>Amount</th>
@@ -76,6 +77,14 @@ function Transactions({searchterm}) {
 
   {transactions.map((item, index) => (
     <tr key={item.id}>
+      <td>
+      <img src= 'https://img.freepik.com/free-photo/camera-equipment-capturing-single-macro-object-generative-ai_188544-12096.jpg?w=740&t=st=1696576966~exp=1696577566~hmac=1e61322ac56a7e5c6db888c31502041896ada66bcfeb093ad1fafca8c3fb19f2' 
+      alt={item.name} 
+      width="50" 
+      height="50" 
+      style={{ borderRadius: "50%" }}
+      />
+      </td>
       <td>{index + 1}</td>
       <td>{item.quantity}</td>
       <td> KSH {item.amount}</td>
