@@ -5,6 +5,11 @@
   padding: 10px;
 }
 
+.navbar {
+  /* background-color: white; Set the background color to white */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle box shadow */
+  margin: 4px;
+}
 .nav-item a {
   color: black;
   padding: 10px;
@@ -16,7 +21,23 @@
 .login_out {
   border: 1px purple solid;
 }
-
+.gallery_cart {
+  display: flex;
+  width: 100%;
+}
+.gallery_card_inner {
+  width: 25%;
+  height: 27rem;
+  margin: 1.5rem;
+  margin-bottom: 10rem;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+img {
+  object-fit: cover;
+  height: 70%;
+  overflow: hidden;
+  height: 20rem;
+}
 .galleryHolder {
   display: flex;
   flex-wrap: wrap;
@@ -24,25 +45,26 @@
   align-items: center;
   margin: 2rem;
 }
+
 .gallery_card_inner {
   width: 25%;
-
   height: 27rem;
   margin: 1.5rem;
   margin-bottom: 10rem;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-.gallery_card_inner img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 1px solid purple;
-  border-radius: 10px;
-  padding: 3px;
-}
+
 .gallery_card_inner img {
   object-fit: cover;
   height: 80%;
   overflow: hidden;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.gallery_card_inner img:hover {
+  border: 1px purple solid;
+  padding: 3px;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add your desired shadow properties here */
 }
 .addToCart:hover {
   border: 1px solid rgb(224, 157, 33);
@@ -55,9 +77,10 @@
   font-weight: bold;
 }
 .card-body {
-  height: 12rem;
+  height: 14rem;
   background-color: rgb(233, 228, 222);
 }
+
 .card-img-top {
   margin: 0px;
 }
@@ -68,5 +91,14 @@
   font-family: "Dancing Script", cursive;
   text-align: center;
 }
-.gallery_cart {
+
+.theCart {
+  margin-top: 4rem;
+  margin-right: 2rem;
+  width: 40rem;
+  margin-left: 0;
+}
+
+.theCart .card {
+  width: 100%;
 }
