@@ -37,58 +37,52 @@ const App = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
-                <div className="container">
-                  <Routes>
+                <div className="container_main">
+                  {/* <Routes>
                     <Route path="/home" element={<Home jwToken={jwToken} />} />
                     <Route
-                      path="/photopurchase"
+                      path="/transaction"
                       element={
-                        jwToken != "" ? (
-                          <Transactions jwToken={jwToken} />
-                        ) : (
+                        jwToken === "" ? (
                           <Navigate to="/login" />
+                        ) : (
+                          <Transactions jwToken={jwToken} />
                         )
                       }
                     />
                     <Route
-                      path="/transaction"
+                      path="/photopurchase"
                       element={
-                        jwToken ? (
-                          <PhotoPurchase jwToken={jwToken} />
-                        ) : (
+                        jwToken === "" ? (
                           <Navigate to="/login" />
+                        ) : (
+                          <PhotoPurchase jwToken={jwToken} />
                         )
                       }
                     />
                     <Route
                       path="/profile"
                       element={
-                        jwToken ? (
-                          <Profile jwToken={jwToken} />
-                        ) : (
+                        jwToken === "" ? (
                           <Navigate to="/login" />
+                        ) : (
+                          <Profile jwToken={jwToken} />
                         )
                       }
                     />
                     <Route
                       path="/gallery"
                       element={
-                        jwToken ? (
-                          <Gallery jwToken={jwToken} />
-                        ) : (
+                        jwToken === "" ? (
                           <Navigate to="/login" />
+                        ) : (
+                          <Gallery jwToken={jwToken} />
                         )
                       }
                     />
                     <Route
                       path="/logout"
-                      element={
-                        jwToken ? (
-                          <Logout setJWToken={setJWToken} />
-                        ) : (
-                          <Navigate to="/login" />
-                        )
-                      }
+                      element={<Logout setJWToken={setJWToken} />}
                     />
                     <Route
                       path="/categories"
@@ -107,6 +101,35 @@ const App = () => {
                         <Login jwToken={jwToken} setJWToken={setJWToken} />
                       }
                     />
+                  </Routes> */}
+                  <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<Home jwToken={jwToken} />} />
+                    <Route
+                      path="/photopurchase"
+                      element={<Transactions jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/transaction"
+                      element={<PhotoPurchase jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/profile"
+                      element={<Profile jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/gallery"
+                      element={<Gallery jwToken={jwToken} />}
+                    />
+                    <Route
+                      path="/logout"
+                      element={<Logout setJWToken={setJWToken} />}
+                    />
+                    <Route
+                      path="/categories"
+                      element={<Categories jwToken={jwToken} />}
+                    />
+                    <Route path="/signup" element={<Signup />} />
                   </Routes>
                 </div>
               </div>

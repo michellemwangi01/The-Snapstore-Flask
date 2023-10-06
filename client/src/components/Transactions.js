@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-function Transactions() {
+function Transactions({ jwToken }) {
   const [transactions, setTransaction] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/api/transactions')
+    console.log(jwToken);
+    fetch("http://127.0.0.1:5555/snapstore/transactions", {
+      headers: {
+        Authorization: `Bearer ${jwToken.access_token}`,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
         setTransaction(data);
       })
       .catch((error) => {
-        console.error('Error fetching transactions:', error);
+        console.error("Error fetching transactions:", error);
       });
   }, []);
 
@@ -33,8 +38,8 @@ function Transactions() {
               <td>{item.id}</td>
               <td>{item.quantity}</td>
               <td>{item.amount}</td>
-              <td>{item.photo.id}</td>
-              <td>{item.user.id}</td>
+              <td>{item.purchased_at}</td>
+              <td>{item.user.username}</td>
 
               <td>
                 <button>Delete</button>

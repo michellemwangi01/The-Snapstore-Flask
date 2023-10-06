@@ -100,9 +100,9 @@ cart_item_schema = api.model('cart_item', {
 
 transaction_schema = api.model('transaction', {
     "id": fields.Integer,
-    "photo_id": fields.Integer,
-    "user_id": fields.Integer,
-    "quantity": fields.Integer,
+    "photo": fields.Nested(photo_category_schema),
+    "user": fields.Nested(users_schema),
+    # "quantity": fields.Integer,
     "amount": fields.Float,
     "purchased_at": fields.DateTime,
 })

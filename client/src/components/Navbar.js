@@ -38,7 +38,7 @@ function Navbar({ jwToken }) {
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <NavLink
-                to="/"
+                to="/home"
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
@@ -116,8 +116,8 @@ function Navbar({ jwToken }) {
               to="/login"
               className={({ isActive }) =>
                 isActive
-                  ? "active navbar_buttons btn btn-lg btn-block"
-                  : "inactive navbar_buttons btn btn-lg btn-block"
+                  ? "login_out active navbar_buttons btn btn-lg btn-block"
+                  : "login_out inactive navbar_buttons btn btn-lg btn-block"
               }
             >
               {btnText}

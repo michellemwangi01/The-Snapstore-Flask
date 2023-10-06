@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:wght@300&family=Dancing+Script:wght@600&family=IBM+Plex+Serif:wght@300&family=Kalam:wght@300&family=Satisfy&family=Ysabeau+Infant:ital,wght@1,300&display=swap");
 .nav-item a.active {
   background-color: purple;
   color: white;
@@ -8,6 +9,64 @@
   color: black;
   padding: 10px;
   opacity: 0.9;
-  width: 6rem;
+  width: 7rem;
   margin: 5px;
+}
+
+.login_out {
+  border: 1px purple solid;
+}
+
+.galleryHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+.gallery_card_inner {
+  width: 25%;
+
+  height: 27rem;
+  margin: 1.5rem;
+  margin-bottom: 10rem;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.gallery_card_inner img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid purple;
+  border-radius: 10px;
+  padding: 3px;
+}
+.gallery_card_inner img {
+  object-fit: cover;
+  height: 80%;
+  overflow: hidden;
+}
+.addToCart:hover {
+  border: 1px solid rgb(224, 157, 33);
+  background-color: white;
+}
+.card-title {
+  padding: 3px;
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.card-body {
+  height: 12rem;
+  background-color: rgb(233, 228, 222);
+}
+.card-img-top {
+  margin: 0px;
+}
+.card-title h5 .card-text p .card-text p {
+  padding-left: 10px;
+}
+.my-4 {
+  font-family: "Dancing Script", cursive;
+  text-align: center;
+}
+.gallery_cart {
 }

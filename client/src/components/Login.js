@@ -40,7 +40,7 @@ const Login = ({ jwToken, setJWToken }) => {
       })
       .then((data) => {
         console.log("Response data:", data);
-        localStorage.setItem("jwtToken", data.token);
+        localStorage.setItem("jwtToken", data.access_token);
         setFormData({
           username: "",
           email: "",

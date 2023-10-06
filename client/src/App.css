@@ -48,7 +48,7 @@ iframe#webpack-dev-server-client-overlay {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04aa6d;
+  background-color: purple;
   color: white;
 }
 #transaction {
@@ -61,4 +61,8 @@ iframe#webpack-dev-server-client-overlay {
 #transaction th {
   border: 1px solid #ddd;
   padding: 8px;
+}
+.container_main {
+  margin: auto;
+  width: 100%;
 }
