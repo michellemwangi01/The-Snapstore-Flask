@@ -1,12 +1,11 @@
-#!/usr/bin/env python3
-from app.app_factory import app
+from api import app, routes
 
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5555)
+    app.run(port=5555, debug=True)
 
 
 # from app.routes import *

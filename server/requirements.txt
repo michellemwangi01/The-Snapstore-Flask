@@ -55,3 +55,4 @@ Werkzeug==2.2.3
 WTForms==3.0.1
 yarl==1.9.2
 zipp==3.17.0
+flask-jwt-extended==4.5.3
