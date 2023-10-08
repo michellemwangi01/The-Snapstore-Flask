@@ -39,7 +39,7 @@ const Login = ({
       password: password,
     };
 
-    fetch("https://the-snapstore-flask-api.onrender.com/login", {
+    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -173,24 +173,3 @@ const Login = ({
 };
 
 export default Login;
-
-//   useEffect(() => {
-//     fetch("http://127.0.0.1:5555/snapstore/users", {
-//       headers: {
-//         Authorization: "Bearer {jwToken}",
-//       },
-//     })
-//       .then((response) => {
-//         if (response.message) {
-//           console.log(response.message);
-//         }
-//         return response.json();
-//       })
-//       .then((data) => {
-//         console.log("Response data:", data);
-//         setJWToken(data.token);
-//       })
-//       .catch((error) => {
-//         console.error("Error:", error);
-//       });
-//   }, [jwToken]);

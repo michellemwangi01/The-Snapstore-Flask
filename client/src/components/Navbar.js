@@ -169,23 +169,3 @@ function Navbar({
 }
 
 export default Navbar;
-
-//  {jwToken ? (
-//             <NavLink
-//               to="/logout"
-//               className={({ isActive }) =>
-//                 isActive
-//                   ? "active navbar_buttons btn btn-lg btn-block"
-//                   : "inactive navbar_buttons btn btn-lg btn-block"
-//               }
-//               style={{
-//                 padding: "3px 10px",
-//                 margin: "1rem",
-//                 border: "1px purple solid",
-//                 color: "white",
-//                 background: "purple",
-//               }}
-//             >
-//               {btnText}
-//             </NavLink>
-//           ) : (
