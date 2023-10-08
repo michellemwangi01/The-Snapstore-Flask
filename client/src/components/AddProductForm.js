@@ -47,7 +47,7 @@ const AddProductForm = ({ username, jwToken }) => {
     };
 
     console.log(newProduct);
-    fetch("http://127.0.0.1:5555/snapstore/addphotos", {
+    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/addphotos", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${jwToken}`,

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import ConfirmDeleteDialog from "./Confirmdelet";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Transactions({ jwToken }) {
   const [transactions, setTransactions] = useState([]);
@@ -9,12 +11,17 @@ function Transactions({ jwToken }) {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const transaction_deleted_successfully = () =>
+    toast("Transaction Successfully deleted!");
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/snapstore/transactions", {
-      headers: {
-        Authorization: `Bearer ${jwToken}`,
-      },
-    })
+    fetch(
+      " https://the-snapstore-flask-api.onrender.com/snapstore/transactions",
+      {
+        headers: {
+          Authorization: `Bearer ${jwToken}`,
+        },
+      }
+    )
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
@@ -57,7 +64,7 @@ function Transactions({ jwToken }) {
     try {
       // Send a DELETE request to the API to delete the resource
       await fetch(
-        `https://the-snapstore-flask-api.onrender.com/transactions/${selectedItemId}`,
+        `https://the-snapstore-flask-api.onrender.com/snapstore/transactions/${selectedItemId}`,
         {
           method: "DELETE",
         }
@@ -68,7 +75,7 @@ function Transactions({ jwToken }) {
           (transaction) => transaction.id !== selectedItemId
         )
       );
-
+      transaction_deleted_successfully();
       // Close the confirmation dialog
       setIsDialogOpen(false);
       setSelectedItemId(null);
