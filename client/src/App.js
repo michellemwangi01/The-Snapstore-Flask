@@ -98,29 +98,31 @@ const App = () => {
                     <Route
                       path="/gallery"
                       element={
-                        //   jwToken === "" ? (
-                        //     <>
-                        //       <Navigate to="/redirect" />
-                        //     </>
-                        //   ) : (
-                        <Gallery
-                          jwToken={jwToken}
-                          category_id={selectedCategoryId}
-                        />
-                        // )
+                        jwToken === "" ? (
+                          <>
+                            <Navigate to="/redirect" />
+                          </>
+                        ) : (
+                          <Gallery
+                            jwToken={jwToken}
+                            category_id={selectedCategoryId}
+                          />
+                        )
                       }
                     />
                     <Route
                       path="/categories"
                       element={
-                        // jwToken === "" ? (
-                        //   <Navigate to="/redirect" />
-                        // ) : (
-                        <Categories
-                          to="/categories"
-                          filterPhotosByCategory={handleFilterPhotosByCategory}
-                        />
-                        // )
+                        jwToken === "" ? (
+                          <Navigate to="/redirect" />
+                        ) : (
+                          <Categories
+                            to="/categories"
+                            filterPhotosByCategory={
+                              handleFilterPhotosByCategory
+                            }
+                          />
+                        )
                       }
                     />
                     <Route
