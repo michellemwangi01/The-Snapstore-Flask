@@ -16,10 +16,13 @@ const ImageUploadForm = () => {
     formData.append("image", image);
 
     // Send the formData to your Flask backend using fetch or Axios
-    fetch("http://127.0.0.1:5555/uploadimage", {
-      method: "POST",
-      body: formData,
-    })
+    fetch(
+      "https://the-snapstore-flask-api.onrender.com/snapstore/uploadimage",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         // Handle the response from the server

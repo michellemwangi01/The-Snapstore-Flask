@@ -9,11 +9,14 @@ function Transactions({ jwToken }) {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/snapstore/transactions", {
-      headers: {
-        Authorization: `Bearer ${jwToken}`,
-      },
-    })
+    fetch(
+      "https://the-snapstore-flask-api.onrender.com/snapstore/transactions",
+      {
+        headers: {
+          Authorization: `Bearer ${jwToken}`,
+        },
+      }
+    )
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);

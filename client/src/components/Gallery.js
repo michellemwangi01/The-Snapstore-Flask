@@ -13,7 +13,7 @@ const Gallery = ({ category_id }) => {
   const [photosPerPage] = useState(9); // Set the number of photos per page
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/snapstore/photos")
+    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/photos")
       .then((response) => response.json())
       .then((data) => {
         setPhotos(data);
@@ -35,7 +35,18 @@ const Gallery = ({ category_id }) => {
   // console.log("photos", photos);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          fontStyle: "italic",
+          fontSize: "2rem",
+          padding: "2rem",
+        }}
+      >
+        Loading data...
+      </p>
+    );
   }
 
   // Function to handle page navigation

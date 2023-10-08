@@ -13,7 +13,7 @@ const Categories = ({ photos, setPhotos, originalPhotos }) => {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/snapstore/categories", {
+    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/categories", {
       method: "GET",
     })
       .then((res) => res.json())

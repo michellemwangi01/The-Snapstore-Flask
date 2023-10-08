@@ -32,7 +32,7 @@ const Signup = () => {
     console.log(userData);
     console.log(formData);
 
-    fetch("http://127.0.0.1:5555/snapstore/signup", {
+    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

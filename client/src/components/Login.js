@@ -39,7 +39,7 @@ const Login = ({
       password: password,
     };
 
-    fetch("http://127.0.0.1:5555/snapstore/login", {
+    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
