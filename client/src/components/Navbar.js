@@ -98,14 +98,14 @@ function Navbar({
                 History
               </NavLink>
               <NavLink
-                to="/cart"
+                to="/addproduct"
                 className={({ isActive }) =>
                   isActive
                     ? "active navbar_buttons btn btn-lg btn-block"
                     : "inactive navbar_buttons btn btn-lg btn-block"
                 }
               >
-                Cart
+                Your Catalog
               </NavLink>
               <NavLink
                 to="/categories"

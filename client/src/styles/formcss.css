@@ -1,0 +1,74 @@
+/* CSS for the form container */
+.form-container {
+  background-color: purple;
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 5px 15px;
+}
+
+/* CSS for form headings */
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: purple;
+  font-style: italic;
+}
+
+/* CSS for form fields */
+.form-field {
+  margin-bottom: 15px;
+}
+
+/* CSS for labels */
+label {
+  display: block;
+  font-weight: 400;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* CSS for text inputs and textareas */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid purple;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+/* CSS for select dropdown */
+#category {
+  /* You can use an ID selector to target the specific select element */
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+/* CSS for the submit button */
+.submit-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Style the button on hover */
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Center the button */
+.submit-button {
+  display: block;
+  margin: 0 auto;
+}

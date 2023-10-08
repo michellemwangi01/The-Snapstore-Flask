@@ -3,6 +3,8 @@ import Cart from "./Cart"; // Import the Cart component
 import "../styles/mystyles.css";
 import Categories from "./Categories";
 import PhotoCard from "./PhotoCard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Gallery = ({ category_id }) => {
   const [photos, setPhotos] = useState([]);
@@ -10,7 +12,12 @@ const Gallery = ({ category_id }) => {
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [photosPerPage] = useState(9); // Set the number of photos per page
+  const [photosPerPage] = useState(4); // Set the number of photos per page
+  const indexOfLastPhoto = currentPage * photosPerPage;
+  const indexOfFirstPhoto = indexOfLastPhoto - photosPerPage;
+
+  const currentPhotos = photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
+  const item_added_to_cart = () => toast("Added to cart!");
 
   useEffect(() => {
     fetch("https://the-snapstore-flask-api.onrender.com/snapstore/photos")
@@ -28,6 +35,7 @@ const Gallery = ({ category_id }) => {
 
   const addToCart = (photo) => {
     setCart([...cart, photo]);
+    item_added_to_cart();
   };
 
   if (loading) {
@@ -56,6 +64,10 @@ const Gallery = ({ category_id }) => {
   const photosList = photos.map((photo) => (
     <PhotoCard photo={photo} addToCart={addToCart} />
   ));
+
+  //  const photosList = currentPhotos.map((photo) => (
+  //    <PhotoCard key={photo.id} photo={photo} addToCart={addToCart} />
+  //  ));
 
   return (
     <>

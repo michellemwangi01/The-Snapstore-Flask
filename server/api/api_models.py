@@ -70,7 +70,6 @@ photo_schema = api.model('photo',{
 })
 
 photo_input_schema = api.model('photo_input',{
-    "id": fields.Integer,
     "name": fields.String,
     "description": fields.String,
     "price": fields.Integer,

@@ -6,6 +6,8 @@ import {
   Navigate,
   Link,
 } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import Categories from "./components/Categories";
 import Home from "./components/Home";
@@ -22,6 +24,7 @@ import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import "./App.css";
 import Redirect from "./components/Redirect";
+import AddProductForm from "./components/AddProductForm";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -40,6 +43,17 @@ const App = () => {
   };
   return (
     <div className="theRoot">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Router>
         <div>
           <Navbar
@@ -58,6 +72,20 @@ const App = () => {
                 <div className="container_main">
                   <Routes>
                     <Route path="/" element={<LandingPage />} />
+                    <Route
+                      path="/addproduct"
+                      element={
+                        jwToken ? (
+                          <AddProductForm
+                            jwToken={jwToken}
+                            username={username}
+                          />
+                        ) : (
+                          <Navigate to="/redirect" />
+                        )
+                      }
+                    />
+
                     <Route
                       path="/history"
                       element={

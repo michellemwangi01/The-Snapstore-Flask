@@ -250,7 +250,6 @@ class CategoryByID(Resource):
 
 @ns.route('/transactions')
 class Transactions(Resource):
-    # @token_required
     @jwt_required()
     # @ns.expect(transaction_input_schema)
     @ns.marshal_list_with(transaction_schema)
@@ -352,6 +351,42 @@ class Photos(Resource):
             app.logger.error(str(e))
             return "Error loading photos", 500
 
+
+
+
+
+@ns.route('/addphotos')
+class Photos(Resource):
+    @ns.expect(photo_input_schema)  
+    @ns.marshal_with(photo_schema)  
+    def post(self):
+        try:
+            data = request.get_json()
+            # print(data)
+            user = User.query.filter_by(username=data['postedBy']).first()
+            category = Category.query.filter_by(name=data['category']).first()
+            print(f'user: {user}')
+            print(f'category: {category.id}')
+            print(f'image: {data["imageUrl"]}')
+            print(f'user_id: {user.id}')
+            print(f'price: {data["price"]}')
+
+            new_photo = Photo(
+                name=data['name'],
+                description=data['description'],
+                price=data['price'],
+                image=data['imageUrl'],
+                user_id=user.id, 
+                category_id=category.id,  
+            )
+            print(f'new_photo: {new_photo}')
+            db.session.add(new_photo)
+            db.session.commit()
+            print(f'new_photo: {new_photo}')
+
+            return new_photo, 201 
+        except Exception as e:
+            return {'message': 'Failed to create photo', 'error': str(e)}, 400  
 
 
 
