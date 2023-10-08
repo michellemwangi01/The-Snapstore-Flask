@@ -95,6 +95,9 @@ cart_item_schema = api.model('cart_item', {
     "quantity": fields.Integer,
     "added_at": fields.DateTime,
 })
+transaction_input_schema = api.model('transaction_input', {
+    "id": fields.Integer,
+})
 
 
 

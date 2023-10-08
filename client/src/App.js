@@ -44,10 +44,11 @@ const App = () => {
         <div>
           <Navbar
             username={username}
+            setUsername={setUsername}
             jwToken={jwToken}
             setJWToken={setJWToken}
-            setIsLoggedIn={setIsLoggedIn}
             isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
             btnText={btnText}
             setBtnText={setBtnText}
           />

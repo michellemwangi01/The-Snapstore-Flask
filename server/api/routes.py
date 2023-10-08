@@ -252,6 +252,7 @@ class CategoryByID(Resource):
 class Transactions(Resource):
     # @token_required
     @jwt_required()
+    # @ns.expect(transaction_input_schema)
     @ns.marshal_list_with(transaction_schema)
     def get(self):
         current_user = get_jwt_identity()

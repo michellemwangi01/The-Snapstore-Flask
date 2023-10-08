@@ -50,7 +50,7 @@ const Login = ({
         console.log("Response data:", data);
         localStorage.setItem("jwtToken", data.access_token);
         setIsLoggedIn(true);
-        setBtnText("Logout User");
+        setBtnText(`Logout, ${data.username}`);
         navigate("/");
         setFormData({
           username: "",

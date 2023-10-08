@@ -22,50 +22,26 @@ function Navbar({
   setBtnText,
 }) {
   const navigate = useNavigate();
-  // const btnText = isLoggedIn ? `Logout, ${toTitleCase(username)}` : "Login";
-
   console.log(isLoggedIn);
 
-  // const logoutHandler = () => {
-  //   if (isLoggedIn == true) {
-  //     // console.log("testing logout");
-  //     // localStorage.removeItem("jwtToken");
-  //     // setJWToken("");
-  //     // setUsername("");
-  //     // navigate("/login");
-  //     setIsLoggedIn(false);
-  //     console.log(isLoggedIn);
-  //     // setBtnText("Login");
-  //   } else {
-  //     navigate("/login");
-  //     setIsLoggedIn(false);
-  //     // setBtnText(`Logout, ${toTitleCase(username)}`);
-  //   }
-  // };
-
-  const updateButtonContent = () => {
+  const logoutHandler = () => {
     if (isLoggedIn) {
       console.log("----------------");
+      localStorage.removeItem("jwtToken");
+      setJWToken("");
+      setUsername("");
+      setBtnText("Login");
       setIsLoggedIn(false);
-      setBtnText("Login", () => navigate("/login"));
       // navigate("/login");
-    } else {
-      setBtnText("Logout User", () => navigate("/"));
-      setIsLoggedIn(() => false);
-      // setBtnText("Login");
-      // navigate("/login");
-      #
     }
   };
 
-  // `Logout, ${toTitleCase(username)}`;
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     console.log("Navigating to /login");
-  //     navigate("/login");
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    // if (isLoggedIn) {
+    console.log("Navigating to /login");
+    navigate("/login");
+    // }
+  }, [isLoggedIn]);
 
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -196,7 +172,7 @@ function Navbar({
             </NavLink>
           ) : (
             <button
-              onClick={updateButtonContent}
+              onClick={logoutHandler}
               className={({ isActive }) =>
                 isActive
                   ? "login_out active navbar_buttons btn btn-lg btn-block"
