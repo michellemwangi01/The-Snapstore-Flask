@@ -54,6 +54,7 @@ function Navbar({
       setIsLoggedIn(() => false);
       // setBtnText("Login");
       // navigate("/login");
+      #
     }
   };
 
