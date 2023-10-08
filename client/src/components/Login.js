@@ -39,7 +39,7 @@ const Login = ({
       password: password,
     };
 
-    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/login", {
+    fetch("https://the-snapstore-flask-api.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

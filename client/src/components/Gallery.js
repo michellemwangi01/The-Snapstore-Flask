@@ -30,10 +30,6 @@ const Gallery = ({ category_id }) => {
     setCart([...cart, photo]);
   };
 
-  // console.log("original photos", originalPhotos);
-  // // setPhotos(originalPhotos);
-  // console.log("photos", photos);
-
   if (loading) {
     return (
       <p

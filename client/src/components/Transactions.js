@@ -7,25 +7,39 @@ function Transactions({ jwToken }) {
   const [transactions, setTransactions] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      "https://the-snapstore-flask-api.onrender.com/snapstore/transactions",
-      {
-        headers: {
-          Authorization: `Bearer ${jwToken}`,
-        },
-      }
-    )
+    fetch("https://the-snapstore-flask-api.onrender.com/transactions", {
+      headers: {
+        Authorization: `Bearer ${jwToken}`,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
         setTransactions(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          fontStyle: "italic",
+          fontSize: "2rem",
+          padding: "2rem",
+        }}
+      >
+        Loading data...
+      </p>
+    );
+  }
 
   const handleDelete = async (transactionId) => {
     // Open the confirmation dialog and store the selected item ID
@@ -42,9 +56,12 @@ function Transactions({ jwToken }) {
   const handleConfirm = async () => {
     try {
       // Send a DELETE request to the API to delete the resource
-      await fetch(`http://127.0.0.1:5555/api/transactions/${selectedItemId}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://the-snapstore-flask-api.onrender.com/transactions/${selectedItemId}`,
+        {
+          method: "DELETE",
+        }
+      );
       // Update the local state by removing the deleted resource
       setTransactions((prevTransactions) =>
         prevTransactions.filter(
