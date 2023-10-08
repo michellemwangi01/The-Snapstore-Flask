@@ -9,10 +9,9 @@ function Transactions({ jwToken }) {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
-    console.log(jwToken);
     fetch("http://127.0.0.1:5555/snapstore/transactions", {
       headers: {
-        Authorization: `Bearer ${jwToken.access_token}`,
+        Authorization: `Bearer ${jwToken}`,
       },
     })
       .then((resp) => resp.json())
@@ -66,26 +65,52 @@ function Transactions({ jwToken }) {
 
   return (
     <div className="tablediv">
-      <table id="transaction">
+      <table
+        id="transaction"
+        style={{
+          borderCollapse: "separate",
+          borderSpacing: "0px 10px",
+          borderRadius: "15px",
+          margin: "2rem",
+        }}
+      >
         <tbody>
           <tr>
             <th>#</th>
-            <th>Purchased By</th>
-            <th>Name of Item</th>
-            <th>Quantity</th>
-            <th>Amount</th>
+            <th>Item</th>
             <th>PhotoName</th>
-            <th>Username</th>
+            <th>Purchased By</th>
+            <th>Price</th>
+            <th>Date of Purchase</th>
             <th></th>
           </tr>
 
           {transactions.map((item, index) => (
             <tr key={item.id}>
-              <td>{index + 1}</td>
-              <td>{item.quantity}</td>
-              <td> KSH {item.amount}</td>
-              <td>{toTitleCase(item.photo.name)}</td>
+              <td style={{ marginBottom: "10px" }}>{index + 1}</td>
+              <td>
+                <img
+                  src={item.photo.image}
+                  alt="Item Photo"
+                  style={{
+                    width: "2.5rem",
+                    height: "2.5rem",
+                    borderRadius: "50%",
+                  }}
+                />
+              </td>
+              <td>{item.photo.name}</td>
               <td>{toTitleCase(item.user.username)}</td>
+              <td>
+                $
+                {item.photo.price.toLocaleString("en-US", {
+                  style: "decimal",
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </td>
+              <td>{item.purchased_at}</td>
+
               <td>
                 <FontAwesomeIcon
                   color="red"

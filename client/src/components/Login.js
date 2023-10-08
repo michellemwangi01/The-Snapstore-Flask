@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../styles/mystyles.css";
 
-const Login = ({ jwToken, setJWToken }) => {
+const Login = ({
+  jwToken,
+  setJWToken,
+  setUsername,
+  setIsLoggedIn,
+  setBtnText,
+  isLoggedIn,
+}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -42,41 +49,22 @@ const Login = ({ jwToken, setJWToken }) => {
       .then((data) => {
         console.log("Response data:", data);
         localStorage.setItem("jwtToken", data.access_token);
+        setIsLoggedIn(true);
+        setBtnText("Logout User");
+        navigate("/");
         setFormData({
           username: "",
           email: "",
           password: "",
           repeatPassword: "",
         });
-        setJWToken(data);
-        navigate("/home");
+        setJWToken(data.access_token);
+        setUsername(data.username);
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .catch((response) => {
+        console.error("Error:", response.message);
       });
   };
-  console.log(jwToken);
-
-  //   useEffect(() => {
-  //     fetch("http://127.0.0.1:5555/snapstore/users", {
-  //       headers: {
-  //         Authorization: "Bearer {jwToken}",
-  //       },
-  //     })
-  //       .then((response) => {
-  //         if (response.message) {
-  //           console.log(response.message);
-  //         }
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         console.log("Response data:", data);
-  //         setJWToken(data.token);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //       });
-  //   }, [jwToken]);
 
   return (
     <div>
@@ -143,9 +131,9 @@ const Login = ({ jwToken, setJWToken }) => {
                       </div>
 
                       <div class="d-flex justify-content-center">
-                        <Link
-                          to="/"
+                        <button
                           class="btn "
+                          type="submit"
                           style={{
                             border: "1px purple solid",
                             color: "white",
@@ -155,7 +143,7 @@ const Login = ({ jwToken, setJWToken }) => {
                           }}
                         >
                           Login
-                        </Link>
+                        </button>
                       </div>
 
                       <p
@@ -178,3 +166,24 @@ const Login = ({ jwToken, setJWToken }) => {
 };
 
 export default Login;
+
+//   useEffect(() => {
+//     fetch("http://127.0.0.1:5555/snapstore/users", {
+//       headers: {
+//         Authorization: "Bearer {jwToken}",
+//       },
+//     })
+//       .then((response) => {
+//         if (response.message) {
+//           console.log(response.message);
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         console.log("Response data:", data);
+//         setJWToken(data.token);
+//       })
+//       .catch((error) => {
+//         console.error("Error:", error);
+//       });
+//   }, [jwToken]);

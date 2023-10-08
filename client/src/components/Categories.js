@@ -1,24 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+// export default FetchAPIData;
+import React, { useEffect, useState } from "react";
+import CategoryCard from "./CategoryCard";
 
-function Categories() {
+const Categories = ({ photos, setPhotos, originalPhotos }) => {
+  const [categories, setCategories] = useState([]);
+
+  const handleFilterByCategory = (categoryId) => {
+    const filteredPhotosList = originalPhotos.filter(
+      (photo) => photo.category.id === categoryId
+    );
+    setPhotos(filteredPhotosList);
+  };
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/snapstore/categories", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+      });
+  }, []);
+
+  const categoriesList = categories.map((category) => (
+    <CategoryCard
+      key={category.id}
+      category={category}
+      filterPhotosByCategory={handleFilterByCategory}
+    />
+  ));
+
   return (
-    <div className="bg-light p-3">
-      <h3 className="text-dark">Categories</h3>
-      <ul className="list-unstyled">
-        <li className="mb-2">
-          <Link to="/" className="btn btn-primary btn-lg btn-block">Home</Link> {/* Blue */}
-        </li>
-        <li className="mb-2">
-          <Link to="/photopurchase" className="btn btn-warning btn-lg btn-block">Photo Purchase</Link> {/* Yellow */}
-        </li>
-        <li>
-          <Link to="/transaction" className="btn btn-success btn-lg btn-block">Transactions</Link> {/* Green */}
-        </li>
-        {/* Add more categories as needed */}
-      </ul>
+    <div>
+      <h4
+        style={{
+          fontWeight: "lighter",
+          marginTop: "2rem",
+          textAlign: "center",
+        }}
+      >
+        Select a category to view photos available for it.
+      </h4>
+      <div className="buttonsContainer">{categoriesList}</div>
     </div>
   );
-}
+};
 
 export default Categories;

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Signup = (addUser) => {
+const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -19,6 +20,7 @@ const Signup = (addUser) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const { username, email, password, repeatPassword } = formData;
 
     const userData = {
@@ -27,6 +29,8 @@ const Signup = (addUser) => {
       password: password,
       repeatPassword: repeatPassword,
     };
+    console.log(userData);
+    console.log(formData);
 
     fetch("http://127.0.0.1:5555/snapstore/signup", {
       method: "POST",
@@ -43,17 +47,19 @@ const Signup = (addUser) => {
       })
       .then((data) => {
         console.log("Response data:", data);
+        navigate("/login");
       })
+      .then(
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          repeatPassword: "",
+        })
+      )
       .catch((error) => {
         console.error("Error:", error);
       });
-
-    setFormData({
-      username: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-    });
   };
 
   return (
@@ -138,7 +144,7 @@ const Signup = (addUser) => {
                       <div className="form-outline mb-4">
                         <input
                           type="password"
-                          id="password"
+                          id="repeatPassword"
                           className="form-control form-control-lg"
                           name="repeatPassword"
                           value={formData.repeatPassword}
@@ -169,9 +175,9 @@ const Signup = (addUser) => {
                       </div>
 
                       <div class="d-flex justify-content-center">
-                        <Link
-                          to="/login"
-                          class="btn "
+                        <button
+                          class="btn"
+                          type="submit"
                           style={{
                             border: "1px purple solid",
                             color: "white",
@@ -181,7 +187,7 @@ const Signup = (addUser) => {
                           }}
                         >
                           Register
-                        </Link>
+                        </button>
                       </div>
 
                       <p

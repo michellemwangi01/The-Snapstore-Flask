@@ -24,9 +24,12 @@
 .gallery_cart {
   display: flex;
   width: 100%;
+  position: relative;
+  margin: auto;
+  justify-content: center;
 }
 .gallery_card_inner {
-  width: 25%;
+  width: 20%;
   height: 27rem;
   margin: 1.5rem;
   margin-bottom: 10rem;
@@ -97,15 +100,21 @@ img {
 }
 
 .theCart {
-  margin-top: 4rem;
-  margin-right: 2rem;
-  width: 40rem;
+  /* margin-top: 4rem;
+  margin-right: 2rem; */
+  width: 10%;
   margin-left: 0;
+  position: absolute;
+  top: 35%;
+  right: 5px;
 }
 
-.theCart .card {
-  width: 100%;
-}
+/* .card {
+  width: 14rem;
+  position: absolute;
+  left: 104rem;
+  top: 20rem;
+} */
 button .btnLogin {
   background-color: purple;
   color: white;
@@ -121,4 +130,21 @@ button .btnLogin {
   align-items: center;
   justify-content: center;
   margin-top: 12rem;
+}
+.categoryButtons {
+  padding: 8px;
+  width: auto;
+  margin: 10px;
+  border-radius: 7px;
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  opacity: 0.6;
+}
+.buttonsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.container_gallery {
 }

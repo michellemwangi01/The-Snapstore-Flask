@@ -1,12 +1,70 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ProfileIconImage from "../assets/profile-icon.svg";
 import PhotosIconImage from "../assets/photos-svgrepo-com.svg";
 import Login from "./Login";
 import "../styles/mystyles.css";
 
-function Navbar({ jwToken }) {
-  const btnText = jwToken === "" ? "Login" : "Logout";
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (word) {
+    return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+  });
+}
+
+function Navbar({
+  jwToken,
+  setJWToken,
+  setUsername,
+  username,
+  setIsLoggedIn,
+  isLoggedIn,
+  btnText,
+  setBtnText,
+}) {
+  const navigate = useNavigate();
+  // const btnText = isLoggedIn ? `Logout, ${toTitleCase(username)}` : "Login";
+
+  console.log(isLoggedIn);
+
+  // const logoutHandler = () => {
+  //   if (isLoggedIn == true) {
+  //     // console.log("testing logout");
+  //     // localStorage.removeItem("jwtToken");
+  //     // setJWToken("");
+  //     // setUsername("");
+  //     // navigate("/login");
+  //     setIsLoggedIn(false);
+  //     console.log(isLoggedIn);
+  //     // setBtnText("Login");
+  //   } else {
+  //     navigate("/login");
+  //     setIsLoggedIn(false);
+  //     // setBtnText(`Logout, ${toTitleCase(username)}`);
+  //   }
+  // };
+
+  const updateButtonContent = () => {
+    if (isLoggedIn) {
+      console.log("----------------");
+      setIsLoggedIn(false);
+      setBtnText("Login", () => navigate("/login"));
+      // navigate("/login");
+    } else {
+      setBtnText("Logout User", () => navigate("/"));
+      setIsLoggedIn(() => false);
+      // setBtnText("Login");
+      // navigate("/login");
+    }
+  };
+
+  // `Logout, ${toTitleCase(username)}`;
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     console.log("Navigating to /login");
+  //     navigate("/login");
+  //   }
+  // }, [isLoggedIn]);
 
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -136,8 +194,8 @@ function Navbar({ jwToken }) {
               {btnText}
             </NavLink>
           ) : (
-            <NavLink
-              to="/login"
+            <button
+              onClick={updateButtonContent}
               className={({ isActive }) =>
                 isActive
                   ? "login_out active navbar_buttons btn btn-lg btn-block"
@@ -152,7 +210,7 @@ function Navbar({ jwToken }) {
               }}
             >
               {btnText}
-            </NavLink>
+            </button>
           )}
         </div>
       </div>

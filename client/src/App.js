@@ -26,17 +26,31 @@ import Redirect from "./components/Redirect";
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState("");
+  const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [btnText, setBtnText] = useState("Login");
 
   useEffect(() => {
     setCurrentUser("Mamamia");
   }, []);
 
+  const handleFilterPhotosByCategory = (categoryId) => {
+    setSelectedCategoryId(categoryId);
+  };
   return (
     <div className="theRoot">
       <Router>
         <div>
-          <Navbar jwToken={jwToken} />
+          <Navbar
+            username={username}
+            jwToken={jwToken}
+            setJWToken={setJWToken}
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            btnText={btnText}
+            setBtnText={setBtnText}
+          />
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
@@ -83,23 +97,29 @@ const App = () => {
                     <Route
                       path="/gallery"
                       element={
-                        jwToken === "" ? (
-                          <>
-                            <Navigate to="/redirect" />
-                          </>
-                        ) : (
-                          <Gallery jwToken={jwToken} />
-                        )
+                        //   jwToken === "" ? (
+                        //     <>
+                        //       <Navigate to="/redirect" />
+                        //     </>
+                        //   ) : (
+                        <Gallery
+                          jwToken={jwToken}
+                          category_id={selectedCategoryId}
+                        />
+                        // )
                       }
                     />
                     <Route
                       path="/categories"
                       element={
-                        jwToken === "" ? (
-                          <Navigate to="/redirect" />
-                        ) : (
-                          <Categories to="/categories" />
-                        )
+                        // jwToken === "" ? (
+                        //   <Navigate to="/redirect" />
+                        // ) : (
+                        <Categories
+                          to="/categories"
+                          filterPhotosByCategory={handleFilterPhotosByCategory}
+                        />
+                        // )
                       }
                     />
                     <Route
@@ -111,7 +131,15 @@ const App = () => {
                     <Route
                       path="/login"
                       element={
-                        <Login jwToken={jwToken} setJWToken={setJWToken} />
+                        <Login
+                          username={username}
+                          setUsername={setUsername}
+                          jwToken={jwToken}
+                          setJWToken={setJWToken}
+                          setIsLoggedIn={setIsLoggedIn}
+                          setBtnText={setBtnText}
+                          isLoggedIn={isLoggedIn}
+                        />
                       }
                     />
                     <Route path="/redirect" element={<Redirect />} />
