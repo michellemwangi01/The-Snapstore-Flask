@@ -16,6 +16,12 @@ const Login = ({
     password: "",
   });
 
+  function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function (word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    });
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -50,7 +56,8 @@ const Login = ({
         console.log("Response data:", data);
         localStorage.setItem("jwtToken", data.access_token);
         setIsLoggedIn(true);
-        setBtnText(`Logout, ${data.username}`);
+        const username_uppper = toTitleCase(data.username);
+        setBtnText(`Logout, ${username_uppper}`);
         navigate("/");
         setFormData({
           username: "",

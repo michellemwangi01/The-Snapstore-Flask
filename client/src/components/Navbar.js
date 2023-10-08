@@ -27,21 +27,14 @@ function Navbar({
   const logoutHandler = () => {
     if (isLoggedIn) {
       console.log("----------------");
+      setBtnText("Login");
       localStorage.removeItem("jwtToken");
       setJWToken("");
       setUsername("");
-      setBtnText("Login");
       setIsLoggedIn(false);
-      // navigate("/login");
+      navigate("/login");
     }
   };
-
-  useEffect(() => {
-    // if (isLoggedIn) {
-    console.log("Navigating to /login");
-    navigate("/login");
-    // }
-  }, [isLoggedIn]);
 
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -152,43 +145,23 @@ function Navbar({
               Search
             </button>
           </form>
-          {jwToken ? (
-            <NavLink
-              to="/logout"
-              className={({ isActive }) =>
-                isActive
-                  ? "active navbar_buttons btn btn-lg btn-block"
-                  : "inactive navbar_buttons btn btn-lg btn-block"
-              }
-              style={{
-                padding: "3px 10px",
-                margin: "1rem",
-                border: "1px purple solid",
-                color: "white",
-                background: "purple",
-              }}
-            >
-              {btnText}
-            </NavLink>
-          ) : (
-            <button
-              onClick={logoutHandler}
-              className={({ isActive }) =>
-                isActive
-                  ? "login_out active navbar_buttons btn btn-lg btn-block"
-                  : "login_out inactive navbar_buttons btn btn-lg btn-block"
-              }
-              style={{
-                padding: "3px 10px",
-                margin: "1rem",
-                border: "1px purple solid",
-                color: "white",
-                background: "purple",
-              }}
-            >
-              {btnText}
-            </button>
-          )}
+          <button
+            onClick={() => (isLoggedIn ? logoutHandler() : navigate("/login"))}
+            className={({ isActive }) =>
+              isActive
+                ? "login_out active navbar_buttons btn btn-lg btn-block"
+                : "login_out inactive navbar_buttons btn btn-lg btn-block"
+            }
+            style={{
+              padding: "3px 10px",
+              margin: "1rem",
+              border: "1px purple solid",
+              color: "white",
+              background: "purple",
+            }}
+          >
+            {btnText}
+          </button>
         </div>
       </div>
     </nav>
@@ -196,3 +169,23 @@ function Navbar({
 }
 
 export default Navbar;
+
+//  {jwToken ? (
+//             <NavLink
+//               to="/logout"
+//               className={({ isActive }) =>
+//                 isActive
+//                   ? "active navbar_buttons btn btn-lg btn-block"
+//                   : "inactive navbar_buttons btn btn-lg btn-block"
+//               }
+//               style={{
+//                 padding: "3px 10px",
+//                 margin: "1rem",
+//                 border: "1px purple solid",
+//                 color: "white",
+//                 background: "purple",
+//               }}
+//             >
+//               {btnText}
+//             </NavLink>
+//           ) : (
