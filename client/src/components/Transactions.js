@@ -15,7 +15,7 @@ function Transactions({ jwToken }) {
     toast("Transaction Successfully deleted!");
   useEffect(() => {
     fetch(
-      " https://the-snapstore-flask-api.onrender.com/snapstore/transactions",
+      "https://the-snapstore-flask-api.onrender.com/snapstore/transactions",
       {
         headers: {
           Authorization: `Bearer ${jwToken}`,

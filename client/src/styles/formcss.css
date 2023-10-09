@@ -1,8 +1,9 @@
 /* CSS for the form container */
 .form-container {
   background-color: purple;
-  max-width: 600px;
+  width: 900px;
   margin: 3rem auto;
+  height: 46rem;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -71,4 +72,12 @@ label {
 .submit-button {
   display: block;
   margin: 0 auto;
+}
+.yourCatalog {
+  width: 90;
+  margin: auto;
+}
+.yourCatalogItems {
+  border: 1px solid purple;
+  margin: 3rem 1.5rem;
 }

@@ -47,21 +47,26 @@ SnapStore is more than just an online marketplace for photography; it's a commun
 2. User-Friendly Navigation
 
    - Navbar
-     ![Alt text](image-5.png)
+     ![Alt text](images/image-5.png)
 
-3. Personalized User Profiles and update personal catalog
+3. Personalized User Profiles
 
    - update catalog
-     ![Alt text](image-6.png)
+     ![Alt text](images/image-6.png)
 
 4. Photo Categories
 
    - Categories
-     ![Alt text](image-7.png)
+     ![Alt text](images/image-7.png)
 
 5. API Access
+
    - API Documentation
-     ![Alt text](image-8.png)
+     ![Alt text](images/image-8.png)
+
+6. Update personal catalog
+   - Update personal catalog
+     ![Alt text](images/image-9.png)
 
 ## API Access
 
@@ -85,9 +90,6 @@ Getting started with SnapStore is easy:
 3 .Purchase Photos: When you find the perfect image, proceed to the secure checkout process. SnapStore accepts various payment methods for your convenience.
 
 4 .Create Your Profile: Customize your user profile to showcase your favorite photos and connect with other users who share your interests.
-
-5 .User Profiles
-Your user profile is your personal space on SnapStore. Here's what you can do with it:
 
 6 .Upload Profile Picture: Add a profile picture to make your presence in the community more personal.
 

@@ -23,21 +23,26 @@
 }
 .gallery_cart {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   position: relative;
   margin: auto;
+  align-items: center;
   justify-content: center;
 }
+
 .gallery_card_inner {
   width: 20%;
-  height: 27rem;
+  /* height: 27rem; */
   margin: 1.5rem;
-  margin-bottom: 10rem;
+  margin-bottom: 2rem;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: 1px solid black;
+  height: 40rem;
 }
 img {
   object-fit: cover;
-  height: 70%;
+  height: 60%;
   overflow: hidden;
   height: 20rem;
 }
@@ -51,14 +56,15 @@ img {
 
 .gallery_card_inner {
   width: 25%;
-  height: 27rem;
+  height: 40rem;
   margin: 1.5rem;
-  margin-bottom: 10rem;
+  margin-bottom: 2rem;
+  padding: 5px;
 }
 
 .gallery_card_inner img {
   object-fit: cover;
-  height: 80%;
+  height: 60%;
   overflow: hidden;
   transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
@@ -145,6 +151,4 @@ button .btnLogin {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-.container_gallery {
 }

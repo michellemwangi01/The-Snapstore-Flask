@@ -251,7 +251,6 @@ class CategoryByID(Resource):
 @ns.route('/transactions')
 class Transactions(Resource):
     @jwt_required()
-    # @ns.expect(transaction_input_schema)
     @ns.marshal_list_with(transaction_schema)
     def get(self):
         current_user = get_jwt_identity()
@@ -339,20 +338,28 @@ class Photos(Resource):
     def get(self):
         try:
             photos = Photo.query.all()
-
             if not photos:
-
                 return "No photos found", 404
-
-            # print("ourphotos",photos)
-
             return photos, 200
         except Exception as e:
             app.logger.error(str(e))
             return "Error loading photos", 500
 
 
-
+@ns.route('/userphotos/')
+class Photos(Resource):
+    @jwt_required()
+    @ns.marshal_with(photo_schema)
+    def get(self):
+        try:
+            current_user = get_jwt_identity()
+            photos = Photo.query.filter_by(user_id = current_user).all()
+            if not photos:
+                return "No photos found", 404
+            return photos, 200
+        except Exception as e:
+            app.logger.error(str(e))
+            return "Error loading photos", 500
 
 
 @ns.route('/addphotos')
