@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -9,6 +11,8 @@ const Signup = () => {
     password: "",
     repeatPassword: "",
   });
+  const successfully_signedup = () =>
+    toast("Successfully Signed up. Wait to be redirected to login page.!");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,6 +50,7 @@ const Signup = () => {
         return response.json();
       })
       .then((data) => {
+        successfully_signedup();
         console.log("Response data:", data);
         navigate("/login");
       })

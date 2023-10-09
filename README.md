@@ -1,5 +1,12 @@
 # # SnapStore
 
+![python version](https://img.shields.io/badge/python-3.10.12-blue.svg)
+![Flask version](https://img.shields.io/badge/flask-2.3.3-red.svg)
+![Flask-RESTX version](https://img.shields.io/badge/Flask_RESTX-1.1.0-cyan.svg)
+![Pytest version](https://img.shields.io/badge/pytest-7.4.2-white.svg)
+[![license](https://img.shields.io/badge/license-%20MIT%20-green.svg)](./LICENSE)
+![Gunicorn version](https://img.shields.io/badge/gunicorn-21.2.0-orange.svg)
+
 # Introduction
 
 SnapStore is more than just an online marketplace for photography; it's a community where photographers and art enthusiasts come together to explore, appreciate, and support the art of visual storytelling.
@@ -15,10 +22,8 @@ SnapStore is more than just an online marketplace for photography; it's a commun
 - Login
   ![Alt text](images/image-2.png)
 
-- Gallery
-  ![Alt text](images/image-3.png)
-
-  <img src="./doc/screenshot/overview.png" alt="screenshot" />
+- History
+  ![Alt text](images/image-4.png)
 
 ## Table of Contents
 
@@ -35,25 +40,28 @@ SnapStore is more than just an online marketplace for photography; it's a commun
 ## Key Features
 
 1. Vast Collection of High-Quality Photos
-   SnapStore boasts a diverse and ever-growing collection of high-quality photos in various genres, from stunning landscapes to intimate portraits.
+
+   - Gallery
+     ![Alt text](images/image-3.png)
 
 2. User-Friendly Navigation
-   Our intuitive user interface makes it easy to discover and browse photos, categories, and artists.
 
-3. Secure Transactions
-   Shop with confidence knowing that SnapStore provides secure and hassle-free transactions for purchasing photos.
+   - Navbar
+     ![Alt text](image-1.png)
 
-4. Personalized User Profiles
-   Create your own profile to showcase your favorite photos, keep track of your transactions, and interact with the community.
+3. Personalized User Profiles and update personal catalog
 
-5. Photo Categories
-   Explore a wide range of categories to find the perfect image for your project, home decor, or collection.
+   - update catalog
+     ![Alt text](image-4.png)
 
-6. Community Engagement
-   Connect with photographers and art enthusiasts, comment on photos, and share your appreciation for the art.
+4. Photo Categories
 
-7. API Access
-   Developers can take advantage of our API to integrate SnapStore's features into their own applications and services.
+   - Categories
+     ![Alt text](image-2.png)
+
+5. API Access
+   - API Documentation
+     ![Alt text](image-3.png)
 
 ## API Access
 
@@ -61,21 +69,10 @@ Developers can leverage SnapStore's API to integrate its features into their own
 
 With SnapStore's API, you can:
 
-1 Access our extensive collection of photos and categories programmaically.
-Implement search and filtering functionalities to enhance user experiences.
-Enable secure and convenient transactions within your application.
-Showcase stunning photography to enhance your platform's visual appeal.
-Our API documentation provides comprehensive guidance on how to integrate SnapStore seamlessly into your project. Developers can obtain API keys and access endpoints to unlock the power of SnapStore within their applications.
-
-## Why Choose SnapStore?
-
-SnapStore is more than just a marketplace; it's a platform built with passion for photography and a commitment to celebrating visual artistry. Here's why you should choose SnapStore:
-
-Quality Assurance: Our team of photographers and curators ensures that every photo on SnapStore meets the highest standards of quality.
-
-Diverse Selection: With a vast collection of photos spanning various categories, you're sure to find the perfect image for any project or personal use.
-
-Secure Transactions: Shop confidently with our secure payment processing and reliable customer
+- Access our extensive collection of photos and categories programmaically.
+- Implement search and filtering functionalities to enhance user experiences.
+- Showcase stunning photography to enhance your platform's visual appeal.
+- Our API documentation provides comprehensive guidance on how to integrate SnapStore seamlessly into your project.
 
 ## Getting Started
 
@@ -107,41 +104,11 @@ Shopping on SnapStore is secure and straightforward:
 
 Add to Cart: Browse photos and add your favorites to your shopping cart.
 
-## Contributing
-
-At SnapStore, we welcome contributions from photographers, developers, and enthusiasts who share our passion for visual storytelling. Whether you want to submit your photos, enhance our platform, or collaborate on new features, we're excited to have you as part of our community.
-
-To contribute, please refer to our Contributing Guidelines for detailed information on how to get involved.
-
-## License
-
-SnapStore is released under the MIT License, which means you are free to use, modify, and distribute the platform for your own purposes. We encourage you to explore the codebase, contribute to its development, and create your own unique photography experiences using SnapStore.
-
-Thank you for choosing SnapStore as your premier destination for high-quality photography. We look forward to sharing the beauty of visual artistry with you.
-
-# SnapStore
-
 ## Introduction
 
 SnapStore is more than just an online marketplace for photography; it's a community where photographers and art enthusiasts come together to explore, appreciate, and support the art of visual storytelling. Whether you're a photographer looking to showcase your work, a buyer in search of that perfect image, or simply someone who appreciates the beauty of photography, SnapStore has something for you.
 
-## Screenshots of the project
-
-- Homepage
-
-  <img src=".components/screenshort/home.png" alt="screenshot" />
-
-- navbar
-  <img src="./components/screenshot/navbar.png" alt="screenshot" />
-
-- Footer
-  <img src="./components/screenshot/footer.png" alt="screenshot" />
-- Overview
-  <img src="./doc/screenshot/overview.png" alt="screenshot" />
-
-# Features
-
-## cart
+## Cart
 
 - add a snap to cart
 - view items in cart

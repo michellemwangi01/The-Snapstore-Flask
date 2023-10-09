@@ -61,7 +61,7 @@ const Gallery = ({ category_id }) => {
   // Calculate the total number of pages
   const totalPages = Math.ceil(photos.length / photosPerPage);
 
-  const photosList = photos.map((photo) => (
+  const photosList = currentPhotos.map((photo) => (
     <PhotoCard photo={photo} addToCart={addToCart} />
   ));
 

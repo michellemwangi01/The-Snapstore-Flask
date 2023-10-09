@@ -16,7 +16,17 @@ const PhotoCard = ({ photo, addToCart }) => {
       <div className="card-body">
         <h5 className="card-title">{photo.name}</h5>
         <p className="card-text">{photo.description}</p>
-        <p className="card-text">Price: ${photo.price}</p>
+        <p className="card-text">
+          Price:
+          {photo.price.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2, // Ensure 2 decimal places
+          })}
+        </p>
+        <p className="card-text" style={{ fontStyle: "italic" }}>
+          Posted by: {photo.user.username}
+        </p>
 
         <button
           className={`btn custom-love-button ${
