@@ -98,6 +98,19 @@ transaction_input_schema = api.model('transaction_input', {
     "id": fields.Integer,
 })
 
+cart_item_output_schema = api.model('cart_item_output', {
+    "id": fields.Integer,
+    "cart_id": fields.Integer,
+    "photo_id": fields.Integer,
+    "quantity": fields.Integer,
+    "added_at": fields.DateTime,
+    "photo": fields.Nested(photo_schema), 
+})
+
+cart_items_schema = api.model('cart_items', {
+    "cart_items": fields.List(fields.Nested(cart_item_output_schema)),
+})
+
 
 
 
