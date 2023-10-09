@@ -12,7 +12,7 @@ const Gallery = ({ category_id }) => {
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [photosPerPage] = useState(4); // Set the number of photos per page
+  const [photosPerPage] = useState(10); // Set the number of photos per page
   const indexOfLastPhoto = currentPage * photosPerPage;
   const indexOfFirstPhoto = indexOfLastPhoto - photosPerPage;
 

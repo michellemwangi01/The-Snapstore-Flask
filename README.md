@@ -70,7 +70,9 @@ SnapStore is more than just an online marketplace for photography; it's a commun
 
 ## API Access
 
-Developers can leverage SnapStore's API to integrate its features into their own applications and services. Whether you're building a website, mobile app, or any digital platform that requires high-quality photography, our API offers seamless integration.
+Developers can leverage SnapStore's API to integrate its features into their own applications and services.
+
+Link: https://the-snapstore-flask-api.onrender.com
 
 With SnapStore's API, you can:
 
@@ -142,7 +144,7 @@ https://github.com/michellemwangi01/The-Snapstore-Flask.git
 # Installing the backend
 
 1. Navigate to the project's directory
-   cd super-heroes-Flask-API
+   cd The-Snapstore-Flask
    cd Server
 
 2. Install required dependencies
