@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/mystyles.css";
-const PhotoCard = ({ photo, addToCart }) => {
+const PhotoCard = ({ photo, addToCart, userID}) => {
   const [likes, setLikes] = useState({});
   const toggleLike = (photoId) => {
     const updatedLikes = { ...likes };
@@ -38,7 +38,7 @@ const PhotoCard = ({ photo, addToCart }) => {
         </button>
         <button
           className="addToCart btn btn-warning ml-2"
-          onClick={() => addToCart(photo)}
+          onClick={() => addToCart(photo, userID)}
         >
           Add to Cart
         </button>

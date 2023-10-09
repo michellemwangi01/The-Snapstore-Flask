@@ -19,7 +19,7 @@ jwt = JWTManager(app)
 
 
 # -------------------------------------- A U T H E N T I C A T I O N ------------------------------
-from jwt.exceptions import ExpiredSignatureError, DecodeError
+# from jwt.exceptions import ExpiredSignatureError, DecodeError
 import jwt  # Make sure you have the jwt library imported
 
 def token_required(f):
@@ -43,9 +43,9 @@ def token_required(f):
             if not current_user:
                 return {"message": "User not found"}, 401
             print(current_user)
-        except ExpiredSignatureError:
+        except Exception:
             return {"message": "Token has expired"}, 401
-        except DecodeError as e:
+        except Exception as e:
             return {"message": f"{e}"}, 401
 
         return f(current_user, *args, **kwargs)
@@ -168,19 +168,14 @@ class Login(Resource):
     @ns.expect(user_login_schema)
     def post(self):
         data = request.get_json()
-        # print(data)
 
         if not data or not data['username'] or not data['password']:
-            return {'message': 'Could Not Verify'},401
+            return {'message': 'Could Not Verify'}, 401
 
         user = User.query.filter_by(username=data['username']).first()
-        print(user)
-        print('------------------------------------------------------------------')
 
-        if  not user:
-            print('------------------------------------------------------------------')
-            return {'message': 'Could Not Verify'},401
-
+        if not user:
+            return {'message': 'Could Not Verify'}, 401
 
         token_payload = {
             'public_id': user.public_id,
@@ -189,25 +184,28 @@ class Login(Resource):
 
         if check_password_hash(user.password_hash, data['password']):
             access_token = create_access_token(identity=user.id)
-            return {
-                'access_token': access_token, 
-                "username":user.username},201
+            response_data = {
+                'user_id': user.id,
+                'access_token': access_token,
+                'username': user.username
+            }
+
+            # Check if the user has a cart, if not, create one
+            user_cart = Cart.query.filter_by(user_id=user.id).first()
+            if not user_cart:
+                try:
+                    new_cart = Cart(user=user)
+                    db.session.add(new_cart)
+                    db.session.commit()
+                    print(f"Cart created for user {user.id}")
+                except Exception as e:
+                    db.session.rollback()
+                    return {'message': f'Error creating cart for user {user.id}: {str(e)}'}, 500
+
+            return response_data, 201
         else:
             return jsonify({'message': 'Invalid credentials'}), 401
 
-            # token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
-
-            # # Check if the user has a cart, if not, create one
-            # user_cart = Cart.query.filter_by(user_id=user.id).first()
-            # if not user_cart:
-            #     new_cart = Cart(user=user)
-            #     db.session.add(new_cart)
-            #     db.session.commit()
-            #     print(f"cart for user {user.id}", new_cart)
-
-            # return jsonify({'token': token})
-
-# api.add_resource(Login, '/login')
 
 
 @ns.route('/users')
@@ -400,56 +398,66 @@ class Photos(Resource):
 
 @ns.route('/cart/add/<int:photo_id>')
 class AddToCart(Resource):
-    # @token_required
     @ns.expect(cart_item_input_schema, validate=True)
-    def post(self, photo_id, current_user):
+    def post(self, photo_id):
         data = request.get_json()
-        current = User.query.filter_by(id = current_user.id).first()
-        # print(current)
 
-        # Check if the user has a cart, if not, create one
+        # Extract user_id from the request data
+        user_id = data.get('user_id')
+        print(f"Received request to add photo {photo_id} to cart for user {user_id}")
+
+        if not user_id:
+            return make_response('Unauthorized: User ID missing in request data', 401)
+
         try:
-            user_cart = Cart.query.filter_by(user_id=current.id).first()
-            if not user_cart:
-                user = User.query.get(current.id)
-                new_cart = Cart(user=user)
+            user = User.query.get(user_id)
+            if not user:
+                return make_response('Unauthorized: User not found', 401)
+
+            user_cart = Cart.query.filter_by(user_id=user_id).first()
+            if user_cart is None:
+                new_cart = Cart(user_id=user_id)
                 db.session.add(new_cart)
                 db.session.commit()
-        except SQLAlchemyError as e:
-            app.logger.error(str(e))
-            return {"message": "Error creating cart for user"}, 500
+                user_cart = new_cart
 
+            photo = Photo.query.get(photo_id)
+            if not photo:
+                app.logger.error("Photo not found")
+                return {"message": "Photo not found"}, 404
 
-        # Check if the photo exists
-        photo = Photo.query.get(photo_id)
-        if not photo:
-            app.logger.error("Photo not found")
-            return {"message":"Photo not found"}, 404
+            if user_cart:
+                existing_item = CartItem.query.filter_by(cart_id=user_cart.id, photo_id=photo_id).first()
+                if existing_item:
+                    app.logger.error("Item is already in the cart")
+                    return {"message": "Item is already in the cart"}, 400
 
-        # Check if the item is already in the cart
-        existing_item = CartItem.query.filter_by(cart_id=user_cart.id, photo_id=photo_id).first()
-        if existing_item:
-            app.logger.error("Item is already in the cart")
-            return {"message":"Item is already in the cart"}, 400
+            # Add the item to the cart
+            new_item = CartItem(cart=user_cart, photo=photo, quantity=data["quantity"])
+            db.session.add(new_item)
 
-        # Add the item to the cart
-        new_item = CartItem(cart=user_cart, photo=photo, quantity=data["quantity"])
-        db.session.add(new_item)
-        db.session.commit()
-        app.logger.info("Item added to the cart successfully")
-        return {"message": "Item added to the cart successfully"}, 201
+            try:
+                db.session.commit()
+                app.logger.info("Item added to the cart successfully")
+            except Exception as e:
+                db.session.rollback()
+                app.logger.error(f"Error adding item to cart: {str(e)}")
+                return {"message": "Internal server error"}, 500
+        except Exception as e:
+            app.logger.error(f"Error processing the request: {str(e)}")
+            return {"message": "Internal server error"}, 500
 
 
 @ns.route('/checkout')
 class Checkout(Resource):
     # @token_required
     @ns.expect(transaction_input_schema)
-    def post(self, current_user):
+    def post(self):
         data = request.get_json()
 
 
         # Check if the user has a cart
-        user_cart = Cart.query.filter_by(user_id=current_user.id).first()
+        user_cart = Cart.query.filter_by(user_id=data['user_id']).first()
         if not user_cart:
             app.logger.error("User does not have a cart. Add items to the cart first.")
             return {"message":"User does not have a cart. Add items to the cart first."}, 400
@@ -465,7 +473,7 @@ class Checkout(Resource):
             # Create a transaction
             transaction = Transaction(
                 photo_id=data["photo_id"],
-                user_id=current_user.id, 
+                user_id=data['user_id'], 
                 cart_item_id =user_cart.id
                 
             )
@@ -481,28 +489,18 @@ class Checkout(Resource):
             app.logger.error(str(e))
             return {"message": "Error Creating Transction"}
 
-        # user_cart = Cart.query.filter_by(user_id=19).first()
-        # if not user_cart:
-        #     return {"message": app.logger.error("User does not have a cart. Add items to the cart first.")}, 400
+@ns.route('/cart/items/<int:user_id>')
+class CartItemsResource(Resource):
+    def get(self, user_id):
+        try:
+            user_cart = Cart.query.filter_by(user_id=user_id).first()
+            if not user_cart:
+                return {"message": "Cart not found for this user"}, 404
 
-        # # Check if the item is in the user's cart
-        # cart_item = CartItem.query.filter_by(cart_id=user_cart.id, photo_id=data["photo_id"]).first()
-        # if not cart_item:
-            
-        #     return {"message": app.logger.error( "Item is not in the cart")}, 404
+            cart_items = CartItem.query.filter_by(cart_id=user_cart.id).all()
+            serialized_cart_items = [api.marshal(item, cart_item_output_schema) for item in cart_items]
 
-        # # Create a transaction
-        # transaction = Transaction(
-        #     photo_id=data["photo_id"],
-        #     user_id=1, 
-        #     cart_item_id =cart_item.id
-            
-        # )
-        # db.session.add(transaction)
-        # db.session.commit()
-
-        # # Remove the item from the cart
-        # db.session.delete(cart_item)
-        # db.session.commit()   
-
-        # return {"message": app.logger.error("Transaction completed successfully")}, 201
+            return api.marshal({"cart_items": serialized_cart_items}, cart_items_schema), 200
+        except Exception as e:
+            app.logger.error(f"Error retrieving cart items: {str(e)}")
+            return {"message": "Internal server error"}, 500
