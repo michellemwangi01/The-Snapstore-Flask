@@ -30,9 +30,13 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState("");
   const [username, setUsername] = useState("");
+  const [user_id, setUserid] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [btnText, setBtnText] = useState("Login");
+
+  console.log(`jwtoken ${jwToken}`);
+  console.log(`user id ${user_id}`);
 
   useEffect(() => {
     setCurrentUser("Mamamia");
@@ -134,6 +138,7 @@ const App = () => {
                           <Gallery
                             jwToken={jwToken}
                             category_id={selectedCategoryId}
+                            userID={user_id}
                           />
                         )
                       }
@@ -170,6 +175,8 @@ const App = () => {
                           setIsLoggedIn={setIsLoggedIn}
                           setBtnText={setBtnText}
                           isLoggedIn={isLoggedIn}
+                          user_Id={user_id} 
+                          setUserid={setUserid}
                         />
                       }
                     />
