@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Garamond:wght@300&family=Dancing+Script:wght@600&family=IBM+Plex+Serif:wght@300&family=Kalam:wght@300&family=Satisfy&family=Ysabeau+Infant:ital,wght@1,300&display=swap");
+.nav-item a.active {
+  background-color: purple;
+  color: white;
+  padding: 10px;
+}
+
+.navbar {
+  /* background-color: white; Set the background color to white */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle box shadow */
+  margin: 4px;
+}
+.nav-item a {
+  color: black;
+  padding: 10px;
+  opacity: 0.9;
+  width: auto;
+  margin: 5px;
+}
+
+.login_out {
+  border: 1px purple solid;
+}
+.gallery_cart {
+  display: flex;
+  width: 100%;
+  position: relative;
+  margin: auto;
+  justify-content: center;
+}
+.gallery_card_inner {
+  width: 20%;
+  height: 27rem;
+  margin: 1.5rem;
+  margin-bottom: 10rem;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+img {
+  object-fit: cover;
+  height: 70%;
+  overflow: hidden;
+  height: 20rem;
+}
+.galleryHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+
+.gallery_card_inner {
+  width: 25%;
+  height: 27rem;
+  margin: 1.5rem;
+  margin-bottom: 10rem;
+}
+
+.gallery_card_inner img {
+  object-fit: cover;
+  height: 80%;
+  overflow: hidden;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.gallery_card_inner img:hover {
+  border: 1px purple solid;
+  padding: 3px;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add your desired shadow properties here */
+}
+.addToCart:hover {
+  border: 1px solid rgb(224, 157, 33);
+  background-color: white;
+}
+.card-title {
+  padding: 3px;
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.card-body {
+  height: 0;
+  background-color: transparent;
+}
+.card-body .p-5 {
+  height: 0;
+  background-color: transparent;
+}
+
+.card-img-top {
+  margin: 0px;
+}
+.card-title h5 .card-text p .card-text p {
+  padding-left: 10px;
+}
+.my-4 {
+  font-family: "Dancing Script", cursive;
+  text-align: center;
+}
+
+.theCart {
+  /* margin-top: 4rem;
+  margin-right: 2rem; */
+  width: 10%;
+  margin-left: 0;
+  position: absolute;
+  top: 35%;
+  right: 5px;
+}
+
+/* .card {
+  width: 14rem;
+  position: absolute;
+  left: 104rem;
+  top: 20rem;
+} */
+button .btnLogin {
+  background-color: purple;
+  color: white;
+}
+.p-5 {
+  background-color: transparent;
+}
+.vh-100 {
+  height: 80vh;
+}
+.loginBackgroundContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12rem;
+}
+.categoryButtons {
+  padding: 8px;
+  width: auto;
+  margin: 10px;
+  border-radius: 7px;
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  opacity: 0.6;
+}
+.buttonsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.container_gallery {
+}
