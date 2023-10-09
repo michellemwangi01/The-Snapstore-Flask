@@ -1,4 +1,4 @@
-# # SnapStore
+# The SnapStore
 
 ![python version](https://img.shields.io/badge/python-3.10.12-blue.svg)
 ![Flask version](https://img.shields.io/badge/flask-2.3.3-red.svg)
@@ -47,21 +47,21 @@ SnapStore is more than just an online marketplace for photography; it's a commun
 2. User-Friendly Navigation
 
    - Navbar
-     ![Alt text](image-1.png)
+     ![Alt text](image-5.png)
 
 3. Personalized User Profiles and update personal catalog
 
    - update catalog
-     ![Alt text](image-4.png)
+     ![Alt text](image-6.png)
 
 4. Photo Categories
 
    - Categories
-     ![Alt text](image-2.png)
+     ![Alt text](image-7.png)
 
 5. API Access
    - API Documentation
-     ![Alt text](image-3.png)
+     ![Alt text](image-8.png)
 
 ## API Access
 
