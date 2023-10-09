@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/formcss.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import YourGallery from "./YourGallery";
 
 const AddProductForm = ({ username, jwToken }) => {
   const [formData, setFormData] = useState({
@@ -74,86 +75,91 @@ const AddProductForm = ({ username, jwToken }) => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Add a New Image</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-field">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            className="input-field"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            className="input-field"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="imageUrl">Image URL:</label>
-          <input
-            type="text"
-            id="imageUrl"
-            className="input-field"
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            className="input-field"
-            name="price"
-            min={0}
-            value={formData.price}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="category">Category:</label>
-          <select
-            id="category"
-            className="input-field"
-            name="category"
-            value={formData.category}
-            onChange={handleInputChange}
-          >
-            <option value="">Select a category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-field">
-          <label htmlFor="postedBy">Posted By:</label>
-          <input
-            type="text"
-            id="postedBy"
-            className="input-field"
-            name="postedBy"
-            value={formData.postedBy}
-            onChange={handleInputChange}
-            readOnly
-          />
-        </div>
-        <button type="submit" className="submit-button">
-          Submit
-        </button>
-      </form>
+    <div className="yourCatalog">
+      <div className="form-container">
+        <h2>Add a New Image</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-field">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              className="input-field"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-field">
+            <label htmlFor="description">Description:</label>
+            <textarea
+              id="description"
+              className="input-field"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-field">
+            <label htmlFor="imageUrl">Image URL:</label>
+            <input
+              type="text"
+              id="imageUrl"
+              className="input-field"
+              name="imageUrl"
+              value={formData.imageUrl}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-field">
+            <label htmlFor="price">Price:</label>
+            <input
+              type="number"
+              id="price"
+              className="input-field"
+              name="price"
+              min={0}
+              value={formData.price}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-field">
+            <label htmlFor="category">Category:</label>
+            <select
+              id="category"
+              className="input-field"
+              name="category"
+              value={formData.category}
+              onChange={handleInputChange}
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-field">
+            <label htmlFor="postedBy">Posted By:</label>
+            <input
+              type="text"
+              id="postedBy"
+              className="input-field"
+              name="postedBy"
+              value={formData.postedBy}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
+        </form>
+      </div>
+      <div className="yourCatalogItems">
+        <YourGallery jwToken={jwToken} />
+      </div>
     </div>
   );
 };

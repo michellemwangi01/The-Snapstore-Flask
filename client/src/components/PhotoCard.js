@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../styles/mystyles.css";
 const PhotoCard = ({ photo, addToCart }) => {
   const [likes, setLikes] = useState({});
   const toggleLike = (photoId) => {
