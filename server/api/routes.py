@@ -356,7 +356,8 @@ class Photos(Resource):
             photos = Photo.query.filter_by(user_id = current_user).all()
             if not photos:
                 return "No photos found", 404
-            return photos, 200
+            else:
+                return photos, 200
         except Exception as e:
             app.logger.error(str(e))
             return "Error loading photos", 500
