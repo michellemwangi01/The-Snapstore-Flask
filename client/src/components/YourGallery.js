@@ -34,6 +34,7 @@ const YourGallery = ({ category_id, jwToken }) => {
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
+        setLoading(false);
       });
   }, []);
 
@@ -57,9 +58,25 @@ const YourGallery = ({ category_id, jwToken }) => {
     setCurrentPage(pageNumber);
   };
 
-  // Calculate the total number of pages
-  //   const totalPages = Math.ceil(photos.length / photosPerPage);
-
+  if (yourPhotos.length === 0) {
+    return (
+      <div className="your_gallery_container">
+        <h1 className="my-4">Your Catalog</h1>
+        <div className="gallery_cart">
+          <h1
+            style={{
+              fontFamily: "cursive",
+              fontWeight: "lighter",
+              textAlign: "center",
+            }}
+          >
+            "No data found, your catalog is empty."
+          </h1>
+        </div>
+      </div>
+    );
+  }
+  console.log(yourPhotos);
   const photosList = yourPhotos.map((photo) => <PhotoCard photo={photo} />);
 
   return (
