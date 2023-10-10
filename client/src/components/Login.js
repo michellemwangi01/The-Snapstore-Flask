@@ -9,6 +9,8 @@ const Login = ({
   setIsLoggedIn,
   setBtnText,
   isLoggedIn,
+  user_id, 
+  setUserid 
 }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -55,7 +57,9 @@ const Login = ({
       .then((data) => {
         console.log("Response data:", data);
         localStorage.setItem("jwtToken", data.access_token);
+        localStorage.setItem("jwtToken", data.user_id);
         setIsLoggedIn(true);
+        // setUserid(data.user_id)
         const username_uppper = toTitleCase(data.username);
         setBtnText(`Logout, ${username_uppper}`);
         navigate("/");
@@ -67,10 +71,13 @@ const Login = ({
         });
         setJWToken(data.access_token);
         setUsername(data.username);
+        setUserid(data.user_id)
       })
       .catch((response) => {
         console.error("Error:", response.message);
       });
+      console.log(jwToken);
+      console.log(user_id)
   };
 
   return (
