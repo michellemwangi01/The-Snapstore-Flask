@@ -6,9 +6,9 @@ import PhotoCard from "./PhotoCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Gallery = ({ category_id, userID, jwToken}) => {
-  console.log("our token is", jwToken)
-  console.log("our user is", userID)
+const Gallery = ({ category_id, userID, jwToken }) => {
+  console.log("our token is", jwToken);
+  console.log("our user is", userID);
 
   const [photos, setPhotos] = useState([]);
   const [originalPhotos, setOriginalPhotos] = useState([]);
@@ -26,13 +26,11 @@ const Gallery = ({ category_id, userID, jwToken}) => {
   const handleCartRefresh = () => {
     setCartRefresh(!cartRefresh);
   };
-  console.log("cart items",cart)
+  console.log("cart items", cart);
 
   const removeFromCart = (photoId) => {
-    
     setCart((prevCart) => prevCart.filter((item) => item.id !== photoId));
   };
-  
 
   useEffect(() => {
     fetch("https://the-snapstore-flask-api.onrender.com/snapstore/photos")
@@ -48,8 +46,6 @@ const Gallery = ({ category_id, userID, jwToken}) => {
       });
   }, []);
 
-
-
   const addToCart = (photo, userID, item_added_to_cart) => {
     console.log("USER TO POST CART", userID);
 
@@ -58,13 +54,13 @@ const Gallery = ({ category_id, userID, jwToken}) => {
       user_id: userID,
       photo_id: photo.id,
       quantity: 1,
-    }
+    };
 
     // Make the POST request to add the photo to the cart
-    fetch(`https://the-snapstore-flask-api.onrender.com/snapstore/cart/add/${photo.id}`, {
-      method: 'POST',
+    fetch(`http://127.0.0.1:5555/snapstore/cart/add/${photo.id}`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
@@ -74,24 +70,22 @@ const Gallery = ({ category_id, userID, jwToken}) => {
           return response.json(); // Parse the response JSON
         } else {
           // Handle error by throwing an error with a message
-          throw new Error('Failed to add item to cart');
+          throw new Error("Failed to add item to cart");
         }
       })
       .then((cartData) => {
-        
-        console.log('Item added to cart:', cartData);
-        
+        console.log("Item added to cart:", cartData);
+
         setCart((prevCart) => [...prevCart, photo]);
         item_added_to_cart();
       })
       .catch((error) => {
         // Handle any errors that occurred during the fetch or processing
-        console.error('Error adding item to cart:', error);
+        console.error("Error adding item to cart:", error);
       });
   };
 
-console.log("items in cart",cart)
-
+  console.log("items in cart", cart);
 
   if (loading) {
     return (
@@ -117,12 +111,7 @@ console.log("items in cart",cart)
   const totalPages = Math.ceil(photos.length / photosPerPage);
 
   const photosList = currentPhotos.map((photo) => (
-    <PhotoCard 
-    photo={photo} 
-    addToCart={addToCart} 
-    userID={userID} 
-    
-    />
+    <PhotoCard photo={photo} addToCart={addToCart} userID={userID} />
   ));
 
   //  const photosList = currentPhotos.map((photo) => (
@@ -171,8 +160,9 @@ console.log("items in cart",cart)
             {Array.from({ length: totalPages }, (_, index) => (
               <li
                 key={index + 1}
-                className={`page-item ${currentPage === index + 1 ? "active" : ""
-                  }`}
+                className={`page-item ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
               >
                 <button
                   className="page-link"
@@ -183,8 +173,9 @@ console.log("items in cart",cart)
               </li>
             ))}
             <li
-              className={`page-item ${currentPage === totalPages ? "disabled" : ""
-                }`}
+              className={`page-item ${
+                currentPage === totalPages ? "disabled" : ""
+              }`}
             >
               <button
                 className="page-link"
@@ -197,12 +188,12 @@ console.log("items in cart",cart)
           </ul>
         </nav>
         <div className="theCart">
-          <Cart 
-          cartItem={cart} 
-          user_ID={userID} 
-          cartRefresh={cartRefresh} 
-          onCartRefresh={handleCartRefresh} 
-          removeFromCart={removeFromCart}
+          <Cart
+            cartItem={cart}
+            user_ID={userID}
+            cartRefresh={cartRefresh}
+            onCartRefresh={handleCartRefresh}
+            removeFromCart={removeFromCart}
           />
         </div>
       </div>

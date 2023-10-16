@@ -9,8 +9,8 @@ const Login = ({
   setIsLoggedIn,
   setBtnText,
   isLoggedIn,
-  user_id, 
-  setUserid 
+  user_id,
+  setUserid,
 }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ const Login = ({
       password: password,
     };
 
-    fetch("https://the-snapstore-flask-api.onrender.com/snapstore/login", {
+    fetch("http://127.0.0.1:5555/snapstore/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const Login = ({
       .then((data) => {
         console.log("Response data:", data);
         localStorage.setItem("jwtToken", data.access_token);
-        localStorage.setItem("jwtToken", data.user_id);
+        localStorage.setItem("userID", data.user_id);
         setIsLoggedIn(true);
         // setUserid(data.user_id)
         const username_uppper = toTitleCase(data.username);
@@ -71,13 +71,13 @@ const Login = ({
         });
         setJWToken(data.access_token);
         setUsername(data.username);
-        setUserid(data.user_id)
+        setUserid(data.user_id);
       })
       .catch((response) => {
         console.error("Error:", response.message);
       });
-      console.log(jwToken);
-      console.log(user_id)
+    console.log(jwToken);
+    console.log(user_id);
   };
 
   return (
