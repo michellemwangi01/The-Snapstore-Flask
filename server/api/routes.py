@@ -5,7 +5,8 @@ from api import app, ma, api
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from .api_models import *
 from .models import Category, Transaction, User, Photo, Cart, CartItem
-import jwt, os
+# import jwt, 
+import os
 from functools import wraps
 from marshmallow.exceptions import ValidationError
 from flask_jwt_extended import JWTManager
@@ -14,7 +15,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 
 ns = Namespace('snapstore')
 api.add_namespace(ns)
-jwt = JWTManager(app)
+# jwt = JWTManager(app)
 
 
 
