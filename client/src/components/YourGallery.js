@@ -18,11 +18,15 @@ const YourGallery = ({ category_id, jwToken }) => {
   //   const currentPhotos = photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
 
   useEffect(() => {
-    fetch(`https://the-snapstore-flask-api.onrender.com/snapstore/userphotos`, {
-      headers: {
-        Authorization: `Bearer ${jwToken}`,
-      },
-    })
+    fetch(
+      `https://the-snapstore-flask-api.onrender.com/snapstore/userphotos/
+`,
+      {
+        headers: {
+          Authorization: `Bearer ${jwToken}`,
+        },
+      }
+    )
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
@@ -60,7 +64,7 @@ const YourGallery = ({ category_id, jwToken }) => {
           padding: "2rem",
         }}
       >
-        No photos available.
+        You have not posted any images to the site.
       </p>
     );
   }

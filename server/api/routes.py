@@ -352,7 +352,7 @@ class Photos(Resource):
     def get(self):
         try:
             current_user = get_jwt_identity()
-            photos = Photo.query.filter_by(user_id = current_user).all()
+            photos = Photo.query.filter_by(user_id=current_user).all()
             if not photos:
                 return "No photos found", 404
             return photos, 200

@@ -49,7 +49,7 @@ function Transactions({ jwToken }) {
     );
   }
 
-  if (yourPhotos.length === 0) {
+  if (transactions.length === 0) {
     return (
       <p
         style={{
