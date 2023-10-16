@@ -17,7 +17,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_migrate import Migrate
 import datetime
 import uuid
-import jwt
+# import jwt
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 
