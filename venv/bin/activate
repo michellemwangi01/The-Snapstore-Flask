@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/michelle/Development/Code/phase-4-flask/TSS/TSS-dev/The-Snapstore-Flask/venv"
+VIRTUAL_ENV="/home/michelle/Development/Code/phase-4-flask/TSS/TSS-dev/TSS-With-Checkout/The-Snapstore-Flask/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -1,21 +1,21 @@
 from api import jsonify, request, url_for, csrf, Resource, User, SQLAlchemyError, make_response, FlaskForm, \
-    FileField, send_from_directory, FileAllowed, FileRequired, Migrate, db, Api, UploadSet, SubmitField, \
-    configure_uploads, IMAGES, Namespace, Marshmallow, fields, check_password_hash, datetime, uuid
+    FileField, send_from_directory, FileAllowed, FileRequired, Migrate, db, Api, SubmitField, \
+   Namespace, Marshmallow, fields, check_password_hash, datetime, uuid
 from api import app, ma, api
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+# from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from .api_models import *
 from .models import Category, Transaction, User, Photo, Cart, CartItem
 # import jwt, 
 import os
 from functools import wraps
 from marshmallow.exceptions import ValidationError
-# from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
 ns = Namespace('snapstore')
 api.add_namespace(ns)
-# jwt = JWTManager(app)
+jwt = JWTManager(app)
 
 
 
@@ -56,14 +56,14 @@ api.add_namespace(ns)
 
 # -------------------------------------- R O U T E S ------------------------------
 
-photos = UploadSet('photos', IMAGES)
-configure_uploads(app, photos)
+# photos = UploadSet('photos', IMAGES)
+# configure_uploads(app, photos)
 
-UPLOAD_FOLDER = "uploads"  # Folder where the uploaded images will be stored
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+# UPLOAD_FOLDER = "uploads"  # Folder where the uploaded images will be stored
+# if not os.path.exists(UPLOAD_FOLDER):
+#     os.makedirs(UPLOAD_FOLDER)
 
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+# app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @ns.route('/')
 class Home(Resource):
@@ -74,13 +74,13 @@ class Home(Resource):
             return {'error': f'{str(e)}'}
 
 
-class UploadForm(FlaskForm):
-    photo = FileField(
-        validators=[
-            FileAllowed(photos, 'Only images are allowed'),
-            FileRequired('File field should not be empty')]
-    )
-    submit = SubmitField('Upload')
+# class UploadForm(FlaskForm):
+#     photo = FileField(
+#         validators=[
+#             FileAllowed(photos, 'Only images are allowed'),
+#             FileRequired('File field should not be empty')]
+#     )
+#     submit = SubmitField('Upload')
 
 
 @ns.route('/get_csrf_token')
@@ -96,23 +96,23 @@ class GetFile(Resource):
 
 api.add_resource(GetFile, '/uploads/<filename>')
 
-@ns.route('/uploadimage')
-class UploadImage(Resource):
-    def post(self):
-        # form = UploadForm()
-        # if form.validate_on_submit():
-        try:
-            file = request.files("image")
-            if file:
-                # filename = photos.save(form.photo.data)  # Save the image to the uploads folder
-                # file_url = url_for('get_file', filename=filename)
-                filename = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
-                file.save(filename)
-                return make_response(jsonify(filename), 200)
-            else:
-                return {"message": "No file uploaded"}, 400
-        except Exception as e:
-            return {"message": str(e)}, 500
+# @ns.route('/uploadimage')
+# class UploadImage(Resource):
+#     def post(self):
+#         # form = UploadForm()
+#         # if form.validate_on_submit():
+#         try:
+#             file = request.files("image")
+#             if file:
+#                 # filename = photos.save(form.photo.data)  # Save the image to the uploads folder
+#                 # file_url = url_for('get_file', filename=filename)
+#                 filename = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+#                 file.save(filename)
+#                 return make_response(jsonify(filename), 200)
+#             else:
+#                 return {"message": "No file uploaded"}, 400
+#         except Exception as e:
+#             return {"message": str(e)}, 500
 
 # api.add_resource(UploadImage, '/uploadimage')
 

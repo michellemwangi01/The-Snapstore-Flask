@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/home/michelle/Development/Code/phase-4-flask/TSS/TSS-dev/The-Snapstore-Flask/venv"
+setenv VIRTUAL_ENV "/home/michelle/Development/Code/phase-4-flask/TSS/TSS-dev/TSS-With-Checkout/The-Snapstore-Flask/venv"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

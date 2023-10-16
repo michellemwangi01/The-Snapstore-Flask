@@ -1,4 +1,3 @@
-
 import os
 from flask import Flask, make_response, request, jsonify
 import datetime
@@ -13,7 +12,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from flask_restx import Api, Resource, Namespace, fields
 from sqlalchemy.exc import SQLAlchemyError
-from flask_uploads import UploadSet, configure_uploads, IMAGES
+# from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_migrate import Migrate
 import datetime
 import uuid
