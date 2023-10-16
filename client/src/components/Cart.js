@@ -1,57 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  const Cart = ({ user_ID, cartItem, cartRefresh, onCartRefresh, removeFromCart }) => {
+const Cart = ({
+  user_ID,
+  cartItem,
+  cartRefresh,
+  onCartRefresh,
+  removeFromCart,
+}) => {
   const [cartItems, setCartItems] = useState([]);
   const [carts, setCarts] = useState(cartItem);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [checkout, setCheckout] = useState(false)
+  const [checkout, setCheckout] = useState(false);
 
+  const transaction_created_successfully = () =>
+    toast("Transaction successfully created. Navigate to history to view!");
 
-    // Function to handle the checkout process
-    const handleCheckout = (photoId, user_ID) => {
-    
-      // Make a POST request to the /checkout endpoint
-      fetch(`https://the-snapstore-flask-api.onrender.com/snapstore/checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any necessary headers (e.g., authentication)
-        },
-        body: JSON.stringify({
-          photo_id: photoId,
-          user_id: user_ID,
-          
-        }),
-      })
-        .then(async (response) => {
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message}`);
-          }
-  
-          // Handle a successful checkout here
-          const successMessage = 'Transaction initiated successfully!'; // Create a success message
-          alert(successMessage); // Display the success message to the user
-  
-          // setCartItems((prevCartItems) => prevCartItems.filter((item) => item.id !== cartItemId));
+  // Function to handle the checkout process
+  const handleCheckout = (photoId, user_ID) => {
+    // Make a POST request to the /checkout endpoint
+    console.log(photoId, user_ID);
+    fetch(`http://127.0.0.1:5555/snapstore/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        photo_id: photoId,
+        user_id: user_ID,
+      }),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          console.log("Error: HTTP error! Status: " + response.status);
+        } else {
+          transaction_created_successfully();
           removeFromCart(photoId);
-          
           onCartRefresh();
-        })
-        .catch((error) => {
-          console.error('Error during checkout:', error.message);
-          alert('Error during checkout: ' + error.message);
-        });
-    };
+        }
+      })
+      .catch((error) => {
+        console.error("Error during checkout:", error.message);
+        alert("Error during checkout: " + error.message);
+      });
+  };
 
   useEffect(() => {
     // Fetch cart items when the component mounts
-    fetch(`https://the-snapstore-flask-api.onrender.com/snapstore/cart/items/${user_ID}`)
+    fetch(`http://127.0.0.1:5555/snapstore/cart/items/${user_ID}`)
       .then(async (response) => {
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message}`);
+          throw new Error(
+            `HTTP error! Status: ${response.status}, Message: ${errorData.message}`
+          );
         }
 
         return response.json();
@@ -61,17 +65,17 @@ import React, { useState, useEffect } from 'react';
         setCartItems(data.cart_items);
         setLoading(false); // Update loading state
         // Calculate the total price when cart items change
-        const totalPrice = data.cart_items.reduce((total, item) => total + item.photo.price, 0);
+        const totalPrice = data.cart_items.reduce(
+          (total, item) => total + item.photo.price,
+          0
+        );
         setTotalPrice(totalPrice);
       })
       .catch((error) => {
-        console.error('Error retrieving cart items:', error.message);
-        alert('Error retrieving cart items: ' + error.message);
+        console.error("Error retrieving cart items:", error.message);
+        alert("Error retrieving cart items: " + error.message);
       });
   }, [cartItem]); // Run this effect when the user_ID changes
-
-
-
 
   return (
     <div className="card">
@@ -89,7 +93,6 @@ import React, { useState, useEffect } from 'react';
           ) : (
             <ul className="list-group list-group-flush">
               {cartItems.map((item) => (
-              
                 <li key={item.id} className="list-group-item">
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="d-flex flex-column">
@@ -98,9 +101,12 @@ import React, { useState, useEffect } from 'react';
                     </div>
                     <div>
                       <span className="ml-2">Price: ${item.photo.price}</span>
-                      <button className="btn btn-danger btn-sm ml-2"
-                      onClick={() => handleCheckout(item.photo.id, user_ID)}
-                      >Checkout</button>
+                      <button
+                        className="btn btn-danger btn-sm ml-2"
+                        onClick={() => handleCheckout(item.photo.id, user_ID)}
+                      >
+                        Checkout
+                      </button>
                     </div>
                   </div>
                 </li>

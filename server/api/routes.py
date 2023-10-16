@@ -185,9 +185,9 @@ class Login(Resource):
         if check_password_hash(user.password_hash, data['password']):
             access_token = create_access_token(identity=user.id)
             response_data = {
-                'user_id': user.id,
                 'access_token': access_token,
-                'username': user.username
+                'username': user.username,
+                 'user_id': user.id
             }
 
             # Check if the user has a cart, if not, create one
@@ -397,7 +397,7 @@ class Photos(Resource):
 
 @ns.route('/cart/add/<int:photo_id>')
 class AddToCart(Resource):
-    @ns.expect(cart_item_input_schema, validate=True)
+    # @ns.expect(cart_item_input_schema, validate=True)
     def post(self, photo_id):
         data = request.get_json()
 
@@ -449,14 +449,15 @@ class AddToCart(Resource):
 
 @ns.route('/checkout')
 class Checkout(Resource):
-    # @token_required
+    # @jwt_required()
     @ns.expect(transaction_input_schema)
     def post(self):
+        print('------------checkout---------------')
         data = request.get_json()
-
 
         # Check if the user has a cart
         user_cart = Cart.query.filter_by(user_id=data['user_id']).first()
+        print(user_cart)
         if not user_cart:
             app.logger.error("User does not have a cart. Add items to the cart first.")
             return {"message":"User does not have a cart. Add items to the cart first."}, 400
@@ -478,14 +479,15 @@ class Checkout(Resource):
             )
             db.session.add(transaction)
             db.session.commit()
+            print(transaction)
 
             # Remove the item from the cart
             db.session.delete(cart_item)
             db.session.commit()
 
-            return {"message": app.logger.info("Transaction completed successfully")}, 201
+            return {"message": "Transaction completed successfully"}, 201
         except SQLAlchemyError as e:
-            app.logger.error(str(e))
+            # app.logger.error(str(e))
             return {"message": "Error Creating Transction"}
 
 @ns.route('/cart/items/<int:user_id>')
