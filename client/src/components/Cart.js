@@ -22,7 +22,7 @@ const Cart = ({
   const handleCheckout = (photoId, user_ID) => {
     // Make a POST request to the /checkout endpoint
     console.log(photoId, user_ID);
-    fetch(`http://127.0.0.1:5555/snapstore/checkout`, {
+    fetch(`https://the-snapstore-flask-api.onrender.com/snapstore/checkout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,9 @@ const Cart = ({
 
   useEffect(() => {
     // Fetch cart items when the component mounts
-    fetch(`http://127.0.0.1:5555/snapstore/cart/items/${user_ID}`)
+    fetch(
+      `https://the-snapstore-flask-api.onrender.com/snapstore/cart/items/${user_ID}`
+    )
       .then(async (response) => {
         if (!response.ok) {
           const errorData = await response.json();

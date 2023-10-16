@@ -14,11 +14,14 @@ function Transactions({ jwToken }) {
   const transaction_deleted_successfully = () =>
     toast("Transaction Successfully deleted!");
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/snapstore/transactions", {
-      headers: {
-        Authorization: `Bearer ${jwToken}`,
-      },
-    })
+    fetch(
+      "https://the-snapstore-flask-api.onrender.com/snapstore/transactions",
+      {
+        headers: {
+          Authorization: `Bearer ${jwToken}`,
+        },
+      }
+    )
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
@@ -27,6 +30,7 @@ function Transactions({ jwToken }) {
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
+        setLoading(false);
       });
   }, []);
 
@@ -41,6 +45,21 @@ function Transactions({ jwToken }) {
         }}
       >
         Loading data...
+      </p>
+    );
+  }
+
+  if (yourPhotos.length === 0) {
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          fontStyle: "italic",
+          fontSize: "2rem",
+          padding: "2rem",
+        }}
+      >
+        You have not made any purchases yet.{" "}
       </p>
     );
   }

@@ -18,14 +18,11 @@ const YourGallery = ({ category_id, jwToken }) => {
   //   const currentPhotos = photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
 
   useEffect(() => {
-    fetch(
-      `https://the-snapstore-flask-api.onrender.com/snapstore/userphotos/`,
-      {
-        headers: {
-          Authorization: `Bearer ${jwToken}`,
-        },
-      }
-    )
+    fetch(`https://the-snapstore-flask-api.onrender.com/snapstore/userphotos`, {
+      headers: {
+        Authorization: `Bearer ${jwToken}`,
+      },
+    })
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
@@ -34,6 +31,7 @@ const YourGallery = ({ category_id, jwToken }) => {
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
+        setLoading(false);
       });
   }, []);
 
@@ -48,6 +46,21 @@ const YourGallery = ({ category_id, jwToken }) => {
         }}
       >
         Loading data...
+      </p>
+    );
+  }
+
+  if (yourPhotos.length === 0) {
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          fontStyle: "italic",
+          fontSize: "2rem",
+          padding: "2rem",
+        }}
+      >
+        No photos available.
       </p>
     );
   }

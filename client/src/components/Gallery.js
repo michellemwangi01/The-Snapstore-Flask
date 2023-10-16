@@ -57,13 +57,16 @@ const Gallery = ({ category_id, userID, jwToken }) => {
     };
 
     // Make the POST request to add the photo to the cart
-    fetch(`http://127.0.0.1:5555/snapstore/cart/add/${photo.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://the-snapstore-flask-api.onrender.com/snapstore/cart/add/${photo.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((response) => {
         if (response.ok) {
           // Handle success by updating the cart state
