@@ -9,7 +9,7 @@ from .models import Category, Transaction, User, Photo, Cart, CartItem
 import os
 from functools import wraps
 from marshmallow.exceptions import ValidationError
-from flask_jwt_extended import JWTManager
+# from flask_jwt_extended import JWTManager
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
@@ -21,37 +21,37 @@ api.add_namespace(ns)
 
 # -------------------------------------- A U T H E N T I C A T I O N ------------------------------
 # from jwt.exceptions import ExpiredSignatureError, DecodeError
-import jwt  # Make sure you have the jwt library imported
+# import jwt  # Make sure you have the jwt library imported
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-        auth_header = request.headers.get('Authorization')
+# def token_required(f):
+#     @wraps(f)
+#     def decorated(*args, **kwargs):
+#         token = None
+#         auth_header = request.headers.get('Authorization')
 
-        if auth_header and auth_header.startswith('Bearer '):
-            token = auth_header.split('Bearer ')[1]
-            print(token)
-        if not token:
-            return {"message": "Token is missing"}, 401
+#         if auth_header and auth_header.startswith('Bearer '):
+#             token = auth_header.split('Bearer ')[1]
+#             print(token)
+#         if not token:
+#             return {"message": "Token is missing"}, 401
         
-        try:
-            print(app.config['SECRET_KEY'])
-            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])  # Specify the algorithm here
-            # token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
+#         try:
+#             print(app.config['SECRET_KEY'])
+#             # data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])  # Specify the algorithm here
+#             # token = jwt.encode(token_payload, app.config['SECRET_KEY'], algorithm='HS256')
 
-            current_user = User.query.filter_by(public_id=data['public_id']).first()
-            if not current_user:
-                return {"message": "User not found"}, 401
-            print(current_user)
-        except Exception:
-            return {"message": "Token has expired"}, 401
-        except Exception as e:
-            return {"message": f"{e}"}, 401
+#             current_user = User.query.filter_by(public_id=data['public_id']).first()
+#             if not current_user:
+#                 return {"message": "User not found"}, 401
+#             print(current_user)
+#         except Exception:
+#             return {"message": "Token has expired"}, 401
+#         except Exception as e:
+#             return {"message": f"{e}"}, 401
 
-        return f(current_user, *args, **kwargs)
+#         return f(current_user, *args, **kwargs)
 
-    return decorated
+#     return decorated
 
 
 # -------------------------------------- R O U T E S ------------------------------
@@ -211,7 +211,7 @@ class Login(Resource):
 
 @ns.route('/users')
 class Users(Resource):
-    @token_required
+    # @token_required
     @ns.marshal_list_with(users_schema)
     def get(self):
         # if not current_user.admin:
