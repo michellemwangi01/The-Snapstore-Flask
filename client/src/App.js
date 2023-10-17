@@ -26,7 +26,7 @@ import "./App.css";
 import Redirect from "./components/Redirect";
 import AddProductForm from "./components/AddProductForm";
 import AOS from "aos";
-import "aos/dist/aos.css";
+// import "aos/dist/aos.css";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
