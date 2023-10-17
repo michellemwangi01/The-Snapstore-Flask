@@ -40,11 +40,11 @@ const App = () => {
   console.log(`jwtoken ${jwToken}`);
   console.log(`user id ${user_id}`);
 
-  // useEffect(() => {
-  //   AOS.init({ duration: 3000 });
-  // }, []);
+  useEffect(() => {
+    AOS.init({ duration: 3000 });
+  }, []);
 
-  AOS.init({ duration: 3000 });
+  // AOS.init({ duration: 3000 });
 
   useEffect(() => {
     setCurrentUser("Mamamia");
