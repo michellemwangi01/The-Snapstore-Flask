@@ -192,7 +192,7 @@ const Gallery = ({ category_id, userID, jwToken }) => {
             position: "absolute",
             maxHeight: "60rem",
             overflow: "scroll",
-            width: "30rem",
+            width: "23%",
             padding: "0.5rem",
             top: "6.5%",
             backgroundColor: "whitesmoke",
