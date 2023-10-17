@@ -73,12 +73,14 @@ const LandingPage = () => {
     <div>
       {/* Header */}
       <header
+        data-aos="zoom-in"
+        data-aos-once="true"
         className="bg-light"
         style={{
           backgroundImage: `url("${headerImageUrl}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "300px", // Adjust the height as needed
+          height: "350px", // Adjust the height as needed
           margin: "0",
         }}
       >
