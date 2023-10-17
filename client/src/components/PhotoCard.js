@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../styles/mystyles.css";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const PhotoCard = ({ photo, addToCart, userID }) => {
   const [likes, setLikes] = useState({});
@@ -10,10 +8,6 @@ const PhotoCard = ({ photo, addToCart, userID }) => {
     updatedLikes[photoId] = !updatedLikes[photoId];
     setLikes(updatedLikes);
   };
-
-  useEffect(() => {
-    AOS.init({ duration: 3000 });
-  }, []);
 
   return (
     <div

@@ -25,18 +25,26 @@ import LandingPage from "./components/LandingPage";
 import "./App.css";
 import Redirect from "./components/Redirect";
 import AddProductForm from "./components/AddProductForm";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [jwToken, setJWToken] = useState("");
   const [username, setUsername] = useState("");
-  const [user_id, setUserid] = useState(null)
+  const [user_id, setUserid] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [btnText, setBtnText] = useState("Login");
 
   console.log(`jwtoken ${jwToken}`);
   console.log(`user id ${user_id}`);
+
+  // useEffect(() => {
+  //   AOS.init({ duration: 3000 });
+  // }, []);
+
+  AOS.init({ duration: 3000 });
 
   useEffect(() => {
     setCurrentUser("Mamamia");
@@ -175,7 +183,7 @@ const App = () => {
                           setIsLoggedIn={setIsLoggedIn}
                           setBtnText={setBtnText}
                           isLoggedIn={isLoggedIn}
-                          user_Id={user_id} 
+                          user_Id={user_id}
                           setUserid={setUserid}
                         />
                       }
