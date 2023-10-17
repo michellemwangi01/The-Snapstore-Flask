@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/mystyles.css";
-const PhotoCard = ({ photo, addToCart, userID}) => {
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+const PhotoCard = ({ photo, addToCart, userID }) => {
   const [likes, setLikes] = useState({});
   const toggleLike = (photoId) => {
     const updatedLikes = { ...likes };
@@ -8,8 +11,17 @@ const PhotoCard = ({ photo, addToCart, userID}) => {
     setLikes(updatedLikes);
   };
 
+  useEffect(() => {
+    AOS.init({ duration: 3000 });
+  }, []);
+
   return (
-    <div key={photo.id} className="gallery_card_inner">
+    <div
+      key={photo.id}
+      className="gallery_card_inner"
+      data-aos="flip-right"
+      data-aos-once="true"
+    >
       {" "}
       {/* Add card-sm class to make cards smaller */}
       <img src={photo.image} alt={photo.name} className="card-img-top" />

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const LandingPage = () => {
   // Define state variables for image URLs
@@ -105,17 +107,21 @@ const LandingPage = () => {
       </header>
       {/* Main content */}
       <main className="container my-5">
-        <section className="my-5">
+        <section className="my-5" data-aos="fade-in" data-aos-once="true">
           <ul className="list-unstyled">
             {searchCategories.map((category, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                style={{ margin: "1.5rem" }}
+                data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
+              >
                 {category.name}
                 <img src={category.imageUrl} alt={category.name} />
               </li>
             ))}
           </ul>
         </section>
-        <section className="my-5">
+        <section className="my-5" data-aos="fade-out" data-aos-once="true">
           <h2>The right photo for every moment</h2>
           <p>
             Finding the perfect image to convey your message or evoke the right
@@ -131,14 +137,14 @@ const LandingPage = () => {
           </p>{" "}
           <div className="row">
             {momentCategories.map((category, index) => (
-              <div className="col-md-4" key={index}>
+              <div className="col-md-4" key={index} data-aos="zoom-in">
                 {category.name}
                 <img src={category.imageUrl} alt={category.name} />
               </div>
             ))}
           </div>
         </section>
-        <section className="my-5">
+        <section className="my-5" data-aos="fade-in" data-aos-once="true">
           <h2>Keep consistency in your designs</h2>
           <p>
             Ensure consistency in your creative process by easily finding all
@@ -158,8 +164,7 @@ const LandingPage = () => {
             ))}
           </div>
         </section>
-
-        <section className="my-5">
+        <section className="my-5" data-aos="fade-out" data-aos-once="true">
           <h2 className="mb-4">Featured Products</h2>
           <div className="row">
             <div className="col-md-6">
@@ -209,7 +214,7 @@ const LandingPage = () => {
         </section>
 
         {/* Inspiration Gallery Section */}
-        <section className="my-5">
+        <section className="my-5" data-aos="fade-in" data-aos-once="true">
           <h2 className="mb-4">Inspiration Gallery</h2>
           <div className="row">
             <div className="col-md-6">
@@ -235,7 +240,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section class="my-5">
+        <section class="my-5" data-aos="fade-out" data-aos-once="true">
           <h2 class="mb-4">snapstore Free Picks</h2>
           <div class="row">
             <div class="col-md-6">
@@ -260,30 +265,6 @@ const LandingPage = () => {
               />
               <a href="https://wallpapers.com/cool-pictures/">
                 wallpapers snapstore
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Related Articles Section */}
-        <section className="my-5">
-          <h2 className="mb-4">Related Articles</h2>
-          <div className="row">
-            <div className="col-md-6">
-              <p>
-                Explore these captivating articles to dive deeper into the
-                topics that matter. From the latest trends in technology to
-                insightful pieces on health and wellness, these articles offer a
-                wealth of knowledge and inspiration. Whether you're looking for
-                tips on staying productive, updates on current events, or
-                in-depth analyses of fascinating subjects, you'll find it all
-                here. Join us on a journey of discovery as we delve into these
-                thought-provoking articles that are sure to broaden your
-                horizons and spark your curiosity.
-              </p>
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmQ2-JI5waOR8yQA2xEN0Stfhttps://example.com/freepiks.jpgmjnmXyTfiSfQ&usqp=CAU" />
-              <a href="https://edition.cnn.com/interactive/2020/specials/year-in-pictures/">
-                CNN Year in Pictures
               </a>
             </div>
           </div>
