@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const LandingPage = () => {
+  useEffect(() => {
+    AOS.init({ duration: 3000 });
+  }, []);
   // Define state variables for image URLs
   const [headerImageUrl, setHeaderImageUrl] = useState(
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQET0Rdutg60BT4OHYYyJHxb-ikyClutyIQ9w&usqp=CAU"

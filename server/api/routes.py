@@ -10,7 +10,7 @@ import os
 from functools import wraps
 from marshmallow.exceptions import ValidationError
 from flask_jwt_extended import JWTManager
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, create_refresh_token,get_jwt_identity, jwt_required
 
 
 ns = Namespace('snapstore')
@@ -140,26 +140,6 @@ class Signup(Resource):
                 return new_user, 201
             else:
                 return {'message': "No data found"}, 404
-        # if data:
-        #     new_user = User(
-        #         username=data['username'],
-        #         email=data['email'],
-        #         public_id=str(uuid.uuid4())
-        #     )
-        #     new_user.set_password(data['password'])
-        #     print(f'new user:{new_user}')
-        #     new_user.set_password(data['password'])
-        #     db.session.add(new_user)
-        #     db.session.commit()
-        #     print(new_user)
-
-            # Create a cart for the newly registered user
-            # new_cart = Cart(user=new_user)
-            # print("user cart", new_cart)
-            # db.session.add(new_cart)
-            # db.session.commit()
-
-            # return new_user, 201
         else:
             return {'message': "No data found"}, 404
 
@@ -178,13 +158,10 @@ class Login(Resource):
         if not user:
             return {'message': 'Could Not Verify'}, 401
 
-        token_payload = {
-            'public_id': user.public_id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-        }
 
         if check_password_hash(user.password_hash, data['password']):
             access_token = create_access_token(identity=user.id)
+            refresh_token = create_refresh_token(identity=user.id)
             response_data = {
                 'access_token': access_token,
                 'username': user.username,
@@ -281,13 +258,6 @@ class Deletetransaction(Resource):
 class PostTransaction(Resource):
     def post(self):
         try:
-            # Validate and get data from the request
-            
-
-            # if not (photo_id and user_id and quantity and amount):
-            #     return {"message": "Missing required fields"}, 400
-
-            # Create a new transaction
             new_transaction = Transaction(
                 photo_id = request.form.get ('photo_id') ,
                 user_id = request.form.get ('user_id') ,

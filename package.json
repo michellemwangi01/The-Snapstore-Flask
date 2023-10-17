@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "aos": "^2.3.4",
+    "aos": "^3.0.0-beta.6",
     "express": "^4.18.2",
     "lottie-web": "^5.12.2"
   }
