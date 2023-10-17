@@ -49,8 +49,10 @@ const PhotoCard = ({ photo, addToCart, userID }) => {
           {likes[photo.id] ? "❤️ Liked" : "❤️ Like"}
         </button>
         <button
+          id="addToCart"
           className="addToCart btn btn-warning ml-2"
           onClick={() => addToCart(photo, userID)}
+          style={{}}
         >
           Add to Cart
         </button>

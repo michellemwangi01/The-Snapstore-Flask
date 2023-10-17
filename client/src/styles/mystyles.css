@@ -152,3 +152,8 @@ button .btnLogin {
   flex-wrap: wrap;
   justify-content: center;
 }
+#addToCart:hover {
+  background-color: transparent;
+  border: 1px solid #a57f0b;
+  color: #a57f0b;
+}
