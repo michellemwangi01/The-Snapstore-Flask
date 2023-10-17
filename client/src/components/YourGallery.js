@@ -8,18 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 
 const YourGallery = ({ category_id, jwToken }) => {
   const [yourPhotos, setYourPhotos] = useState([]);
+  const [photosList, setPhotosList] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [photosPerPage] = useState(8);
   const indexOfLastPhoto = currentPage * photosPerPage;
   const indexOfFirstPhoto = indexOfLastPhoto - photosPerPage;
 
-  //   const currentPhotos = photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
-
   useEffect(() => {
     fetch(
-      `https://the-snapstore-flask-api.onrender.com/snapstore/userphotos/
+      `https://the-snapstore-flask-api.onrender.com/snapstore/userphotos
 `,
       {
         headers: {
@@ -67,6 +65,11 @@ const YourGallery = ({ category_id, jwToken }) => {
         You have not posted any images to the site.
       </p>
     );
+  } else {
+    const yourPhotosList = yourPhotos.map((photo) => (
+      <PhotoCard photo={photo} />
+    ));
+    setPhotosList(yourPhotosList);
   }
 
   // Function to handle page navigation
@@ -76,8 +79,6 @@ const YourGallery = ({ category_id, jwToken }) => {
 
   // Calculate the total number of pages
   //   const totalPages = Math.ceil(photos.length / photosPerPage);
-
-  const photosList = yourPhotos.map((photo) => <PhotoCard photo={photo} />);
 
   return (
     <>

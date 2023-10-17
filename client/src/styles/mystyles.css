@@ -49,13 +49,13 @@ img {
 .galleryHolder {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  margin: 2rem;
+  margin-left: 10px;
 }
 
 .gallery_card_inner {
-  width: 25%;
+  width: 23%;
   height: 40rem;
   margin: 1.5rem;
   margin-bottom: 2rem;

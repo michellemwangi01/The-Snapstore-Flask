@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import lottie from "lottie-web";
+import animationData from "./CartAnimation.json";
 
 const Cart = ({
   user_ID,
@@ -14,9 +16,29 @@ const Cart = ({
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [checkout, setCheckout] = useState(false);
+  const container = useRef(null);
+  const [animationLoaded, setAnimationLoaded] = useState(false);
+
+  useEffect(() => {
+    const animation = lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+    });
+
+    animation.addEventListener("DOMLoaded", () => {
+      setAnimationLoaded(true);
+    });
+
+    return () => {
+      animation.destroy();
+    };
+  }, []);
 
   const transaction_created_successfully = () =>
-    toast("Transaction successfully created. Navigate to history to view!");
+    toast("Item checked out. Transaction successfully updated!");
 
   // Function to handle the checkout process
   const handleCheckout = (photoId, user_ID) => {
@@ -80,32 +102,66 @@ const Cart = ({
   }, [cartItem]); // Run this effect when the user_ID changes
 
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{ minHeight: "90%", backgroundColor: "transparent" }}
+    >
       <div className="card-header bg-primary text-white">
-        <h5 className="mb-0">Your Cart</h5>
+        <h5
+          className="mb-0"
+          style={{ textAlign: "center", fontStyle: "italic" }}
+        >
+          Your Cart
+        </h5>
       </div>
+      <div className="container" ref={container}></div>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
         <div>
           {cartItems.length === 0 ? (
-            <div className="card-body">
+            <div className="card-body" style={{ minHeight: "4rem" }}>
               <p>Your cart is empty</p>
             </div>
           ) : (
             <ul className="list-group list-group-flush">
               {cartItems.map((item) => (
-                <li key={item.id} className="list-group-item">
+                <li
+                  key={item.id}
+                  className="list-group-item"
+                  style={{ padding: "1rem", margin: "10px" }}
+                >
                   <div className="d-flex justify-content-between align-items-center">
-                    <div className="d-flex flex-column">
-                      <span>{item.name}</span>
-                      <span className="ml-2">P.Name: {item.photo.name}</span>
+                    <div
+                      className="d-flex flex-row"
+                      style={{ justifyContent: "center", alignItems: "center" }}
+                    >
+                      <span>
+                        <img
+                          src={item.photo.image}
+                          style={{
+                            height: "50px",
+                            borderRadius: "25%",
+                            marginRight: "1rem",
+                            width: "50px",
+                          }}
+                        />
+                      </span>
+                      <span className="ml-2">{item.photo.name}</span>
                     </div>
                     <div>
                       <span className="ml-2">Price: ${item.photo.price}</span>
                       <button
                         className="btn btn-danger btn-sm ml-2"
                         onClick={() => handleCheckout(item.photo.id, user_ID)}
+                        style={{
+                          backgroundColor: "transparent",
+                          opacity: "0.8",
+                          color: "blue",
+                          marginLeft: "15px",
+                          border: "1px blue solid",
+                        }}
                       >
                         Checkout
                       </button>

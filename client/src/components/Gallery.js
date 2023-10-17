@@ -46,9 +46,8 @@ const Gallery = ({ category_id, userID, jwToken }) => {
       });
   }, []);
 
-  const addToCart = (photo, userID, item_added_to_cart) => {
+  const addToCart = (photo, userID) => {
     console.log("USER TO POST CART", userID);
-
     // Create an object with the data to send in the request body
     const data = {
       user_id: userID,
@@ -69,18 +68,15 @@ const Gallery = ({ category_id, userID, jwToken }) => {
     )
       .then((response) => {
         if (response.ok) {
-          // Handle success by updating the cart state
-          return response.json(); // Parse the response JSON
+          return response.json();
         } else {
-          // Handle error by throwing an error with a message
           throw new Error("Failed to add item to cart");
         }
       })
       .then((cartData) => {
-        console.log("Item added to cart:", cartData);
-
-        setCart((prevCart) => [...prevCart, photo]);
         item_added_to_cart();
+        console.log("Item added to cart:", cartData);
+        setCart((prevCart) => [...prevCart, photo]);
       })
       .catch((error) => {
         // Handle any errors that occurred during the fetch or processing
@@ -123,7 +119,7 @@ const Gallery = ({ category_id, userID, jwToken }) => {
 
   return (
     <>
-      <div className="container_gallery">
+      <div className="container_gallery" style={{ position: "relative" }}>
         <h1 className="my-4">The SnapStore Gallery</h1>
         <Categories
           setPhotos={setPhotos}
@@ -190,7 +186,19 @@ const Gallery = ({ category_id, userID, jwToken }) => {
             </li>
           </ul>
         </nav>
-        <div className="theCart">
+        <div
+          className="theCart"
+          style={{
+            position: "absolute",
+            maxHeight: "60rem",
+            overflow: "scroll",
+            width: "30rem",
+            padding: "0.5rem",
+            top: "6.5%",
+            backgroundColor: "whitesmoke",
+            opacity: "0.99",
+          }}
+        >
           <Cart
             cartItem={cart}
             user_ID={userID}
