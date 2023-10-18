@@ -21,8 +21,8 @@ const Login = ({
   });
 
   const successfully_loggedin = () => {
-    toast("Successfully Logged In. Wait to be redirected to home page.!!", {
-      duration: 10000, // Set duration to 10,000 milliseconds (10 seconds)
+    toast("Successfully Logged In. Wait to be redirected to home page!!", {
+      duration: 12000, // Set duration to 10,000 milliseconds (10 seconds)
     });
   };
   function toTitleCase(str) {
