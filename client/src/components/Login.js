@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../styles/mystyles.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({
   jwToken,
@@ -17,6 +19,9 @@ const Login = ({
     username: "",
     password: "",
   });
+
+  const successfully_loggedin = () =>
+    toast("Successfully Logged In. Wait to be redirected to home page.!");
 
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (word) {
@@ -40,7 +45,7 @@ const Login = ({
       username: username,
       password: password,
     };
-
+    successfully_loggedin();
     fetch("https://the-snapstore-flask-api.onrender.com/snapstore/login", {
       method: "POST",
       headers: {

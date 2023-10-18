@@ -24,7 +24,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    successfully_signedup();
     const { username, email, password, repeatPassword } = formData;
 
     const userData = {
@@ -50,7 +50,6 @@ const Signup = () => {
         return response.json();
       })
       .then((data) => {
-        successfully_signedup();
         console.log("Response data:", data);
         navigate("/login");
       })
