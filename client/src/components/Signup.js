@@ -13,7 +13,7 @@ const Signup = () => {
   });
   const successfully_signedup = () => {
     toast("Successfully Signed up. Wait to be redirected to login page.!", {
-      duration: 12000,
+      duration: 30000,
     });
   };
 
