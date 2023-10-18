@@ -20,9 +20,11 @@ const Login = ({
     password: "",
   });
 
-  const successfully_loggedin = () =>
-    toast("Successfully Logged In. Wait to be redirected to home page.!");
-
+  const successfully_loggedin = () => {
+    toast("Successfully Logged In. Wait to be redirected to home page.!!", {
+      duration: 10000, // Set duration to 10,000 milliseconds (10 seconds)
+    });
+  };
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (word) {
       return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();

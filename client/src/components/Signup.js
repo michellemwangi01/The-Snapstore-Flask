@@ -11,8 +11,11 @@ const Signup = () => {
     password: "",
     repeatPassword: "",
   });
-  const successfully_signedup = () =>
-    toast("Successfully Signed up. Wait to be redirected to login page.!");
+  const successfully_signedup = () => {
+    toast("Successfully Signed up. Wait to be redirected to login page.!", {
+      duration: 12000,
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
